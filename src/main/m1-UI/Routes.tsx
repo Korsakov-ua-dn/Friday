@@ -6,6 +6,7 @@ import { Registration } from '../../features/f2-Registration/r1-UI/Registration'
 import { Forgot } from '../../features/f3-Forgot/f1-UI/Forgot'
 import { PaswordAssistance } from '../../features/f4-Password-assistance/a1-UI/Pasword-assistance'
 import { Profile } from '../../features/f5-Profile/p1-UI/Profile'
+import commonStyle from '../../common/CommonStyle.module.css'
 
 
 // paths
@@ -18,7 +19,7 @@ export const TEST_PATH = '/test'
 
 const Routes: React.FC = () => {
     return (
-        <>
+        <div className={commonStyle.container}>
             <Route exact path={'/'} render={() => <Redirect to={SIGN_IN_PATH}/>}/>
 
             <Route path={ SIGN_IN_PATH } render={() => <SignIn/>}/>
@@ -27,7 +28,7 @@ const Routes: React.FC = () => {
             <Route path={ PASSWORD_ASSISTANCE_PATH } render={() => <PaswordAssistance/>}/>
             <Route path={ PROFILE_PATH } render={() => <Profile/>}/>
             <Route path={ TEST_PATH } render={() => <Test/>}/>
-        </>
+        </div>
     )
 }
 
