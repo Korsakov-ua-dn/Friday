@@ -1,5 +1,6 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
+import { Test } from '../../common/c5-Test/Test'
 import { SignIn } from '../../features/f1-Sign-in/s1-UI/Sign-in'
 import { Registration } from '../../features/f2-Registration/r1-UI/Registration'
 import { Forgot } from '../../features/f3-Forgot/f1-UI/Forgot'
@@ -13,6 +14,7 @@ export const REGISTRATION_PATH = '/registration'
 export const FORGOT_PATH = '/forgot'
 export const PASSWORD_ASSISTANCE_PATH = '/assistance'
 export const PROFILE_PATH = '/profile'
+export const TEST_PATH = '/test'
 
 const Routes: React.FC = () => {
     return (
@@ -24,6 +26,7 @@ const Routes: React.FC = () => {
             <Route path={ FORGOT_PATH } render={() => <Forgot/>}/>
             <Route path={ PASSWORD_ASSISTANCE_PATH } render={() => <PaswordAssistance/>}/>
             <Route path={ PROFILE_PATH } render={() => <Profile/>}/>
+            <Route path={ TEST_PATH } render={() => <Test/>}/>
         </>
     )
 }

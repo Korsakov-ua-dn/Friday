@@ -1,0 +1,13 @@
+.btn {
+    height: 30px;
+    width: 90px;
+    border-radius: 15px;
+}
+
+.default {
+
+}
+
+.red {
+    background: red;
+}
