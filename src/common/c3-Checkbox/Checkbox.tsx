@@ -27,7 +27,7 @@ const Checkbox: React.FC<SuperCheckboxPropsType> = (
     const finalInputClassName = `${s.checkbox} ${className ? className : ''}`
 
     return (
-        <label>
+        <label className={s.wrapper}>
             <input
                 type={'checkbox'}
                 onChange={onChangeCallback}
