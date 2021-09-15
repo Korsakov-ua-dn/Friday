@@ -1,19 +1,19 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { FORGOT_PATH, PASSWORD_ASSISTANCE_PATH, PROFILE_PATH, REGISTRATION_PATH, SIGN_IN_PATH, TEST_PATH } from './Routes'
+import { Path } from './Routes'
 import s from './Header.module.css'
+import { CustomNavlink } from '../../common/c4-Navlink/CustomNavlink'
 
 
 const Header: React.FC = () => {
 
     return (
         <div className={s.header}>
-            <NavLink activeClassName={s.active} to={SIGN_IN_PATH}>sign-in</NavLink>
-            <NavLink activeClassName={s.active} to={REGISTRATION_PATH}>register</NavLink>
-            <NavLink activeClassName={s.active} to={FORGOT_PATH}>forgot</NavLink>
-            <NavLink activeClassName={s.active} to={PASSWORD_ASSISTANCE_PATH}>assistance</NavLink>
-            <NavLink activeClassName={s.active} to={PROFILE_PATH}>profile</NavLink>
-            <NavLink activeClassName={s.active} to={TEST_PATH}>test</NavLink>
+            <CustomNavlink to={Path.SIGN_IN_PATH} body={"sign-in"}/>
+            <CustomNavlink to={Path.REGISTRATION_PATH} body={"register"}/>
+            <CustomNavlink to={Path.FORGOT_PATH} body={"forgot"}/>
+            <CustomNavlink to={Path.PASSWORD_ASSISTANCE_PATH} body={"assistance"}/>
+            <CustomNavlink to={Path.PROFILE_PATH} body={"profile"}/>
+            <CustomNavlink to={Path.TEST_PATH} body={"test"}/>
         </div>
     )
 }

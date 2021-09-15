@@ -10,26 +10,31 @@ import commonStyle from '../../common/CommonStyle.module.css'
 
 
 // paths
-export const SIGN_IN_PATH = '/sign-in'
-export const REGISTRATION_PATH = '/registration'
-export const FORGOT_PATH = '/forgot'
-export const PASSWORD_ASSISTANCE_PATH = '/assistance'
-export const PROFILE_PATH = '/profile'
-export const TEST_PATH = '/test'
+export enum Path {
+    SIGN_IN_PATH = '/sign-in',
+    REGISTRATION_PATH = '/registration',
+    FORGOT_PATH = '/forgot',
+    PASSWORD_ASSISTANCE_PATH = '/assistance',
+    PROFILE_PATH = '/profile',
+    TEST_PATH = '/test',
+} 
 
 const Routes: React.FC = () => {
     return (
         <div className={commonStyle.container}>
-            <Route exact path={'/'} render={() => <Redirect to={SIGN_IN_PATH}/>}/>
+            <Route exact path={'/'} render={() => <Redirect to={Path.SIGN_IN_PATH}/>}/>
 
-            <Route path={ SIGN_IN_PATH } render={() => <SignIn/>}/>
-            <Route path={ REGISTRATION_PATH } render={() => <Registration/>}/>
-            <Route path={ FORGOT_PATH } render={() => <Forgot/>}/>
-            <Route path={ PASSWORD_ASSISTANCE_PATH } render={() => <PaswordAssistance/>}/>
-            <Route path={ PROFILE_PATH } render={() => <Profile/>}/>
-            <Route path={ TEST_PATH } render={() => <Test/>}/>
+            <Route path={ Path.SIGN_IN_PATH } render={() => <SignIn/>}/>
+            <Route path={ Path.REGISTRATION_PATH } render={() => <Registration/>}/>
+            <Route path={ Path.FORGOT_PATH } render={() => <Forgot/>}/>
+            <Route path={ Path.PASSWORD_ASSISTANCE_PATH } render={() => <PaswordAssistance/>}/>
+            <Route path={ Path.PROFILE_PATH } render={() => <Profile/>}/>
+            <Route path={ Path.TEST_PATH } render={() => <Test/>}/>
         </div>
     )
 }
 
 export default Routes
+
+// types
+export type PathsType = typeof Path

@@ -13,8 +13,10 @@
     cursor: pointer;
 }
 .checkbox:checked {
+    color: tomato;
     background-color: white;
     outline: 1px solid #5264AE;
+    content: "x";
 }
 .checkbox:focus {
     outline: 1px solid #5264AE;
