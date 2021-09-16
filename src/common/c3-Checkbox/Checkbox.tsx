@@ -35,7 +35,7 @@ const Checkbox: React.FC<SuperCheckboxPropsType> = (
 
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (checked например там внутри)
             />
-            <span/>
+            {/*<span className={s.arrow}></span>*/}
             {children && <p className={s.spanClassName}>{children}</p>}
         </label>
     )

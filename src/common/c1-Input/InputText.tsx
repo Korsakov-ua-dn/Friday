@@ -45,20 +45,22 @@ export const InputText: React.FC<SuperInputTextPropsType> = (
     const finalInputClassName = `${error ? s.errorInput : ''} ${s.input}`
 
     return (
-        <div className={s.wrapper}>  
+        <div className={s.wrapper}>
             <input
                 type={'text'}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 onBlur={onBlurcallback}
                 className={finalInputClassName}
-                required // меняет поведение lable!!!
+                required // меняет поведение label!!!
+
 
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-                
+
             />
-            <span className={s.animationBorder}></span> 
+            <div></div>
+            <span className={s.animationBorder}> </span>
             <label className={s.label}>{label}</label>
         </div>
     )
-}
+} // TODO: required?

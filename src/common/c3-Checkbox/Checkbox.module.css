@@ -1,4 +1,5 @@
 .wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -7,16 +8,29 @@
     appearance: none;
     width: 20px;
     height: 20px;
-    margin: 0;
-    margin-right: 10px;
+    margin: 0 10px 0 0;
     background: #5264AE;
     cursor: pointer;
+    transition:background-color 500ms ease;
 }
+/*.arrow {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 10px;*/
+/*    height: 10px;*/
+/*    background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/thumbs/1612514754_39-p-galochka-na-serom-fone-59.png");*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 100%;*/
+/*    background-position: center center;*/
+/*    display: none;*/
+/*}*/
 .checkbox:checked {
-    color: tomato;
     background-color: white;
-    outline: 1px solid #5264AE;
-    content: "x";
+    background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/thumbs/1612514754_39-p-galochka-na-serom-fone-59.png");
+    background-position: center center;
+    background-size: 50%;
+    background-repeat: no-repeat;
 }
 .checkbox:focus {
     outline: 1px solid #5264AE;
