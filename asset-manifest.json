@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/Friday/static/css/main.cce0a0db.chunk.css",
-    "main.js": "/Friday/static/js/main.e5792351.chunk.js",
-    "main.js.map": "/Friday/static/js/main.e5792351.chunk.js.map",
+    "main.css": "/Friday/static/css/main.f34985b1.chunk.css",
+    "main.js": "/Friday/static/js/main.5a210188.chunk.js",
+    "main.js.map": "/Friday/static/js/main.5a210188.chunk.js.map",
     "runtime-main.js": "/Friday/static/js/runtime-main.b0a0c197.js",
     "runtime-main.js.map": "/Friday/static/js/runtime-main.b0a0c197.js.map",
     "static/js/2.e37c8608.chunk.js": "/Friday/static/js/2.e37c8608.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.56138f2d.chunk.js": "/Friday/static/js/3.56138f2d.chunk.js",
     "static/js/3.56138f2d.chunk.js.map": "/Friday/static/js/3.56138f2d.chunk.js.map",
     "index.html": "/Friday/index.html",
-    "static/css/main.cce0a0db.chunk.css.map": "/Friday/static/css/main.cce0a0db.chunk.css.map",
+    "static/css/main.f34985b1.chunk.css.map": "/Friday/static/css/main.f34985b1.chunk.css.map",
     "static/js/2.e37c8608.chunk.js.LICENSE.txt": "/Friday/static/js/2.e37c8608.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b0a0c197.js",
     "static/js/2.e37c8608.chunk.js",
-    "static/css/main.cce0a0db.chunk.css",
-    "static/js/main.e5792351.chunk.js"
+    "static/css/main.f34985b1.chunk.css",
+    "static/js/main.5a210188.chunk.js"
   ]
 }
