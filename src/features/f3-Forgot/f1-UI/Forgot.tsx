@@ -3,7 +3,7 @@
 export const Forgot: React.FC = () => {
     return (
         <div>
-            Forgot...
+            Forgot by Korsakov...
         </div>
     )
 }
