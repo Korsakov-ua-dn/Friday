@@ -1,5 +1,6 @@
 import s from './Registration.module.css';
-import SuperButton from "../components/SuperButton/SuperButton";
+import Button from "../components/SuperButton/SuperButton";
+import {SuperInput} from '../components/SuperInput/SuperInput';
 
 export const Registration: React.FC = () => {
     return (
@@ -15,22 +16,30 @@ export const Registration: React.FC = () => {
                     <form>
                         <div className={s.formStyle}>
                             <label className={s.formLabel}>Login: </label>
-                            {/*<SuperInput/>*/}
+                            {/*<InputTextPage/>*/}
+                            <SuperInput/>
                         </div>
 
                         <div className={s.formStyle}>
                             <label className={s.formLabel}>Your Password: </label>
-                            {/*<SuperInput changeType="password"/>*/}
+                            <SuperInput changeType="password"/>
+                            {/*<InputTextPage/>*/}
+
                         </div>
                         <div className={s.formStyle}>
                             <label className={s.formLabel}>Repeat Password: </label>
-                            {/*<SuperInput changeType="password"/>*/}
+                            <SuperInput changeType="password"/>
+                            {/*<InputTextPage/>*/}
+
                         </div>
 
                         <div className={s.formStyle}>
-                            <SuperButton btnPrimary>
-                            SignUp
-                            </SuperButton>
+                            <Button>
+                                SignUp
+                            </Button>
+                            {/*<Button btnPrimary>*/}
+                            {/*SignUp*/}
+                            {/*</Button>*/}
                         </div>
 
                     </form>
