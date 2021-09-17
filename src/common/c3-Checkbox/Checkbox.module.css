@@ -11,25 +11,13 @@
     margin: 0 10px 0 0;
     background: #5264AE;
     cursor: pointer;
-    transition:background-color 500ms ease;
+    transition:background-color 200ms ease;
 }
-/*.arrow {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 10px;*/
-/*    height: 10px;*/
-/*    background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/thumbs/1612514754_39-p-galochka-na-serom-fone-59.png");*/
-/*    background-repeat: no-repeat;*/
-/*    background-size: 100%;*/
-/*    background-position: center center;*/
-/*    display: none;*/
-/*}*/
 .checkbox:checked {
     background-color: white;
     background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/thumbs/1612514754_39-p-galochka-na-serom-fone-59.png");
     background-position: center center;
-    background-size: 50%;
+    background-size: 80%;
     background-repeat: no-repeat;
 }
 .checkbox:focus {
