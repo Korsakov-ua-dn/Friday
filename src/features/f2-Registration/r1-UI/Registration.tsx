@@ -1,4 +1,5 @@
 import s from './Registration.module.css';
+import SuperButton from "../components/SuperButton/SuperButton";
 
 export const Registration: React.FC = () => {
     return (
@@ -27,9 +28,9 @@ export const Registration: React.FC = () => {
                         </div>
 
                         <div className={s.formStyle}>
-                            {/*<SuperButton btnPrimary>*/}
+                            <SuperButton btnPrimary>
                             SignUp
-                            {/*</SuperButton>*/}
+                            </SuperButton>
                         </div>
 
                     </form>
