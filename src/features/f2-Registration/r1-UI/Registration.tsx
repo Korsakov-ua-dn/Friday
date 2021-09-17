@@ -3,7 +3,7 @@
 export const Registration: React.FC = () => {
     return (
         <div>
-            Registration...
+            Registration...from LerGnom
         </div>
     )
 }
