@@ -2,51 +2,53 @@ import s from './Registration.module.css';
 import Button from "../components/SuperButton/SuperButton";
 import {SuperInput} from '../components/SuperInput/SuperInput';
 import React, {useState} from "react";
-import {AddedUserType, requestApi} from "../r3-DAL/api";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "../../../main/m2-BLL/store";
+import {registrationNewUser, returnServerError} from '../r2-BLL/Registration-reducer';
+import {useHistory} from "react-router-dom";
+import {Path} from "../../../main/m1-UI/Routes";
 
 export const Registration: React.FC = () => {
         const [pass, setPass] = useState<string>('');
         const [newPass, setNewPass] = useState<string>('');
         const [login, setLogin] = useState<string>('');
+
+        const serverError = useSelector<AppStoreType, Array<string>>(state => state.register.error);
+        const isSignUp = useSelector<AppStoreType, boolean>(state => state.register.isSign);
+        const dispatch = useDispatch();
+        const history = useHistory();
+
         let error: Array<string>;
+        console.log('server errors', serverError);
         // const errorPass = pass ? '' : 'add pass';
         // const errorLogin = login ? '' : 'add login';
         // const errorNewPass = newPass ? '' : 'add pass';
+        isSignUp && history.push(Path.SIGN_IN_PATH);
 
-
-        // not valid email/password /ᐠ-ꞈ-ᐟ\
-        //Passwords don't match!
 
         const formHandler = () => {
             error = [];
             //Check fields before query
-            pass !== newPass && error.push("Passwords don't match!");
-            pass || newPass === '' && error.push("Password field empty");
-            pass.length < 8 && error.push("Password should be more  7 symbols");
-            login === '' && error.push("Error your login field empty");
+            pass !== newPass && error.push("Passwords don't match!\n");
+            pass || newPass === '' && error.push("Password field empty\n");
+            pass.length < 8 && error.push("Password should be more  7 symbols\n");
+            login === '' && error.push("Error your login field empty\n");
             if (!error.length) {
-                //make query
-                console.log('error empty make query');
-                requestApi.register({email: login, password: pass})
-                    .then(res => {
-                        if (res.status === 201) {
-                            alert("yo");
-                            let objectUser: AddedUserType = res.data;
-                            console.log("You register");
-                        }
-                        // setResult(`${res.data.errorText} ${res.data.info}`);
-                    })
-                    .catch((rej) => {
-                        console.log(rej.response);
-                        console.log(rej.response.data.error);
-                        // setResult(`${rej.response.data.errorText} ${rej.response.data.info}`);
-                    });
+                //ThunkHere
+                dispatch(registrationNewUser(login, pass));
             } else {
                 //show error
-                console.log(error);
+                dispatch(returnServerError(error));
             }
-
         };
+
+        const errorsJSX = serverError.map(err => {
+            return (
+                <li key={err}>
+                    {err}
+                </li>
+            );
+        });
 
         return (
             <>
@@ -77,8 +79,15 @@ export const Registration: React.FC = () => {
                                 <label className={s.formLabel}>Repeat Password: </label>
                                 <SuperInput changeType="password"
                                             value={newPass}
-                                            onChangeText={setNewPass}/>
+                                            onChangeText={setNewPass}
+                                />
                                 {/*<InputTextPage/>*/}
+
+                            </div>
+                            <div className={s.formStyle}>
+                                <ul>
+                                    {errorsJSX}
+                                </ul>
 
                             </div>
 
@@ -99,3 +108,4 @@ export const Registration: React.FC = () => {
         );
     }
 ;
+

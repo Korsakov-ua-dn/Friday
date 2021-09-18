@@ -57,8 +57,20 @@
     flex-direction: column;
 }
 
+.formStyle ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: red;
+    text-align: center;
+}
+
 .formLabel {
     display: block;
     margin-bottom: .5rem;
+
 }
 
