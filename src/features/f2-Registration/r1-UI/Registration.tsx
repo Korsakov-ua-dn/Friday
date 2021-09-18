@@ -2,7 +2,7 @@ import s from './Registration.module.css';
 import Button from "../components/SuperButton/SuperButton";
 import {SuperInput} from '../components/SuperInput/SuperInput';
 import React, {useState} from "react";
-import {requestApi} from "../r3-DAL/api";
+import {AddedUserType, requestApi} from "../r3-DAL/api";
 
 export const Registration: React.FC = () => {
         const [pass, setPass] = useState<string>('');
@@ -27,24 +27,17 @@ export const Registration: React.FC = () => {
             if (!error.length) {
                 //make query
                 console.log('error empty make query');
-
                 requestApi.register({email: login, password: pass})
                     .then(res => {
-
-                        //Response
-                        // {data: {…}, status: 201, statusText: 'Created', headers: {…}, config: {…}, …}
-                        // config: {url: 'auth/register', method: 'post', data: '{"email":"asd3@asd.ru","password":"12345678"}', headers: {…}, baseURL: 'http://localhost:7542/2.0/', …}
-                        // data: {addedUser: {…}}
-                        // headers: {content-length: '250', content-type: 'application/json; charset=utf-8'}
-                        // request: XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}
-                        // status: 201
-                        // statusText: "Created"
-
-
+                        if (res.status === 201) {
+                            alert("yo");
+                            let objectUser: AddedUserType = res.data;
+                            console.log("You register");
+                        }
                         // setResult(`${res.data.errorText} ${res.data.info}`);
-                        console.log(res);
                     })
                     .catch((rej) => {
+                        console.log(rej.response);
                         console.log(rej.response.data.error);
                         // setResult(`${rej.response.data.errorText} ${rej.response.data.info}`);
                     });
