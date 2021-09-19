@@ -13,6 +13,8 @@ export const Registration: React.FC = () => {
         const [pass, setPass] = useState<string>('');
         const [newPass, setNewPass] = useState<string>('');
         const [login, setLogin] = useState<string>('');
+        //change eye
+        const [editInputType, setEditInputType] = useState('password');
 
         const serverError = useSelector<AppStoreType, Array<string>>(state => state.register.error);
         const isSignUp = useSelector<AppStoreType, boolean>(state => state.register.isSign);
@@ -89,13 +91,20 @@ export const Registration: React.FC = () => {
                             </div>
                             <div className={s.formStyle}>
                                 <label className={s.formLabel}>Repeat Password: </label>
-                                <SuperInput changeType="password"
+                                <SuperInput changeType={editInputType}
                                             value={newPass}
                                             onChangeText={setNewPass}
                                             error={errorNewPass}
                                             onClick={resetErrors}
                                             disabled={isFetching}
                                 />
+                                {/*{`${editInputType === 'password' ? s.eye : ''}`}*/}
+                                <span className={s.eye} onMouseOver={() => {
+                                    setEditInputType('text');
+
+                                }} onMouseOut={() => {
+                                    setEditInputType('password');
+                                }}></span>
                                 {/*<InputTextPage/>*/}
 
                             </div>
