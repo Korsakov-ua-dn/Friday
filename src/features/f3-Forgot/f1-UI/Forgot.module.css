@@ -1,0 +1,37 @@
+.wrapper {
+    width: 413px;
+    height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 33px 0 33px;
+    border-radius: 8px;
+    background-color: white;
+}
+.wrapper h1 {
+    margin-bottom: 32px;
+}
+.wrapper h2 {
+    margin-bottom: 57px;
+}
+.wrapper p {
+    margin: 36px auto 99px auto;
+    color: #2D2E46;
+}
+.wrapper .img {
+    width: 108px;
+    height: 108px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgb(161, 192, 248);
+}
+.wrapper .img img {
+    width: 55px;
+}
+
+.btnForgot {
+    height: 36px;
+    width: 266px;
+}

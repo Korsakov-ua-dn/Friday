@@ -9,7 +9,7 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
     onEnter?: () => void
-    setError: (error: boolean) => void
+    setError?: (error: boolean) => void
     error?: boolean
     label?: string
     spanClassName?: string
@@ -37,9 +37,9 @@ export const InputText: React.FC<SuperInputTextPropsType> = (
     }
     const onBlurcallback = (e: React.FocusEvent<HTMLInputElement>) => {
         if (e.currentTarget.value && onEnter) {
-            setError(false)
+            setError && setError(false)
             onEnter()
-        } else setError(true)
+        } else setError && setError(true)
     }
 
     const finalInputClassName = `${error ? s.errorInput : ''} ${s.input}`
