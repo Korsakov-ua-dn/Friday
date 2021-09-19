@@ -1,7 +1,7 @@
 import s from './Registration.module.css';
 import Button from "../components/SuperButton/SuperButton";
 import {SuperInput} from '../components/SuperInput/SuperInput';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {registrationNewUser, returnServerError} from '../r2-BLL/Registration-reducer';
@@ -26,9 +26,16 @@ export const Registration: React.FC = () => {
     //For redirect
     const history = useHistory();
 
+    //startValues
+    useEffect(() => {
+        setLogin('asd@asd.ru');
+        setPass('12345678');
+        setNewPass('12345678');
+    }, []);
+
     //Define error on the form
     let error: Array<string>;
-    const errorLogin = login ? '' : 'add your email please';
+    const errorLogin = login ? '' : 'add your email';
     const errorPass = pass ? '' : 'add your password';
     const errorNewPass = newPass ? '' : 'repeat your password';
 
