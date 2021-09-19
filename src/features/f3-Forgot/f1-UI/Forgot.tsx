@@ -21,12 +21,6 @@ export const Forgot: React.FC<PropsType> = ({
     error,
 }) => {
 
-    // const sendInstruction = () => {
-    //     forgotApi.getPing()
-    //         .then(res => console.log(res) )
-    //         .catch(e => console.log(e))
-    // }
-
     const dispatch = useDispatch()
     const sendInstruction = () => {
         forgotApi.sendForgotPassword(value)
