@@ -41,20 +41,25 @@ export const fetchingRegistration = (isFetch: boolean) => ({type: "REGISTRATION/
 // thunks
 export const registrationNewUser = (login: string, pass: string) => (dispatch: Dispatch) => {
     dispatch(fetchingRegistration(true));
+    document.body.style.cursor = "wait";
+    document.body.style.cursor = "wait";
     requestApi.register({email: login, password: pass})
         .then(res => {
             if (res.status === 201) {
                 alert("Вы успешно зарегистрировались  :)");
                 // let objectUser: AddedUserType = res.data;
                 dispatch(fetchingRegistration(false));
+                document.body.style.cursor = "default";
                 dispatch(isSignUp(true));
             }
         })
         .catch((rej) => {
             const error = [];
-            error.push(rej.response.data.error);
+            rej.response ? error.push(rej.response.data.error) : error.push('Some error on Server. We work with it.');
             dispatch(returnServerError(error));
             dispatch(fetchingRegistration(false));
+            document.body.style.cursor = "default";
+
         });
 };
 // types

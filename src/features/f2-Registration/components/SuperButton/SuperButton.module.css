@@ -4,7 +4,9 @@
     font-size: 1.25rem;
     line-height: 1.5;
     border-radius: .3rem;
+    cursor: inherit;
 }
+
 
 .default:hover {
     opacity: 0.9;
@@ -19,6 +21,8 @@
     font-size: 1.25rem;
     line-height: 1.5;
     border-radius: .3rem;
+    cursor: pointer;
+
 }
 
 .btnPrimary:hover {
