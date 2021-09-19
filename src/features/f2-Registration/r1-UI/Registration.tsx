@@ -9,22 +9,27 @@ import {useHistory} from "react-router-dom";
 import {Path} from "../../../main/m1-UI/Routes";
 
 export const Registration: React.FC = () => {
+        console.log("registration");
         const [pass, setPass] = useState<string>('');
         const [newPass, setNewPass] = useState<string>('');
         const [login, setLogin] = useState<string>('');
 
         const serverError = useSelector<AppStoreType, Array<string>>(state => state.register.error);
         const isSignUp = useSelector<AppStoreType, boolean>(state => state.register.isSign);
+        const isFetching = useSelector<AppStoreType, boolean>(state => state.register.isFetch);
         const dispatch = useDispatch();
         const history = useHistory();
 
         let error: Array<string>;
-        console.log('server errors', serverError);
-        // const errorPass = pass ? '' : 'add pass';
-        // const errorLogin = login ? '' : 'add login';
-        // const errorNewPass = newPass ? '' : 'add pass';
+        const errorLogin = login ? '' : 'add your email please';
+        const errorPass = pass ? '' : 'add your password';
+        const errorNewPass = newPass ? '' : 'repeat your password';
+
         isSignUp && history.push(Path.SIGN_IN_PATH);
 
+        const resetErrors = () => {
+            dispatch(returnServerError([]));
+        };
 
         const formHandler = () => {
             error = [];
@@ -64,14 +69,21 @@ export const Registration: React.FC = () => {
                             <div className={s.formStyle}>
                                 <label className={s.formLabel}>Login: </label>
                                 {/*<InputTextPage/>*/}
-                                <SuperInput value={login} onChangeText={setLogin}/>
+                                <SuperInput value={login} onChangeText={setLogin} error={errorLogin} onClick={resetErrors}
+                                            disabled={isFetching}
+                                />
                             </div>
 
                             <div className={s.formStyle}>
                                 <label className={s.formLabel}>Your Password: </label>
                                 <SuperInput changeType="password"
                                             value={pass}
-                                            onChangeText={setPass}/>
+                                            onChangeText={setPass}
+                                            error={errorPass}
+                                            onClick={resetErrors}
+                                            disabled={isFetching}
+                                />
+
                                 {/*<InputTextPage/>*/}
 
                             </div>
@@ -80,6 +92,9 @@ export const Registration: React.FC = () => {
                                 <SuperInput changeType="password"
                                             value={newPass}
                                             onChangeText={setNewPass}
+                                            error={errorNewPass}
+                                            onClick={resetErrors}
+                                            disabled={isFetching}
                                 />
                                 {/*<InputTextPage/>*/}
 
@@ -95,7 +110,7 @@ export const Registration: React.FC = () => {
                                 {/*<Button>*/}
                                 {/*    SignUp*/}
                                 {/*</Button>*/}
-                                <Button btnPrimary onClick={formHandler}>
+                                <Button btnPrimary={!isFetching} disabled={isFetching} onClick={formHandler}>
                                     SignUp
                                 </Button>
                             </div>
