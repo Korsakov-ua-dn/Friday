@@ -2,7 +2,7 @@ import React, {useCallback, useState} from "react";
 import s from './Sign-in.module.css'
 import {InputText} from "../../../common/c1-Input/InputText";
 import {InputPassword} from "./Common/InputPassword/InputPassword";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import Button from "../../../common/c2-Button/Button";
 import Checkbox from "../../../common/c3-Checkbox/Checkbox";
 import {userAuthRequestTC, UserType} from "../s2-BLL/Sign-in-reducer";
@@ -34,7 +34,11 @@ export const SignIn: React.FC = () => {
     const requestLogin = () => {
         dispatch(userAuthRequestTC({email, password, rememberMe}))
     }
-    console.log(user)
+
+    if (user) {
+        return <Redirect to={"/profile"}/>
+    }
+
     return (
         <div className={s.wrapper}>
             <div className={s.signInContent}>
