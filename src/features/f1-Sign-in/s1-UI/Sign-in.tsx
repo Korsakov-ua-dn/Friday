@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useState} from "react";
 import s from './Sign-in.module.css'
 import {InputText} from "../../../common/c1-Input/InputText";
 import {InputPassword} from "./Common/InputPassword/InputPassword";
@@ -8,6 +8,7 @@ import Checkbox from "../../../common/c3-Checkbox/Checkbox";
 import {userAuthRequestTC, UserType} from "../s2-BLL/Sign-in-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {useDispatch, useSelector} from "react-redux";
+import {FormLogin} from "./Components/FormLogin/FormLogin";
 
 
 export const SignIn: React.FC = () => {
@@ -44,23 +45,13 @@ export const SignIn: React.FC = () => {
             <div className={s.signInContent}>
                 <h1 className={s.present}>It-incubator</h1>
                 <h2 className={s.signIn}>Sign in</h2>
-                <div className={s.wrapperInputs}>
-                    <InputText
-                        value={email}
-                        onChangeText={onChangeEmail}
-                        setError={() => true}
-                        label={"Email"}
-                    />
-                    <InputPassword
-                        value={password}
-                        onChangeText={onChangePassword}
-                        setError={() => true}
-                        label={"Password"}
-                    />
-                    <div className={s.checkboxWrapper}>
-                        <Checkbox onChangeChecked={onChangeRememberMe} checked={rememberMe}>Remember me</Checkbox>
-                    </div>
-                </div>
+                <FormLogin onChangeEmail={onChangeEmail}
+                           onChangePassword={onChangePassword}
+                           onChangeRememberMe={onChangeRememberMe}
+                           email={email}
+                           password={password}
+                           rememberMe={rememberMe}
+                />
                 <div className={s.forgot}>
                     <NavLink to={"/forgot"} className={s.link}>Forgot Password?</NavLink>
                 </div>
