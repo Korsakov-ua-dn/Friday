@@ -19,21 +19,21 @@ export const FormLogin: React.FC<FormLoginType> = React.memo((
     {onChangeEmail, onChangePassword, email, password, onChangeRememberMe, rememberMe}
 ) => {
     const error = useSelector<AppStoreType, string | null>(state => state.signIn.error)
-    console.log(error)
+
     return (
         <div className={s.wrapperInputs}>
             <InputText
                 value={email}
                 onChangeText={onChangeEmail}
                 setError={() => true}
-                error={false}
+                error={!!error}
                 label={"Email"}
             />
             <InputPassword
                 value={password}
                 onChangeText={onChangePassword}
                 setError={() => true}
-                error={false}
+                error={!!error}
                 label={"Password"}
 
             />
