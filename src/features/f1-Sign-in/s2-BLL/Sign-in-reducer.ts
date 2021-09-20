@@ -1,7 +1,8 @@
 
-export const signInReducer = (state: any, action: any) => {
-    switch (action.type) {
+const initialState = {}
 
+export const signInReducer = (state: any = initialState, action: any) => {
+    switch (action.type) {
         default:
             return state
     }
