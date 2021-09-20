@@ -1,3 +1,7 @@
+.errorMessage {
+    font-size: 20px;
+    color: red;
+}
 .wrapper {
     width: 413px;
     height: 540px;
@@ -14,28 +18,11 @@
 .wrapper h2 {
     margin-bottom: 57px;
 }
-.wrapper .errorMessage {
-    font-size: 14px;
-    color: red;
-    opacity: 0.8;
-}
 .wrapper p {
     margin: 36px auto 99px auto;
     color: #2D2E46;
 }
-.wrapper .img {
-    width: 108px;
-    height: 108px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background-color: rgb(161, 192, 248);
-}
-.wrapper .img img {
-    width: 55px;
-}
-.btnForgot {
+.btnSetPassword {
     height: 36px;
     width: 266px;
 }

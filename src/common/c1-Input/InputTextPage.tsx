@@ -4,7 +4,7 @@ import { InputText } from './InputText'
 export const InputTextPage = () => {
 
     const [text, setText] = useState<string>('')
-    const [error, setError] = useState(false)
+    const [error, setError] = useState('')
 
     const showAlert = () => {
         console.log(text)

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, useState} from 'react'
 import s from './InputText.module.css'
 
 // тип пропсов обычного инпута
@@ -9,13 +9,13 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
     onEnter?: () => void
-    setError?: (error: string) => void
-    error?: string
+    setError: (error: boolean) => void
+    error?: boolean
     label?: string
     spanClassName?: string
 }
 
-export const InputText: React.FC<SuperInputTextPropsType> = (
+export const InputPassword: React.FC<SuperInputTextPropsType> = (
     {
         type, // достаём и игнорируем чтоб нельзя было задать другой тип инпута
         onChange, onChangeText,
@@ -28,7 +28,6 @@ export const InputText: React.FC<SuperInputTextPropsType> = (
 ) => {
 
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
-        setError && setError('')
         onChange && onChange(e) // если есть пропс onChange то передать ему е (поскольку onChange не обязателен)
         onChangeText && onChangeText(e.currentTarget.value)
     }
@@ -37,29 +36,35 @@ export const InputText: React.FC<SuperInputTextPropsType> = (
         onEnter && e.key === 'Enter' && onEnter() // если есть пропс onEnter и если нажата кнопка Enter, то вызвать его
     }
     const onBlurcallback = (e: React.FocusEvent<HTMLInputElement>) => {
-        setError && setError('')
-        if (!e.currentTarget.value) {
-            setError && setError('field is required')
-        }
+        if (e.currentTarget.value && onEnter) {
+            setError(false)
+            onEnter()
+        } else setError(true)
     }
 
-    const finalInputClassName = `${error ? s.errorInput : ''} ${s.input} ${className}`
+    const [passwordType, setPasswordType] = useState("password")
 
+    const openPasswordHandler = () => {
+        passwordType === "text" ? setPasswordType("password") : setPasswordType("text")
+    }
+
+    const finalInputClassName = `${error ? s.errorInput : ''} ${s.input}`
 
     return (
         <div className={s.wrapper}>
             <input
-                type={'text'}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 onBlur={onBlurcallback}
                 className={finalInputClassName}
+                autoComplete={"off"}
                 required // меняет поведение label!!!
-
-
+                type={passwordType}
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-
             />
+            <span className={s.onPassword} onClick={openPasswordHandler}></span>
+
+            <div></div>
             <span className={s.animationBorder}> </span>
             <label className={s.label}>{label}</label>
         </div>
