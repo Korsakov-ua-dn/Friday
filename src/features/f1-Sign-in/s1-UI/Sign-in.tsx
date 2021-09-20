@@ -24,7 +24,6 @@ export const SignIn: React.FC = () => {
         setRememberMe(checked)
     }
 
-
     return (
         <div className={s.wrapper}>
             <div className={s.signInContent}>
