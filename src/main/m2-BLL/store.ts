@@ -3,7 +3,7 @@ import  thunkMiddleware from 'redux-thunk'
 import { signInReducer } from '../../features/f1-Sign-in/s2-BLL/Sign-in-reducer'
 import { registrationReducer } from '../../features/f2-Registration/r2-BLL/Registration-reducer'
 import { forgotReducer } from '../../features/f3-Forgot/f2-BLL/Forgot-reducer'
-import { setNewPasswordReducer } from '../../features/f4-Password-assistance/a2-BLL/Password-assistance-reducer'
+import { assistanceReducer } from '../../features/f4-Password-assistance/a2-BLL/assistance-reducer'
 import { profileReducer } from '../../features/f5-Profile/p2-BLL/Profile-reducer'
 
 
@@ -12,7 +12,7 @@ const reducers = combineReducers({
     signIn: signInReducer,
     register: registrationReducer,
     forgot: forgotReducer,
-    assistance: setNewPasswordReducer,
+    assistance: assistanceReducer,
     profile: profileReducer,
 })
 

@@ -1,24 +1,33 @@
-import {useState} from "react";
-import {Forgot} from "./Forgot";
-import {useSelector} from "react-redux";
-import {AppStoreType} from "../../../main/m2-BLL/store";
+import {useEffect, useState} from 'react'
+import {Forgot} from './Forgot'
+import {useDispatch, useSelector} from 'react-redux'
+import {AppStoreType} from '../../../main/m2-BLL/store'
+import {ForgotStateType, restorePassword} from '../f2-BLL/Forgot-reducer'
 
 export const ForgotContainer: React.FC = () => {
+    const dispatch = useDispatch()
+    const forgot = useSelector<AppStoreType , ForgotStateType>(state => state.forgot)
 
-    const isSuccess = useSelector<AppStoreType , boolean>(state => state.forgot.isSuccess)
+    useEffect(() => { setError(forgot.errorMessage)}, [forgot.errorMessage])
 
-    const [value, setValue] = useState('')
-    const [error, setError] = useState(false)
+    const [email, setEmail] = useState('')
+    const [error, setError] = useState(forgot.errorMessage)
 
-    // if(isSuccess) return <Redirect to={Path.SIGN_IN_PATH}/>
+    const sendInstruction = () => {
+        dispatch(restorePassword(email))
+    }
 
     return (
+        forgot.loading
 
-        <Forgot
-            isSuccess={isSuccess}
-            value={value}
-            onChangeText = {setValue}
+        ? <h1>Loading...</h1>
+
+        : <Forgot
+            isSuccess={forgot.isSuccess}
+            value={email}
+            onChangeText = {setEmail}
             setError={setError}
-            error = {error}/>
+            error = {error}
+            sendInstruction={sendInstruction} />
     )
 }

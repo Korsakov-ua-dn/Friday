@@ -1,4 +1,4 @@
-import s from './PaswordAssistance.module.css'
+import s from './Assistance.module.css'
 import {InputText} from '../../../common/c1-Input/InputText'
 import Button from '../../../common/c2-Button/Button'
 import React from 'react'
@@ -7,16 +7,22 @@ type PropsType = {
     value: string
     onChangeText: (value: string) => void
     sendNewPassword: () => void
+    error: string
 }
 
-export const PasswordAssistance: React.FC<PropsType> = ({
+export const Assistance: React.FC<PropsType> = ({
     value,
     onChangeText,
     sendNewPassword,
+    error,
 }) => {
 
     return (
-        <div className={s.wrapper}>
+        error 
+
+        ? <span className={s.errorMessage}>{ error }</span>
+
+        : <div className={s.wrapper}>
             <h1>it-incubator</h1>
             <h2>Create new password</h2>
             <InputText

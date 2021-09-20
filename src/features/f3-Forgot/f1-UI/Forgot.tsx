@@ -1,16 +1,15 @@
 import s from './Forgot.module.css'
-import {InputText} from "../../../common/c1-Input/InputText";
-import Button from "../../../common/c2-Button/Button";
-import {forgotApi} from "../f3-DAL/forgotAPI";
-import {useDispatch} from "react-redux";
-import {sendInstructions} from "../f2-BLL/Forgot-reducer";
+import { InputText } from '../../../common/c1-Input/InputText'
+import Button from '../../../common/c2-Button/Button'
+
 
 type PropsType = {
     isSuccess: boolean
     value: string
     onChangeText: (value: string) => void
-    setError: (error: boolean) => void
-    error: boolean
+    setError: (error: string) => void
+    error: string
+    sendInstruction: () => void
 }
 
 export const Forgot: React.FC<PropsType> = ({
@@ -19,17 +18,8 @@ export const Forgot: React.FC<PropsType> = ({
     onChangeText,
     setError,
     error,
+    sendInstruction,
 }) => {
-
-    const dispatch = useDispatch()
-    const sendInstruction = () => {
-        forgotApi.sendForgotPassword(value)
-            .then(res => {
-                console.log(res)
-                dispatch(sendInstructions(true))
-            } )
-            .catch(e => console.log(e.response.data.error))
-    }
 
     return (
         isSuccess
@@ -51,6 +41,7 @@ export const Forgot: React.FC<PropsType> = ({
                     setError={setError}
                     error={error}
                     label={"E-mail"}/>
+                <span className={s.errorMessage}> {error} </span>   
                 <p>Enter your email address and we will send you further instructions </p>
                 <Button
                     onClick={sendInstruction}
