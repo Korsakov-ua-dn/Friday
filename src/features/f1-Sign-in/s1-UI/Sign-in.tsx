@@ -5,15 +5,22 @@ import {InputPassword} from "./Common/InputPassword/InputPassword";
 import {NavLink} from "react-router-dom";
 import Button from "../../../common/c2-Button/Button";
 import Checkbox from "../../../common/c3-Checkbox/Checkbox";
+import {userAuthRequestTC, UserType} from "../s2-BLL/Sign-in-reducer";
+import {AppStoreType} from "../../../main/m2-BLL/store";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export const SignIn: React.FC = () => {
+    const dispatch = useDispatch()
+    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user)
+
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [rememberMe, setRememberMe] = useState<boolean>(false)
 
-    const onChangeEmail = (text: string) => {
-        setEmail(text)
+
+    const onChangeEmail = (email: string) => {
+        setEmail(email)
     }
 
     const onChangePassword = (password: string) => {
@@ -24,6 +31,10 @@ export const SignIn: React.FC = () => {
         setRememberMe(checked)
     }
 
+    const requestLogin = () => {
+        dispatch(userAuthRequestTC({email, password, rememberMe}))
+    }
+    console.log(user)
     return (
         <div className={s.wrapper}>
             <div className={s.signInContent}>
@@ -49,7 +60,7 @@ export const SignIn: React.FC = () => {
                 <div className={s.forgot}>
                     <NavLink to={"/forgot"} className={s.link}>Forgot Password?</NavLink>
                 </div>
-                <Button>Login</Button>
+                <Button onClick={requestLogin}>Login</Button>
                 <div className={s.registration}>
                     <p>Don't have an account? </p>
                     <NavLink to={"/registration"} className={s.link}>Sign Up</NavLink>

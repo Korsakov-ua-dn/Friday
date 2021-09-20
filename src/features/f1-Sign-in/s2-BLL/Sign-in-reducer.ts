@@ -1,20 +1,31 @@
+import {Dispatch} from "redux";
+import { signAPI } from "../s3-DAL/SignAPI";
 
 const initialState = {
     user: null
 }
 
-export const signInReducer = (state: StateType = initialState, action: any) => {
+export const signInReducer = (state: StateType = initialState, action: ActionsType):StateType  => {
     switch (action.type) {
+        case "SIGN-IN/AUTH-REQUEST":
+            return {...state, user: action.user}
         default:
             return state
     }
 }
 
 // actions
-export const authRequestAC = (user: UserType) => ({type: "SIGN-IN/AUTH-REQUEST", user} as const)
+export const authUserAC = (user: UserType) => ({type: "SIGN-IN/AUTH-REQUEST", user} as const)
 // thunks
-
+export const userAuthRequestTC = (loginData: LoginData) => (dispatch: Dispatch) => {
+    signAPI.authRequest(loginData)
+        .then(res => dispatch(authUserAC(res.data)))
+}
 // types
+
+type StateType = {
+    user: UserType | null
+}
 
 export type UserType = {
     avatar: string,
@@ -33,6 +44,14 @@ export type UserType = {
     deviceTokens: any
 }
 
-type StateType = {
-    user: UserType | null
+type LoginData = {
+    email: string
+    password: string
+    rememberMe: boolean
 }
+
+type AuthUserType = ReturnType<typeof authUserAC>
+
+type ActionsType = AuthUserType
+
+
