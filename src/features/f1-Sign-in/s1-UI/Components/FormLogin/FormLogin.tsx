@@ -15,8 +15,8 @@ type FormLoginType = {
     rememberMe: boolean
 }
 
-export const FormLogin: React.FC<FormLoginType> = (
-    {onChangeEmail, onChangePassword, email, password, onChangeRememberMe,rememberMe}
+export const FormLogin: React.FC<FormLoginType> = React.memo((
+    {onChangeEmail, onChangePassword, email, password, onChangeRememberMe, rememberMe}
 ) => {
 
     return (
@@ -41,4 +41,4 @@ export const FormLogin: React.FC<FormLoginType> = (
             </div>
         </div>
     )
-}
+})

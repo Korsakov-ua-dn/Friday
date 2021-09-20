@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import s from './Sign-in.module.css'
 import {InputText} from "../../../common/c1-Input/InputText";
 import {InputPassword} from "./Common/InputPassword/InputPassword";
@@ -20,17 +20,17 @@ export const SignIn: React.FC = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(false)
 
 
-    const onChangeEmail = (email: string) => {
+    const onChangeEmail = useCallback((email: string) => {
         setEmail(email)
-    }
+    },[])
 
-    const onChangePassword = (password: string) => {
+    const onChangePassword = useCallback((password: string) => {
         setPassword(password)
-    }
+    },[])
 
-    const onChangeRememberMe = (checked: boolean) => {
+    const onChangeRememberMe = useCallback((checked: boolean) => {
         setRememberMe(checked)
-    }
+    },[])
 
     const requestLogin = () => {
         dispatch(userAuthRequestTC({email, password, rememberMe}))
