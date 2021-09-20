@@ -7,7 +7,7 @@ const initialState = {
 
 export const signInReducer = (state: StateType = initialState, action: ActionsType):StateType  => {
     switch (action.type) {
-        case "SIGN-IN/AUTH-REQUEST":
+        case "SIGN-IN/AUTH-USER":
             return {...state, user: action.user}
         default:
             return state
@@ -15,7 +15,7 @@ export const signInReducer = (state: StateType = initialState, action: ActionsTy
 }
 
 // actions
-export const authUserAC = (user: UserType) => ({type: "SIGN-IN/AUTH-REQUEST", user} as const)
+export const authUserAC = (user: UserType) => ({type: "SIGN-IN/AUTH-USER", user} as const)
 // thunks
 export const userAuthRequestTC = (loginData: LoginData) => (dispatch: Dispatch) => {
     signAPI.authRequest(loginData)
