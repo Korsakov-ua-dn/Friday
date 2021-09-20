@@ -45,6 +45,7 @@ export const InputText: React.FC<SuperInputTextPropsType> = (
 
     const finalInputClassName = `${error ? s.errorInput : ''} ${s.input} ${className}`
 
+
     return (
         <div className={s.wrapper}>
             <input
