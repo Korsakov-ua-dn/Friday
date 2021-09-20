@@ -13,6 +13,6 @@ const instance = axios.create({
 
 export const signAPI = {
     authRequest(user: LoginUser) {
-        return axios.post<UserType>("auth/login", user)
+        return instance.post<UserType>("auth/login", user)
     }
 }
