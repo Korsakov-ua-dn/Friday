@@ -39,9 +39,8 @@ export const returnServerError = (error: Array<string>) => ({type: "SERVER_ERROR
 export const isSignUp = (signUp: boolean) => ({type: "REGISTRATION/SET_SIGN_UP", signUp} as const);
 export const fetchingRegistration = (isFetch: boolean) => ({type: "REGISTRATION/FETCHING", isFetch} as const);
 // thunks
-export const registrationNewUser = (login: string, pass: string) => (dispatch: Dispatch) => {
+export const registrationNewUser = (login: string, pass: string) => (dispatch: Dispatch<ActionTypes>) => {
     dispatch(fetchingRegistration(true));
-    document.body.style.cursor = "wait";
     document.body.style.cursor = "wait";
     requestApi.register({email: login, password: pass})
         .then(res => {

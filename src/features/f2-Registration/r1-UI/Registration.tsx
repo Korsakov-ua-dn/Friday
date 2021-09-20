@@ -26,18 +26,20 @@ export const Registration: React.FC = () => {
     //For redirect
     const history = useHistory();
 
-    //startValues
+    // startValues
     useEffect(() => {
         setLogin('asd@asd.ru');
         setPass('12345678');
         setNewPass('12345678');
     }, []);
 
+
     //Define error on the form
     let error: Array<string>;
     const errorLogin = login ? '' : 'add your email';
     const errorPass = pass ? '' : 'add your password';
     const errorNewPass = newPass ? '' : 'repeat your password';
+
 
     //Redirect if success registration
     isSignUp && history.push(Path.SIGN_IN_PATH);
@@ -83,7 +85,7 @@ export const Registration: React.FC = () => {
             <div className={s.pageWrapper}>
                 <div className={s.pageContainer}>
                     <div className={s.pageHeader}>
-                        <p className={s.pageLogo}>
+                        <p className={s.pageLogo}>                                                                                      
                             <span>SignUp</span> page
                         </p>
                     </div>
