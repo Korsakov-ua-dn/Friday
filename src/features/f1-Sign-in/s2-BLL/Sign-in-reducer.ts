@@ -1,9 +1,9 @@
-const initialstate = {}
 
-export const signInReducer = (state: any = initialstate, action: any) => {
+export const signInReducer = (state: any, action: any) => {
     switch (action.type) {
-        
-        default: return state
+
+        default:
+            return state
     }
 }
 
