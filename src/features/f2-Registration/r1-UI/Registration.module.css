@@ -3,7 +3,9 @@
     padding-bottom: 25px;
     padding-left: 55px;
     padding-right: 55px;
-    margin-top: 55px;
+    margin: 55px 0;
+    /*margin-top: 55px;*/
+    /*margin-bottom: 55px;*/
 
     box-shadow: 0px 10px 62px 10px rgba(47, 128, 214, 0.71);
     background-color: #FFF;
@@ -22,6 +24,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    width: 350px;
 }
 
 .pageHeader {
@@ -57,8 +61,35 @@
     flex-direction: column;
 }
 
+.formStyle ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: red;
+    text-align: center;
+}
+
 .formLabel {
     display: block;
     margin-bottom: .5rem;
+
 }
 
+.eye {
+    position: absolute;
+    cursor: pointer;
+    width: 20px;
+    height: 15px;
+    top: 50px;
+    right: 15px;
+    background-color: yellow;
+    /*    display: inline-block;*/
+    background: url(../common/icons/close_eye.png) 0 0 no-repeat;
+}
+
+.eye:hover {
+    background: url(../common/icons/open_eye.png) 0 0 no-repeat;
+}

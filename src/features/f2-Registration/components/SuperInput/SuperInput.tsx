@@ -1,5 +1,6 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react';
 import s from './SuperInput.module.css';
+
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 type SuperInputTextPropsType = DefaultInputPropsType & {
     onChangeText?: (value: string) => void
@@ -45,7 +46,6 @@ export const SuperInput: React.FC<SuperInputTextPropsType> = (
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
-
                 {...restProps}
             />
             {error && <span className={finalSpanClassName}>{error}</span>}
