@@ -7,11 +7,16 @@ import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 import {Redirect} from "react-router-dom";
 import {Path} from "../../../main/m1-UI/Routes";
 import {InputText} from "../../../common/c1-Input/InputText";
+import {profileAPI} from "../p3-DAL/Profile-API";
 
 
 export const Profile: React.FC = () => {
 
     const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user)
+
+    const logoutHandler = () => {
+        profileAPI.logout()
+    }
 
     if (!user) {
         return (
@@ -34,7 +39,7 @@ export const Profile: React.FC = () => {
                         }
 
                         <span>Front-end developer</span>
-                        <Button>LOG OUT</Button>
+                        <Button onClick={logoutHandler}>LOG OUT</Button>
                     </div>
                     <div className={classes.numbers}>
 

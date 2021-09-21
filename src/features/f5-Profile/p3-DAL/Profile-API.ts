@@ -7,5 +7,8 @@ const instance = axios.create({
 export const profileAPI = {
     logout () {
         return instance.delete('auth/me')
+    },
+    setUserData () {
+        return instance.post('auth/me',{})
     }
 }

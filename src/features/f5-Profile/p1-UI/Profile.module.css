@@ -20,7 +20,7 @@
     height: 40%;
     margin: 5px;
     padding: 10px;
-    background-color: #d8e6f1;
+    background-color: rgba(216,230,241,0.7);
     border-radius: 10px;
 }
 
@@ -36,7 +36,7 @@
     height: 60%;
     margin: 5px;
     padding: 10px;
-    background-color: #d8e6f1;
+    background-color: rgba(216,230,241,0.7);
     border-radius: 10px;
 }
 
@@ -44,7 +44,7 @@
     padding: 5px;
     margin: 10px;
     width: 70%;
-    background-color: #d8e6f1;
+    background-color: rgba(216,230,241, 0.8);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -57,7 +57,8 @@
 }
 
 .input input {
-    background-color: #d8e6f1;
+    background-color: rgba(216,230,241, 0.8);
+    border-radius: 15px;
 }
 
 .list {
