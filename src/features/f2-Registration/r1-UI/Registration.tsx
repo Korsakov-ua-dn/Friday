@@ -7,6 +7,7 @@ import {AppStoreType} from "../../../main/m2-BLL/store";
 import {registrationNewUser, returnServerError} from '../r2-BLL/Registration-reducer';
 import {useHistory} from "react-router-dom";
 import {Path} from "../../../main/m1-UI/Routes";
+import {requestApi} from "../r3-DAL/api";
 
 export const Registration: React.FC = () => {
     //Use state for fields
@@ -85,7 +86,7 @@ export const Registration: React.FC = () => {
             <div className={s.pageWrapper}>
                 <div className={s.pageContainer}>
                     <div className={s.pageHeader}>
-                        <p className={s.pageLogo}>                                                                                      
+                        <p className={s.pageLogo}>
                             <span>SignUp</span> page
                         </p>
                     </div>
