@@ -9,13 +9,13 @@ type InitialStateType = {
     isFetch: boolean
 }
 
-const initialstate: InitialStateType = {
+const initialState: InitialStateType = {
     error: [],
     isSign: false,
     isFetch: false
 };
 type ActionTypes = ActionServerError | ActionIsSignUp | ActionFetchingRegistration
-export const registrationReducer = (state: InitialStateType = initialstate, action: ActionTypes): InitialStateType => {
+export const registrationReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case "REGISTRATION/FETCHING": {
             return {...state, isFetch: action.isFetch};
@@ -23,7 +23,7 @@ export const registrationReducer = (state: InitialStateType = initialstate, acti
         case "REGISTRATION/SET_SIGN_UP": {
             return {...state, isSign: action.signUp};
         }
-        case "SERVER_ERROR": {
+        case "REGISTRATION/SERVER_ERROR": {
             return {...state, error: action.error};
         }
 
@@ -32,72 +32,45 @@ export const registrationReducer = (state: InitialStateType = initialstate, acti
     }
 };
 
-// actions
+// actions types
 type ActionServerError = ReturnType<typeof returnServerError>
 type ActionIsSignUp = ReturnType<typeof isSignUp>
 type ActionFetchingRegistration = ReturnType<typeof fetchingRegistration>
 
-export const returnServerError = (error: Array<string>) => ({type: "SERVER_ERROR", error} as const);
-
+//action creators
+export const returnServerError = (error: Array<string>) => ({type: "REGISTRATION/SERVER_ERROR", error} as const);
 export const isSignUp = (signUp: boolean) => ({type: "REGISTRATION/SET_SIGN_UP", signUp} as const);
-
 export const fetchingRegistration = (isFetch: boolean) => ({type: "REGISTRATION/FETCHING", isFetch} as const);
-// thunks
 
-
+// thunk
 export const registrationNewUser = (login: string, pass: string) => (dispatch: Dispatch<ActionTypes>) => {
     dispatch(fetchingRegistration(true));
-    document.body.style.cursor = "wait";
-    const loadComplete = () => {
-        dispatch(fetchingRegistration(false));
-        document.body.style.cursor = "default";
-    };
     // types
     requestApi.register({email: login, password: pass})
         .then((response: AxiosResponse<AddedUserType & ErrorType>) => {
             switch (response.status) {
                 case StatusCode.success: {
-                    const user: AddedUserType = response.data;
+                    //Take User if needs
+                    // const user: AddedUserType = response.data;
                     alert("Вы успешно зарегистрировались  :)");
-                    loadComplete();
                     dispatch(isSignUp(true));
                     break;
                 }
                 case StatusCode.fail: {
-                    const serverError: ErrorType = response.data;
-                    dispatch(returnServerError([serverError.error]));
-                    loadComplete();
+                    const serverResponse: ErrorType = response.data;
+                    dispatch(returnServerError([serverResponse.error]));
                     break;
                 }
                 default: {
                     dispatch(returnServerError(['Some error']));
-                    loadComplete();
                     break;
                 }
             }
         })
         .catch((rej) => {
             dispatch(returnServerError(['Some error on Server. We work with it.']));
-            loadComplete();
-        });
-
-
-    // requestApi.register({email: login, password: pass})
-    //     .then(res => {
-    //         if (res.status === 201) {
-    //             alert("Вы успешно зарегистрировались  :)");
-    //             // let objectUser: AddedUserType = res.data;
-    //             dispatch(fetchingRegistration(false));
-    //             document.body.style.cursor = "default";
-    //             dispatch(isSignUp(true));
-    //         }
-    //     })
-    //     .catch((rej) => {
-    //         const error = [];
-    //         rej.response ? error.push(rej.response.data.error) : error.push('Some error on Server. We work with it.');
-    //         dispatch(returnServerError(error));
-    //         dispatch(fetchingRegistration(false));
-    //         document.body.style.cursor = "default";
-    //
-    //     });
+        }).finally(() => {
+            dispatch(fetchingRegistration(false));
+        }
+    );
 };

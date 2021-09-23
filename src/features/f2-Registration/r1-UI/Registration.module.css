@@ -1,57 +1,30 @@
 .pageWrapper {
-    max-width: 400px;
-    padding-bottom: 25px;
-    padding-left: 55px;
-    padding-right: 55px;
-    margin: 55px 0;
-    /*margin-top: 55px;*/
-    /*margin-bottom: 55px;*/
-
-    box-shadow: 0px 10px 62px 10px rgba(47, 128, 214, 0.71);
-    background-color: #FFF;
-    border-radius: 16px;
-}
-
-.pageContainer {
-    width: 100%;
-    /*padding-right: 15px;*/
-    /*padding-left: 15px;*/
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.pageContainer form {
+    width: 413px;
+    height: 540px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 25px 33px 0 33px;
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
 
-    /*width: 350px;*/
+    box-shadow: 0px 10px 62px 10px rgba(47, 128, 214, 0.71);
 }
 
-.pageHeader {
-    padding-top: 25px;
-    padding-bottom: 25px;
-    text-align: center !important;
+.pageWrapper h1 {
+    margin-bottom: 32px;
 }
 
-.pageHeader .pageLogo {
-    font-weight: 800;
-    font-size: 34px;
-    color: #2789e6;
-    transition: 0.2s ease-in;
-    margin: 0;
+.pageWrapper h2 {
+    margin-bottom: 57px;
 }
 
-.pageLogo span {
-    color: #2B2B2B;
-}
-
-.pageHr {
-    background-color: #2d93f0;
-    height: 45px;
-    margin-bottom: 30px;
-    margin-left: -55px;
-    margin-right: -55px;
+.pageWrapper button {
+    height: 36px;
+    width: 266px;
+    background-color: #5264AE;
+    color: white;
 }
 
 .formStyle {
@@ -65,31 +38,9 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.1rem;
     line-height: 1.5;
     color: red;
     text-align: center;
 }
 
-.formLabel {
-    display: block;
-    margin-bottom: .5rem;
-
-}
-
-.eye {
-    position: absolute;
-    cursor: pointer;
-    width: 20px;
-    height: 15px;
-    top: 60%;
-    right: 15px;
-    background-color: yellow;
-    /*    display: inline-block;*/
-    background: url(../common/icons/close_eye.png) 0 0 no-repeat;
-}
-
-.eye:hover {
-    background: url(../common/icons/open_eye.png) 0 0 no-repeat;
-}

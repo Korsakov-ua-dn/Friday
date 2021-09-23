@@ -1,21 +1,19 @@
 import s from './Registration.module.css';
-import Button from "../components/SuperButton/SuperButton";
-import {SuperInput} from '../components/SuperInput/SuperInput';
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {registrationNewUser, returnServerError} from '../r2-BLL/Registration-reducer';
-import {useHistory} from "react-router-dom";
-import {Path} from "../../../main/m1-UI/Routes";
-import {requestApi} from "../r3-DAL/api";
+import {Redirect} from "react-router-dom";
+import {InputText} from "../../../common/c1-Input/InputText";
+import {InputPassword} from "../../f1-Sign-in/s1-UI/Common/InputPassword/InputPassword";
+import Button from "../../../common/c2-Button/Button";
+import {Preloader} from "../../f1-Sign-in/s1-UI/Common/Loader/Preloader";
 
 export const Registration: React.FC = () => {
     //Use state for fields
     const [pass, setPass] = useState<string>('');
     const [newPass, setNewPass] = useState<string>('');
     const [login, setLogin] = useState<string>('');
-    //Use state for change eye and type field
-    const [editInputType, setEditInputType] = useState('password');
 
     //variable from state
     const serverError = useSelector<AppStoreType, Array<string>>(state => state.register.error);
@@ -24,46 +22,33 @@ export const Registration: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    //For redirect
-    const history = useHistory();
-
-    // startValues
-    useEffect(() => {
-        setLogin('asd@asd.ru');
-        setPass('12345678');
-        setNewPass('12345678');
-    }, []);
-
-
     //Define error on the form
     let error: Array<string>;
     const errorLogin = login ? '' : 'add your email';
-    const errorPass = pass ? '' : 'add your password';
-    const errorNewPass = newPass ? '' : 'repeat your password';
+    const [errorPass, setErrorPass] = useState<boolean>(false);
+    const [errorNewPass, setErrorNewPass] = useState<boolean>(false);
 
+    useEffect(() => {
+        pass === '' ? setErrorPass(true) : setErrorPass(false);
+        newPass === '' ? setErrorNewPass(true) : setErrorNewPass(false);
+    }, [pass, newPass]);
 
     //Redirect if success registration
-    isSignUp && history.push(Path.SIGN_IN_PATH);
+    if (isSignUp) {
+        return <Redirect to={"/sign-in"}/>;
+    }
 
     const resetErrors = () => {
         dispatch(returnServerError([]));
     };
 
-    const onMouseOverHandler = () => {
-        setEditInputType('text');
-    };
-
-    const onMouseOutHandler = () => {
-        setEditInputType('password');
-    };
-
     const formHandler = () => {
         error = [];
         //Check fields before query
-        pass !== newPass && error.push("Passwords don't match!\n");
-        pass || newPass === '' && error.push("Password field empty\n");
-        pass.length < 8 && error.push("Password should be more  7 symbols\n");
         login === '' && error.push("Error your login field empty\n");
+        (pass || newPass) === '' && error.push("Password field empty\n");
+        pass.length < 8 && error.push("Password should be more  7 symbols\n");
+        pass !== newPass && error.push("Passwords don't match!\n");
         if (!error.length) {
             //ThunkHere
             dispatch(registrationNewUser(login, pass));
@@ -84,57 +69,48 @@ export const Registration: React.FC = () => {
     return (
         <>
             <div className={s.pageWrapper}>
-                <div className={s.pageContainer}>
-                    <div className={s.pageHeader}>
-                        <p className={s.pageLogo}>
-                            <span>SignUp</span> page
-                        </p>
-                    </div>
-                    <div className={s.pageHr}></div>
-                    <form>
-                        <div className={s.formStyle}>
-                            <label className={s.formLabel}>Login: </label>
-                            {/*<InputTextPage/>*/}
-                            <SuperInput value={login}
-                                        onChangeText={setLogin}
-                                        error={errorLogin}
-                                        onClick={resetErrors}
-                                        disabled={isFetching}
-                                        placeholder={"please enter your email"}/>
-                        </div>
+                <h1>it-incubator</h1>
+                <h2>SignUp</h2>
+                {isFetching && <Preloader/>}
+                <form>
+                    <div className={s.formStyle}>
 
-                        <div className={s.formStyle}>
-                            <label className={s.formLabel}>Your Password: </label>
-                            <SuperInput changeType={editInputType}
-                                        value={pass}
-                                        onChangeText={setPass}
-                                        error={errorPass}
-                                        onClick={resetErrors}
-                                        disabled={isFetching}/>
-                        </div>
-                        <div className={s.formStyle}>
-                            <label className={s.formLabel}>Repeat Password: </label>
-                            <SuperInput changeType={editInputType}
-                                        value={newPass}
-                                        onChangeText={setNewPass}
-                                        error={errorNewPass}
-                                        onClick={resetErrors}
-                                        disabled={isFetching}/>
-                            <span className={s.eye} onMouseOver={onMouseOverHandler}
-                                  onMouseOut={onMouseOutHandler}></span>
-                        </div>
-                        <div className={s.formStyle}>
-                            <ul>
-                                {errorsJSX}
-                            </ul>
-                        </div>
-                        <div className={s.formStyle}>
-                            <Button btnPrimary={!isFetching} disabled={isFetching} onClick={formHandler}>
-                                SignUp
-                            </Button>
-                        </div>
-                    </form>
-                </div>
+                        <InputText
+                            value={login}
+                            onChangeText={setLogin}
+                            error={errorLogin}
+                            label={"E-mail"}
+                            onClick={resetErrors}
+                            disabled={isFetching}/>
+                    </div>
+
+                    <div className={s.formStyle}>
+                        <InputPassword setError={() => false} value={pass}
+                                       onChangeText={setPass}
+                                       error={errorPass}
+                                       onClick={resetErrors}
+                                       disabled={isFetching}
+                                       label={"Yor password"}/>
+
+
+                    </div>
+                    <div className={s.formStyle}>
+                        <InputPassword setError={() => false} value={newPass}
+                                       onChangeText={setNewPass}
+                                       error={errorNewPass}
+                                       onClick={resetErrors}
+                                       disabled={isFetching}
+                                       label={"Repeat Password"}/>
+                    </div>
+                    <div className={s.formStyle}>
+                        <ul>
+                            {errorsJSX}
+                        </ul>
+                    </div>
+                    <Button onClick={formHandler} disabled={isFetching}>
+                        SignUp
+                    </Button>
+                </form>
             </div>
         </>
     );
