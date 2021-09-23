@@ -11,18 +11,18 @@ export const assistanceReducer =
     (state: AssistanceStateType = initialstate, action: AssistanceActionType): AssistanceStateType => {
 
     switch (action.type) {
-        case "SET_REQUEST_STATUS": return {...state, requestStatus: action.status}
-        case "SET_ERROR_MESSAGE": return {...state, errorMessage: action.message}
-        case "SET_LOADING": return {...state, loading: action.loading}
+        case "ASSISTANCE/SET_REQUEST_STATUS": return {...state, requestStatus: action.status}
+        case "ASSISTANCE/SET_ERROR_MESSAGE": return {...state, errorMessage: action.message}
+        case "ASSISTANCE/SET_LOADING": return {...state, loading: action.loading}
 
         default: return state
     }
 }
 
 // actions
-const setRequestStatus = (status: boolean) => ({type: "SET_REQUEST_STATUS", status} as const)
-const setErrorMessage = (message: string) => ({type: "SET_ERROR_MESSAGE", message} as const)
-const setLoading = (loading: boolean) => ({type: "SET_LOADING", loading} as const)
+const setRequestStatus = (status: boolean) => ({type: "ASSISTANCE/SET_REQUEST_STATUS", status} as const)
+const setErrorMessage = (message: string) => ({type: "ASSISTANCE/SET_ERROR_MESSAGE", message} as const)
+const setLoading = (loading: boolean) => ({type: "ASSISTANCE/SET_LOADING", loading} as const)
 
 // thunks
 export const setNewPassword = (password: string, token: string) => (dispatch: Dispatch) => {
