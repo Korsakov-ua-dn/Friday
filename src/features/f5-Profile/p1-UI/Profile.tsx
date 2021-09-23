@@ -1,21 +1,26 @@
-import React, {useEffect} from "react";
+import React from "react";
 import classes from './Profile.module.css'
 import Button from "../../../common/c2-Button/Button";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 import {Redirect} from "react-router-dom";
 import {Path} from "../../../main/m1-UI/Routes";
 import {InputText} from "../../../common/c1-Input/InputText";
-import {profileAPI} from "../p3-DAL/Profile-API";
+import {logoutThunk, ProfileState} from "../p2-BLL/Profile-reducer";
+import {Preloader} from "../../f1-Sign-in/s1-UI/Common/Loader/Preloader";
 
 
 export const Profile: React.FC = () => {
 
     const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user)
+    const profile = useSelector<AppStoreType, ProfileState >(state => state.profile)
+    const dispatch = useDispatch()
 
-    const logoutHandler = () => {
-        profileAPI.logout()
+    if (profile.loading) {
+        return (
+            <Preloader/>
+        )
     }
 
     if (!user) {
@@ -39,7 +44,7 @@ export const Profile: React.FC = () => {
                         }
 
                         <span>Front-end developer</span>
-                        <Button onClick={logoutHandler}>LOG OUT</Button>
+                        <Button onClick={() => dispatch(logoutThunk)}>LOG OUT</Button>
                     </div>
                     <div className={classes.numbers}>
 
