@@ -30,7 +30,10 @@ export const userAuthRequestTC = (loginData: LoginData) => (dispatch: Dispatch) 
     dispatch(loaderAC(true))
     signAPI.authRequest(loginData)
         .then(res => dispatch(authUserAC(res.data)))
-        .catch(err => dispatch(errorRequestAC(err.response.data.error)))
+        .catch(e => {
+            const errorMessage = e.response?.data?.error || "Unknown error!"
+            dispatch(errorRequestAC(errorMessage))
+        })
         .finally(() => dispatch(loaderAC(false)))
 }
 // types

@@ -1,8 +1,9 @@
-import s from './Sign-up.module.css';
+import s from './SignUp.module.css';
 import React, {useEffect, useState} from "react";
 import {InputText} from "../../../common/c1-Input/InputText";
 import {InputPassword} from "../../../common/c1-Input/InputPassword";
 import Button from "../../../common/c2-Button/Button";
+import {Preloader} from "../../../common/c5-Loader/Preloader";
 
 type PropsType = {
     serverError: Array<string>
@@ -54,47 +55,46 @@ export const SignUp: React.FC<PropsType> = ({
     });
 
     return (
-        <>
-            <div className={s.pageWrapper}>
-                <h1>it-incubator</h1>
-                <h2>SignUp</h2>
-                <form>
-                    <div className={s.formStyle}>
+        <div className={s.pageWrapper}>
+            {isFetching && <Preloader/>}
+            <h1>it-incubator</h1>
+            <h2>SignUp</h2>
+            <form>
+                <div className={s.formStyle}>
 
-                        <InputText
-                            value={login}
-                            onChangeText={setLogin}
-                            error={errorLogin}
-                            label={"E-mail"}
-                            onClick={resetErrors}
-                            disabled={isFetching}/>
-                    </div>
-                    <div className={s.formStyle}>
-                        <InputPassword value={pass}
-                                       onChangeText={setPass}
-                                       error={errorPass}
-                                       onClick={resetErrors}
-                                       disabled={isFetching}
-                                       label={"Yor password"}/>
-                    </div>
-                    <div className={s.formStyle}>
-                        <InputPassword value={newPass}
-                                       onChangeText={setNewPass}
-                                       error={errorNewPass}
-                                       onClick={resetErrors}
-                                       disabled={isFetching}
-                                       label={"Repeat Password"}/>
-                    </div>
-                    <div className={s.formStyle}>
-                        <ul>
-                            {errorsJSX}
-                        </ul>
-                    </div>
-                    <Button onClick={validateform} disabled={isFetching}>
-                        SignUp
-                    </Button>
-                </form>
-            </div>
-        </>
+                    <InputText
+                        value={login}
+                        onChangeText={setLogin}
+                        error={errorLogin}
+                        label={"E-mail"}
+                        onClick={resetErrors}
+                        disabled={isFetching}/>
+                </div>
+                <div className={s.formStyle}>
+                    <InputPassword value={pass}
+                                   onChangeText={setPass}
+                                   error={errorPass}
+                                   onClick={resetErrors}
+                                   disabled={isFetching}
+                                   label={"Yor password"}/>
+                </div>
+                <div className={s.formStyle}>
+                    <InputPassword value={newPass}
+                                   onChangeText={setNewPass}
+                                   error={errorNewPass}
+                                   onClick={resetErrors}
+                                   disabled={isFetching}
+                                   label={"Repeat Password"}/>
+                </div>
+                <div className={s.formStyle}>
+                    <ul>
+                        {errorsJSX}
+                    </ul>
+                </div>
+                <Button onClick={validateform} disabled={isFetching}>
+                    SignUp
+                </Button>
+            </form>
+        </div>
     );
 };

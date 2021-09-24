@@ -1,47 +1,34 @@
-import React, {useCallback, useState} from "react";
+import React from "react";
 import s from './Sign-in.module.css'
-import {NavLink, Redirect} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import Button from "../../../common/c2-Button/Button";
-import {errorRequestAC, userAuthRequestTC, UserType} from "../s2-BLL/Sign-in-reducer";
-import {AppStoreType} from "../../../main/m2-BLL/store";
-import {useDispatch, useSelector} from "react-redux";
 import {FormLogin} from "./FormLogin/FormLogin";
 import {Preloader} from "../../../common/c5-Loader/Preloader";
+import {Path} from "../../../main/m1-UI/Routes";
 
+type PropsType = {
+    loading: boolean
+    error: string
+    email: string
+    onChangeEmail: (email: string) => void
+    onChangePassword: (password: string) => void
+    onChangeRememberMe: (rememberMe: boolean) => void
+    password: string
+    rememberMe: boolean
+    requestLogin: () => void
+}
 
-export const SignIn: React.FC = () => {
-    const dispatch = useDispatch()
-
-    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user)
-    const loading = useSelector<AppStoreType, boolean>(state => state.signIn.loading)
-    const error = useSelector<AppStoreType, string | null>(state => state.signIn.error)
-
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const [rememberMe, setRememberMe] = useState<boolean>(false)
-
-    const onChangeEmail = useCallback((email: string) => {
-        error && dispatch(errorRequestAC(''))
-        setEmail(email)
-    }, [error, dispatch])
-
-    const onChangePassword = useCallback((password: string) => {
-        error && dispatch(errorRequestAC(''))
-        setPassword(password)
-    }, [error, dispatch])
-
-    const onChangeRememberMe = useCallback((checked: boolean) => {
-        error && dispatch(errorRequestAC(''))
-        setRememberMe(checked)
-    }, [error, dispatch])
-
-    const requestLogin = () => {
-        dispatch(userAuthRequestTC({email, password, rememberMe}))
-    }
-
-    if (user) {
-        return <Redirect to={"/profile"}/>
-    }
+export const SignIn: React.FC<PropsType> = ({
+    loading,
+    error,
+    email,
+    requestLogin,
+    onChangeEmail,
+    onChangePassword,
+    onChangeRememberMe,
+    password,
+    rememberMe,
+}) => {
 
     const finallySignInClass = `${loading ? s.signInContent : ""}`
 
@@ -49,22 +36,24 @@ export const SignIn: React.FC = () => {
         <div className={s.wrapper}>
             {loading && <Preloader/>}
             <div className={finallySignInClass}>
-                <h1 className={s.present}>It-incubator</h1>
-                <h2 className={s.signIn}>Sign in</h2>
+                <h1>It-incubator</h1>
+                <h2>Sign in</h2>
                 <FormLogin onChangeEmail={onChangeEmail}
                            onChangePassword={onChangePassword}
                            onChangeRememberMe={onChangeRememberMe}
                            email={email}
                            password={password}
                            rememberMe={rememberMe}
+                           error={error}
                 />
                 <div className={s.forgot}>
-                    <NavLink to={"/forgot"} className={s.link}>Forgot Password?</NavLink>
+                    <NavLink to={Path.FORGOT_PATH} className={s.link}>Forgot Password?</NavLink>
                 </div>
+                <div className={s.error}>{error}</div>
                 <Button onClick={requestLogin}>Login</Button>
                 <div className={s.registration}>
                     <p>Don't have an account? </p>
-                    <NavLink to={"/registration"} className={s.link}>Sign Up</NavLink>
+                    <NavLink to={Path.SIGN_UP_PATH} className={s.link}>Sign Up</NavLink>
                 </div>
             </div>
         </div>

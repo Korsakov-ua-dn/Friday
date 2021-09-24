@@ -1,45 +1,29 @@
 .wrapper {
-    max-width: 400px;
-    text-align: center;
+    width: 413px;
+    height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 33px 0 33px;
     border-radius: 8px;
-    padding: 33px;
-    background-color: antiquewhite;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0px 10px 62px 10px rgba(47, 128, 214, 0.71);
     position: relative;
 }
-
 .signInContent {
     opacity: 0.5;
 }
-
-.present {
-    font-size: 26px;
-    font-weight: bold;
+.wrapper h1 {
+    margin-bottom: 32px;
 }
-
-.signIn {
-    font-size: 22px;
-    font-weight: bold;
+.wrapper h2 {
+    margin-bottom: 57px;
 }
-
-.wrapperInputs {
-    margin-top: 55px;
-    display: flex;
-    flex-direction: column;
-    min-height: 170px;
-    justify-content: space-between;
-}
-
-.checkboxWrapper {
-    text-align: right;
-    margin-left: auto;
-    margin-right: 15px;
-    font-size: 14px;
-}
-
 .forgot {
     text-align: right;
-    margin-top: 15px;
-    margin-bottom: 70px;
+    margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 .forgot a {
@@ -73,4 +57,11 @@
     font-weight: bold;
     transition: 0.3s;
 }
-
+.error {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 105px);
+    width: 100%;
+    top: 50%;
+    color: red;
+}

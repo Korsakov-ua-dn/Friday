@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {registrationNewUser, returnServerError} from '../r2-BLL/Sign-up-reducer';
 import {Redirect} from "react-router-dom";
-import {Preloader} from "../../../common/c5-Loader/Preloader";
 import {SignUp} from "./SignUp";
 
 export const SignUpContainer: React.FC = () => {
@@ -18,7 +17,7 @@ export const SignUpContainer: React.FC = () => {
         dispatch(returnServerError([]));
     };
 
-    const formHandler = (error: Array<string> ,login: string, pass: string) => {
+    const formHandler = (error: Array<string>, login: string, pass: string) => {
         if (!error.length) {
             dispatch(registrationNewUser(login, pass)); //ThunkHere
         } else {
@@ -32,12 +31,10 @@ export const SignUpContainer: React.FC = () => {
     } //Redirect if success registration
 
     return (
-        isFetching
-        ? <Preloader/>
-        : <SignUp
-                serverError={serverError}
-                isFetching={isFetching}
-                resetErrors={resetErrors}
-                formHandler={formHandler} />
+        <SignUp
+            serverError={serverError}
+            isFetching={isFetching}
+            resetErrors={resetErrors}
+            formHandler={formHandler}/>
     );
 };

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { Test } from '../../common/c9-Test/Test'
-import { SignIn } from '../../features/f1-Sign-in/s1-UI/Sign-in'
+import { SignInContainer } from '../../features/f1-Sign-in/s1-UI/SignInContainer'
 import { SignUpContainer } from '../../features/f2-Registration/r1-UI/SignUpContainer'
 import { Profile } from '../../features/f5-Profile/p1-UI/Profile'
 import commonStyle from '../../common/CommonStyle.module.css'
@@ -24,7 +24,7 @@ const Routes: React.FC = () => {
         <div className={commonStyle.container}>
             <Route exact path={'/'} render={() => <Redirect to={Path.SIGN_IN_PATH}/>}/>
 
-            <Route path={ Path.SIGN_IN_PATH } render={() => <SignIn/>}/>
+            <Route path={ Path.SIGN_IN_PATH } render={() => <SignInContainer/>}/>
             <Route path={ Path.SIGN_UP_PATH } render={() => <SignUpContainer/>}/>
             <Route path={ Path.FORGOT_PATH } render={() => <ForgotContainer/>}/>
             <Route path={ Path.PASSWORD_ASSISTANCE_PATH } render={() => <AssistanceContainer/>}/>

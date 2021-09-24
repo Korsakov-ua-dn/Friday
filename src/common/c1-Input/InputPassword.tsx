@@ -48,7 +48,7 @@ export const InputPassword: React.FC<SuperInputTextPropsType> = (
         passwordType === "text" ? setPasswordType("password") : setPasswordType("text")
     }
 
-    const finalInputClassName = `${error ? s.errorInput : ''} ${s.input}`
+    const finalInputClassName = `${error ? s.errorInput : ''} ${s.input} ${className}`
 
     return (
         <div className={s.wrapper}>
