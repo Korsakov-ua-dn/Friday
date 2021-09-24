@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     return (
         <div className={s.header}>
             <CustomNavlink to={Path.SIGN_IN_PATH} body={"sign-in"}/>
-            <CustomNavlink to={Path.REGISTRATION_PATH} body={"register"}/>
+            <CustomNavlink to={Path.SIGN_UP_PATH} body={"sign-up"}/>
             <CustomNavlink to={Path.FORGOT_PATH} body={"forgot"}/>
             <CustomNavlink to={Path.PASSWORD_ASSISTANCE_PATH} body={"assistance"}/>
             <CustomNavlink to={Path.PROFILE_PATH} body={"profile"}/>

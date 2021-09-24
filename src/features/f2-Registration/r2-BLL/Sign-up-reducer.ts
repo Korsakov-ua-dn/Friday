@@ -1,6 +1,6 @@
 import {AxiosResponse} from "axios";
 import {Dispatch} from "redux";
-import {AddedUserType, ErrorType, requestApi, StatusCode} from "../r3-DAL/api";
+import {AddedUserType, ErrorType, requestApi, StatusCode} from "../r3-DAL/SignUpApi";
 
 const initialState = {
     error: [] as Array<string>,
@@ -8,15 +8,15 @@ const initialState = {
     isFetch: false
 };
 
-export const registrationReducer = (state: SignUpStateType = initialState, action: ActionTypes): SignUpStateType => {
+export const signUpReducer = (state: SignUpStateType = initialState, action: ActionTypes): SignUpStateType => {
     switch (action.type) {
-        case "REGISTRATION/FETCHING": {
+        case "SIGN-UP/FETCHING": {
             return {...state, isFetch: action.isFetch};
         }
-        case "REGISTRATION/SET_SIGN_UP": {
+        case "SIGN-UP/SET_SIGN_UP": {
             return {...state, isSign: action.signUp};
         }
-        case "REGISTRATION/SERVER_ERROR": {
+        case "SIGN-UP/SERVER_ERROR": {
             return {...state, error: action.error};
         }
 
@@ -28,9 +28,9 @@ export const registrationReducer = (state: SignUpStateType = initialState, actio
 
 
 // action
-export const returnServerError = (error: Array<string>) => ({type: "REGISTRATION/SERVER_ERROR", error} as const);
-export const isSignUp = (signUp: boolean) => ({type: "REGISTRATION/SET_SIGN_UP", signUp} as const);
-export const fetchingRegistration = (isFetch: boolean) => ({type: "REGISTRATION/FETCHING", isFetch} as const);
+export const returnServerError = (error: Array<string>) => ({type: "SIGN-UP/SERVER_ERROR", error} as const);
+export const isSignUp = (signUp: boolean) => ({type: "SIGN-UP/SET_SIGN_UP", signUp} as const);
+export const fetchingRegistration = (isFetch: boolean) => ({type: "SIGN-UP/FETCHING", isFetch} as const);
 
 // thunk
 export const registrationNewUser = (login: string, pass: string) => (dispatch: Dispatch<ActionTypes>) => {
