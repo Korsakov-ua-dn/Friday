@@ -1,7 +1,7 @@
 import s from './Sign-up.module.css';
 import React, {useEffect, useState} from "react";
 import {InputText} from "../../../common/c1-Input/InputText";
-import {InputPassword} from "../../f1-Sign-in/s1-UI/Common/InputPassword/InputPassword";
+import {InputPassword} from "../../../common/c1-Input/InputPassword";
 import Button from "../../../common/c2-Button/Button";
 
 type PropsType = {

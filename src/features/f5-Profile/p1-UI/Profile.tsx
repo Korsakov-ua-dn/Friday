@@ -8,7 +8,7 @@ import {Redirect} from "react-router-dom";
 import {Path} from "../../../main/m1-UI/Routes";
 import {InputText} from "../../../common/c1-Input/InputText";
 import {logoutThunk, ProfileState} from "../p2-BLL/Profile-reducer";
-import {Preloader} from "../../f1-Sign-in/s1-UI/Common/Loader/Preloader";
+import {Preloader} from "../../../common/c5-Loader/Preloader";
 
 
 export const Profile: React.FC = () => {

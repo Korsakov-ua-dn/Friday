@@ -1,10 +1,10 @@
 import React from "react";
 import s from "./Form.login.module.css";
-import {InputText} from "../../../../../common/c1-Input/InputText";
-import {InputPassword} from "../../Common/InputPassword/InputPassword";
+import {InputText} from "../../../../common/c1-Input/InputText";
+import {InputPassword} from "../../../../common/c1-Input/InputPassword";
 import {useSelector} from "react-redux";
-import {AppStoreType} from "../../../../../main/m2-BLL/store";
-import Checkbox from "../../../../../common/c3-Checkbox/Checkbox";
+import {AppStoreType} from "../../../../main/m2-BLL/store";
+import Checkbox from "../../../../common/c3-Checkbox/Checkbox";
 
 type FormLoginType = {
     onChangeEmail: (email: string) => void
@@ -26,7 +26,7 @@ export const FormLogin: React.FC<FormLoginType> = React.memo((
                 value={email}
                 onChangeText={onChangeEmail}
                 setError={() => true}
-                error={error ? error : ""}
+                error={error}
                 label={"Email"}
             />
             <InputPassword

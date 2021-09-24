@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {registrationNewUser, returnServerError} from '../r2-BLL/Sign-up-reducer';
 import {Redirect} from "react-router-dom";
-import {Preloader} from "../../f1-Sign-in/s1-UI/Common/Loader/Preloader";
+import {Preloader} from "../../../common/c5-Loader/Preloader";
 import {SignUp} from "./SignUp";
 
 export const SignUpContainer: React.FC = () => {

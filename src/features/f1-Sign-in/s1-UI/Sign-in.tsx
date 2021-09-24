@@ -5,8 +5,8 @@ import Button from "../../../common/c2-Button/Button";
 import {errorRequestAC, userAuthRequestTC, UserType} from "../s2-BLL/Sign-in-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {useDispatch, useSelector} from "react-redux";
-import {FormLogin} from "./Components/FormLogin/FormLogin";
-import {Preloader} from "./Common/Loader/Preloader";
+import {FormLogin} from "./FormLogin/FormLogin";
+import {Preloader} from "../../../common/c5-Loader/Preloader";
 
 
 export const SignIn: React.FC = () => {

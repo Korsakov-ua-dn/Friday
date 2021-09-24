@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import { Test } from '../../common/c5-Test/Test'
+import { Test } from '../../common/c9-Test/Test'
 import { SignIn } from '../../features/f1-Sign-in/s1-UI/Sign-in'
 import { SignUpContainer } from '../../features/f2-Registration/r1-UI/SignUpContainer'
 import { Profile } from '../../features/f5-Profile/p1-UI/Profile'
