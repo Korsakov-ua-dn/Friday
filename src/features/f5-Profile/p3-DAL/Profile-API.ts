@@ -1,10 +1,8 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: "http://localhost:7542/2.0/",
-    headers: {
-        withCredentials: true
-    }
+    withCredentials: true,
+    baseURL: "https://neko-back.herokuapp.com/2.0",
 })
 
 export const profileAPI = {
