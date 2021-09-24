@@ -9,8 +9,8 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
     onEnter?: () => void
-    setError: (error: boolean) => void
-    error?: boolean
+    setError?: (error: string) => void
+    error?: string
     label?: string
     spanClassName?: string
 }
@@ -36,10 +36,10 @@ export const InputPassword: React.FC<SuperInputTextPropsType> = (
         onEnter && e.key === 'Enter' && onEnter() // если есть пропс onEnter и если нажата кнопка Enter, то вызвать его
     }
     const onBlurcallback = (e: React.FocusEvent<HTMLInputElement>) => {
-        if (e.currentTarget.value && onEnter) {
-            setError(false)
-            onEnter()
-        } else setError(true)
+        setError && setError('')
+        if (!e.currentTarget.value) {
+            setError && setError('field is required')
+        }
     }
 
     const [passwordType, setPasswordType] = useState("password")
@@ -62,11 +62,10 @@ export const InputPassword: React.FC<SuperInputTextPropsType> = (
                 type={passwordType}
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
             />
-            <span className={s.onPassword} onClick={openPasswordHandler}></span>
+            <span className={s.onPassword} onClick={openPasswordHandler}> </span>
 
-            <div></div>
             <span className={s.animationBorder}> </span>
             <label className={s.label}>{label}</label>
         </div>
     )
-} // TODO: required?
+}

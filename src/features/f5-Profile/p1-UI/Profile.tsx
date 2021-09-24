@@ -35,7 +35,7 @@ export const Profile: React.FC = () => {
                 <div className={classes.avatar}>
                     <div className={classes.description}>
                         <div className={classes.ava}>
-                            <img/>
+                            <img alt={"avatar"}/>
                         </div>
                         {
                             user.name

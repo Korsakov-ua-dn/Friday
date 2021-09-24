@@ -2,12 +2,12 @@ import {Dispatch} from "redux";
 import {signAPI} from "../s3-DAL/SignAPI";
 
 const initialState = {
-    user: null,
+    user: null as null | UserType,
     loading: false,
-    error: null
+    error: ''
 }
 
-export const signInReducer = (state: StateType = initialState, action: ActionsType): StateType => {
+export const signInReducer = (state: SignInStateType = initialState, action: ActionsType): SignInStateType => {
     switch (action.type) {
         case "SIGN-IN/AUTH-USER":
             return {...state, user: action.user}
@@ -21,9 +21,9 @@ export const signInReducer = (state: StateType = initialState, action: ActionsTy
 }
 
 // actions
-export const authUserAC = (user: UserType) => ({type: "SIGN-IN/AUTH-USER", user} as const)
-export const loaderAC = (loading: boolean) => ({type: "SIGN-IN/LOADER", loading} as const)
-export const errorRequestAC = (error: string | null) => ({type: "SIGN-IN/ERROR", error} as const)
+const authUserAC = (user: UserType) => ({type: "SIGN-IN/AUTH-USER", user} as const)
+const loaderAC = (loading: boolean) => ({type: "SIGN-IN/LOADER", loading} as const)
+export const errorRequestAC = (error: string) => ({type: "SIGN-IN/ERROR", error} as const)
 
 // thunks
 export const userAuthRequestTC = (loginData: LoginData) => (dispatch: Dispatch) => {
@@ -35,11 +35,7 @@ export const userAuthRequestTC = (loginData: LoginData) => (dispatch: Dispatch) 
 }
 // types
 
-type StateType = {
-    user: UserType | null
-    loading: boolean
-    error: null | string
-}
+type SignInStateType = typeof initialState
 
 export type UserType = {
     avatar: string,
@@ -64,13 +60,6 @@ type LoginData = {
     rememberMe: boolean
 }
 
-type ErrorRequestType = ReturnType<typeof errorRequestAC>
-type AuthUserType = ReturnType<typeof authUserAC>
-type LoaderType = ReturnType<typeof loaderAC>
-
-type ActionsType =
-    | AuthUserType
-    | LoaderType
-    | ErrorRequestType
-
-
+type ActionsType = ReturnType<typeof authUserAC>
+    | ReturnType<typeof loaderAC>
+    | ReturnType<typeof errorRequestAC>

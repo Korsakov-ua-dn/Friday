@@ -18,7 +18,7 @@ type FormLoginType = {
 export const FormLogin: React.FC<FormLoginType> = React.memo((
     {onChangeEmail, onChangePassword, email, password, onChangeRememberMe, rememberMe}
 ) => {
-    let error = useSelector<AppStoreType, string | null>(state => state.signIn.error)
+    let error = useSelector<AppStoreType, string>(state => state.signIn.error)
 
     return (
         <div className={s.wrapperInputs}>
@@ -33,7 +33,7 @@ export const FormLogin: React.FC<FormLoginType> = React.memo((
                 value={password}
                 onChangeText={onChangePassword}
                 setError={() => true}
-                error={!!error}
+                error={error}
                 label={"Password"}
 
             />

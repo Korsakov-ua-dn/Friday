@@ -21,19 +21,19 @@ export const SignIn: React.FC = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(false)
 
     const onChangeEmail = useCallback((email: string) => {
-        error && dispatch(errorRequestAC(null))
+        error && dispatch(errorRequestAC(''))
         setEmail(email)
-    }, [error])
+    }, [error, dispatch])
 
     const onChangePassword = useCallback((password: string) => {
-        error && dispatch(errorRequestAC(null))
+        error && dispatch(errorRequestAC(''))
         setPassword(password)
-    }, [error])
+    }, [error, dispatch])
 
     const onChangeRememberMe = useCallback((checked: boolean) => {
-        error && dispatch(errorRequestAC(null))
+        error && dispatch(errorRequestAC(''))
         setRememberMe(checked)
-    }, [error])
+    }, [error, dispatch])
 
     const requestLogin = () => {
         dispatch(userAuthRequestTC({email, password, rememberMe}))

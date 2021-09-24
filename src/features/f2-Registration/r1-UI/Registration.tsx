@@ -25,12 +25,12 @@ export const Registration: React.FC = () => {
     //Define error on the form
     let error: Array<string>;
     const errorLogin = login ? '' : 'add your email';
-    const [errorPass, setErrorPass] = useState<boolean>(false);
-    const [errorNewPass, setErrorNewPass] = useState<boolean>(false);
+    const [errorPass, setErrorPass] = useState<string>('');
+    const [errorNewPass, setErrorNewPass] = useState<string>('');
 
     useEffect(() => {
-        pass === '' ? setErrorPass(true) : setErrorPass(false);
-        newPass === '' ? setErrorNewPass(true) : setErrorNewPass(false);
+        pass === '' ? setErrorPass('field is required') : setErrorPass('');
+        newPass === '' ? setErrorNewPass('field is required') : setErrorNewPass('');
     }, [pass, newPass]);
 
     //Redirect if success registration
