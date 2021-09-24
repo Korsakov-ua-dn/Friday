@@ -14,6 +14,7 @@ export const AssistanceContainer: React.FC = () => {
 
     const { token } = useParams<{token: string}>()
 
+
     const sendPassword = () => {
         dispatch(setNewPassword(password, token))
     }
