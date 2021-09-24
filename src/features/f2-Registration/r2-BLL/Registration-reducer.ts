@@ -2,20 +2,13 @@ import {AxiosResponse} from "axios";
 import {Dispatch} from "redux";
 import {AddedUserType, ErrorType, requestApi, StatusCode} from "../r3-DAL/api";
 
-
-type InitialStateType = {
-    error: Array<string>
-    isSign: boolean
-    isFetch: boolean
-}
-
-const initialState: InitialStateType = {
-    error: [],
+const initialState = {
+    error: [] as Array<string>,
     isSign: false,
     isFetch: false
 };
-type ActionTypes = ActionServerError | ActionIsSignUp | ActionFetchingRegistration
-export const registrationReducer = (state: InitialStateType = initialState, action: ActionTypes): InitialStateType => {
+
+export const registrationReducer = (state: SignUpStateType = initialState, action: ActionTypes): SignUpStateType => {
     switch (action.type) {
         case "REGISTRATION/FETCHING": {
             return {...state, isFetch: action.isFetch};
@@ -32,12 +25,9 @@ export const registrationReducer = (state: InitialStateType = initialState, acti
     }
 };
 
-// actions types
-type ActionServerError = ReturnType<typeof returnServerError>
-type ActionIsSignUp = ReturnType<typeof isSignUp>
-type ActionFetchingRegistration = ReturnType<typeof fetchingRegistration>
 
-//action creators
+
+// action
 export const returnServerError = (error: Array<string>) => ({type: "REGISTRATION/SERVER_ERROR", error} as const);
 export const isSignUp = (signUp: boolean) => ({type: "REGISTRATION/SET_SIGN_UP", signUp} as const);
 export const fetchingRegistration = (isFetch: boolean) => ({type: "REGISTRATION/FETCHING", isFetch} as const);
@@ -45,7 +35,6 @@ export const fetchingRegistration = (isFetch: boolean) => ({type: "REGISTRATION/
 // thunk
 export const registrationNewUser = (login: string, pass: string) => (dispatch: Dispatch<ActionTypes>) => {
     dispatch(fetchingRegistration(true));
-    // types
     requestApi.register({email: login, password: pass})
         .then((response: AxiosResponse<AddedUserType & ErrorType>) => {
             switch (response.status) {
@@ -74,3 +63,10 @@ export const registrationNewUser = (login: string, pass: string) => (dispatch: D
         }
     );
 };
+
+// types
+type SignUpStateType = typeof initialState
+
+type ActionTypes = ReturnType<typeof returnServerError>
+    | ReturnType<typeof isSignUp>
+    | ReturnType<typeof fetchingRegistration>
