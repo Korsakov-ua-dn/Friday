@@ -68,7 +68,8 @@ export const SignUp: React.FC<PropsType> = ({
                         error={errorLogin}
                         label={"E-mail"}
                         onClick={resetErrors}
-                        disabled={isFetching}/>
+                        disabled={isFetching}
+                    />
                 </div>
                 <div className={s.formStyle}>
                     <InputPassword value={pass}
@@ -76,7 +77,9 @@ export const SignUp: React.FC<PropsType> = ({
                                    error={errorPass}
                                    onClick={resetErrors}
                                    disabled={isFetching}
-                                   label={"Yor password"}/>
+                                   label={"Password"}
+                                   autoComplete={"new-password"} // влияет на автозаполнение браузером полей Email Password
+                    />
                 </div>
                 <div className={s.formStyle}>
                     <InputPassword value={newPass}
@@ -84,7 +87,8 @@ export const SignUp: React.FC<PropsType> = ({
                                    error={errorNewPass}
                                    onClick={resetErrors}
                                    disabled={isFetching}
-                                   label={"Repeat Password"}/>
+                                   label={"Confirm password"}
+                    />
                 </div>
                 <div className={s.formStyle}>
                     <ul>

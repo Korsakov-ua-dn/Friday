@@ -56,7 +56,6 @@ export const InputText: React.FC<SuperInputTextPropsType> = (
                 className={finalInputClassName}
                 required // меняет поведение label!!!
 
-
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
 
             />

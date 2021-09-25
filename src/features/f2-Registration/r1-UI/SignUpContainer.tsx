@@ -4,6 +4,7 @@ import {AppStoreType} from "../../../main/m2-BLL/store";
 import {registrationNewUser, returnServerError} from '../r2-BLL/Sign-up-reducer';
 import {Redirect} from "react-router-dom";
 import {SignUp} from "./SignUp";
+import {Path} from "../../../main/m1-UI/Routes";
 
 export const SignUpContainer: React.FC = () => {
 
@@ -27,7 +28,7 @@ export const SignUpContainer: React.FC = () => {
 
 
     if (isSignUp) {
-        return <Redirect to={"/sign-in"}/>;
+        return <Redirect to={Path.SIGN_IN_PATH}/>;
     } //Redirect if success registration
 
     return (

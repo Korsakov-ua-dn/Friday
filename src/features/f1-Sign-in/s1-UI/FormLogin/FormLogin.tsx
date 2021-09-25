@@ -18,7 +18,6 @@ export const FormLogin: React.FC<FormLoginType> = React.memo((
     {onChangeEmail, onChangePassword, email, password, onChangeRememberMe, rememberMe, error}
 ) => {
 
-
     return (
         <div className={s.wrapperInputs}>
             <InputText
