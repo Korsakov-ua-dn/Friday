@@ -17,14 +17,14 @@ export  type ResponseType<D = {}> = {
     tokenDeathTime: number,
 }
 
-export type CardsType = {
-
-    [key: number]: CardType
-}
+// export type CardsType = {
+//
+//     [key: number]: CardType
+// }
 export type CardType = {
     cardsCount: number,
     created: string,
-    deckCover: any,
+    deckCover?: any,
     grade: number,
     more_id: string,
     name: string,

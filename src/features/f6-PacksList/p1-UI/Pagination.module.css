@@ -1,0 +1,15 @@
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.pagination span {
+    margin-right: 5px;
+}
+
+.selectedPage {
+    font-weight: bold;
+    cursor: pointer;
+}
