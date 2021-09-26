@@ -1,15 +1,126 @@
+/*.pagination {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    cursor: pointer;*/
+/*    margin-bottom: 15px;*/
+/*}*/
+
+/*.pagination span {*/
+/*    margin-right: 5px;*/
+/*}*/
+
+/*.selectedPage {*/
+/*    font-weight: bold;*/
+/*    cursor: pointer;*/
+/*}*/
+
+.paginationWrapper {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, white 17%, white 83%, rgba(255, 255, 255, 0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00ffffff", endColorstr="#00ffffff", GradientType=1);
+    height: 50px;
+    left: 50%;
+    text-align: center;
+    top: 50%;
+    width: 700px;
+}
+
+/*.paginationWrapper::before {*/
+/*    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 17%, rgba(0, 0, 0, 0.1) 83%, rgba(0, 0, 0, 0) 100%);*/
+/*    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00000000", endColorstr="#00000000", GradientType=1);*/
+/*    content: "";*/
+/*    height: 1px;*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*}*/
+
+/*.paginationWrapper::after {*/
+/*    bottom: -1px;*/
+/*    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 17%, rgba(0, 0, 0, 0.1) 83%, rgba(0, 0, 0, 0) 100%);*/
+/*    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00000000", endColorstr="#00000000", GradientType=1);*/
+/*    content: "";*/
+/*    height: 1px;*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*}*/
+
+
 .pagination {
-    display: flex;
-    flex-wrap: wrap;
-    cursor: pointer;
-    margin-bottom: 15px;
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.pagination span {
-    margin-right: 5px;
+.pagination::before {
+    content: "";
+    display: table;
 }
 
-.selectedPage {
-    font-weight: bold;
+.pagination li {
+    display: block;
+    float: left;
+    padding: 5px;
+}
+
+.pagination li:first-child {
+    border: none;
+}
+
+.pagination .prev, .pagination .next {
+    font-size: 14px;
+}
+
+.pagination button {
+    outline: none;
+    position: relative;
+    transition: all 170ms linear;
     cursor: pointer;
+}
+
+.pagination button, .pagination span {
+    background: none;
+    border: none;
+    border-radius: 50%;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.6);
+    display: block;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    min-width: 40px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.pagination button:before {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    content: "";
+    cursor: pointer;
+    height: 0;
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: all 170ms linear;
+    top: 50%;
+    width: 0;
+}
+
+
+.pagination button.active {
+    background: rgba(0, 0, 0, 0.1);
+    color: black;
+    cursor: default;
+}
+
+.pagination button:hover:not(.active) {
+    color: black;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.visible {
+    visibility: hidden;
 }

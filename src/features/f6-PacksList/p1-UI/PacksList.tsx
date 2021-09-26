@@ -45,13 +45,14 @@ export const PacksList = () => {
         );
     });
 
-    return (<>
-        <h1>Packs list</h1>
-        <Table tableHeaders={["Name", "Cards", "Last Updated", "Created by", "Actions"]} bodyExample={bodyTableJSX}
-               tableBody={cardPacks}/>
-        <Pagination totalCount={cardPacksTotalCount} count={pageCount} page={page} onChangePage={(page) => {
-            dispatch(setPage(page));
-
-        }}/>);
-    </>);
+    return (
+        <>
+            <h1>Packs list</h1>
+            <Table tableHeaders={["Name", "Cards", "Last Updated", "Created by", "Actions"]} bodyExample={bodyTableJSX}
+                   tableBody={cardPacks}/>
+            <Pagination totalCount={cardPacksTotalCount} count={pageCount} page={page} onChangePage={(page) => {
+                dispatch(setPage(page));
+            }} />
+        </>
+    );
 };
