@@ -3,7 +3,7 @@ import {Table} from "../../../common/c10-Table/Table";
 import {CardType} from "../p3-DAL/packsListApi";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
-import {getPacksCards, setPage, setPageCount} from "../p2-BLL/packsList-reducer";
+import {addNewPackCard, getPacksCards, setPage, setPageCount} from "../p2-BLL/packsList-reducer";
 import {Pagination} from "./components/Pagination/Pagination";
 import s from './PacksList.module.css';
 import {MySelect} from "./components/Select/MySelect";
@@ -16,27 +16,14 @@ export const PacksList = () => {
     const cardPacksTotalCount = useSelector<AppStoreType, number>(state => state.packsList.cardPacksTotalCount);
     const pageCount = useSelector<AppStoreType, number>(state => state.packsList.pageCount);
     const page = useSelector<AppStoreType, number>(state => state.packsList.page);
-    const [packName, setPackName] = useState<string>('');
 
     const dispatch = useDispatch();
 
-    //use new array properties
-    // useEffect(() => {
-    //     const newCardPacks = cardPacks.map(card => ({
-    //         name: card.name,
-    //         cards: card.cardsCount,
-    //         update: card.updated,
-    //         author: card.user_name
-    //     }));
-    //     console.log("newCardPacks", newCardPacks);
-    // }, [cardPacks]);
+    const [searchPackName, setSearchPackName] = useState<string>('');
+    const [packName, setPackName] = useState<string>('');
 
-
-    useEffect(() => {
-        dispatch(getPacksCards(page, pageCount, packName));
-    }, [page, pageCount, packName]);
-
-
+    // Data for table
+    const tableHeaders = ["Name", "Cards", "Last Updated", "Created by", "Actions"];
     //TableBodyfor Example
     const bodyTableJSX = cardPacks.map(table => {
         return (
@@ -49,7 +36,30 @@ export const PacksList = () => {
             </tr>
         );
     });
+    ;
+    const optionsForSelector = [5, 10, 15, 20, 25];
 
+    useEffect(() => {
+        dispatch(getPacksCards(page, pageCount, searchPackName));
+    }, [page, pageCount, searchPackName]);
+
+
+    // Added new pack and new query Cards Pack
+    const clickHandlerAddNewPack = () => {
+        dispatch(addNewPackCard({name: packName}));
+        dispatch(getPacksCards(1));
+        setPackName('');
+    };
+
+    //Change pageCount (selector options)
+    const clickHandlerPageCount = (count: string) => {
+        dispatch(setPageCount(+count));
+    };
+
+    //Change page (pagination) NEED TO WORK --- Problem WiTH UPDATE SELECTOR AND ADD NEW PACKS
+    const clickHandlerChangePage = (page: number) => {
+        dispatch(setPage(page));
+    };
 
     return (
         <>
@@ -59,21 +69,20 @@ export const PacksList = () => {
                     <div>My/ALL</div>
                 </div>
                 <div>
-                    <InputText value={packName} onChangeText={setPackName} label={"Search by Pack Name  🔍"}/>
-                    <Button>+ New Pack</Button>
+                    <InputText value={searchPackName} onChangeText={setSearchPackName}
+                               label={"Search by Pack Name  🔍"}/>
+                    <InputText value={packName} onChangeText={setPackName} label={"Add new Pack Name"}/>
+                    <Button onClick={clickHandlerAddNewPack}> + New Pack</Button>
                 </div>
             </div>
-            <Table tableHeaders={["Name", "Cards", "Last Updated", "Created by", "Actions"]} bodyExample={bodyTableJSX}
+            <Table tableHeaders={tableHeaders} bodyExample={bodyTableJSX}
                    tableBody={cardPacks}/>
             <div className={s.packsListFooterWrapper}>
-                <Pagination totalCount={cardPacksTotalCount} count={pageCount} page={page} onChangePage={(page) => {
-                    dispatch(setPage(page));
-                }}/>
+                <Pagination totalCount={cardPacksTotalCount} count={pageCount} page={page}
+                            onChangePage={clickHandlerChangePage}/>
                 <div className={s.packListPageSelector}>
                     Show
-                    <MySelect options={[5, 10, 15, 20, 25]} onChangeCountCards={(count) => {
-                        dispatch(setPageCount(+count));
-                    }}/>
+                    <MySelect options={optionsForSelector} onChangeCountCards={clickHandlerPageCount}/>
                     Cards per Page
                 </div>
             </div>

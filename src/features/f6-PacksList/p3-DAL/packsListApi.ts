@@ -54,4 +54,9 @@ export const PacksListApi = {
             }
         });
     },
+
+    addNewCardPack(payload: { name: string }) {
+        return instance.post<ResponseType>(`cards/pack`, {cardsPack: payload});
+    }
+
 };

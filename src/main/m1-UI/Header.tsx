@@ -1,7 +1,7 @@
-import React from 'react'
-import { Path } from './Routes'
-import s from './Header.module.css'
-import { CustomNavlink } from '../../common/c4-Navlink/CustomNavlink'
+import React from 'react';
+import {Path} from './Routes';
+import s from './Header.module.css';
+import {CustomNavlink} from '../../common/c4-Navlink/CustomNavlink';
 
 
 const Header: React.FC = () => {
@@ -13,9 +13,10 @@ const Header: React.FC = () => {
             <CustomNavlink to={Path.FORGOT_PATH} body={"forgot"}/>
             <CustomNavlink to={Path.PASSWORD_ASSISTANCE_PATH} body={"assistance"}/>
             <CustomNavlink to={Path.PROFILE_PATH} body={"profile"}/>
+            <CustomNavlink to={Path.LERGNOM_PACKS_LIST_PATH} body={"packs-list"}/>
             <CustomNavlink to={Path.TEST_PATH} body={"test"}/>
         </div>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;
