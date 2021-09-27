@@ -3,8 +3,10 @@ import {Table} from "../../../common/c10-Table/Table";
 import {CardType} from "../p3-DAL/packsListApi";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
-import {getPacksCards, setPage} from "../p2-BLL/packsList-reducer";
-import {Pagination} from "./Pagination";
+import {getPacksCards, setPage, setPageCount} from "../p2-BLL/packsList-reducer";
+import {Pagination} from "./components/Pagination/Pagination";
+import s from './PacksList.module.css';
+import {MySelect} from "./components/Select/MySelect";
 
 export const PacksList = () => {
 
@@ -28,8 +30,8 @@ export const PacksList = () => {
 
 
     useEffect(() => {
-        dispatch(getPacksCards(page, 4));
-    }, [page]);
+        dispatch(getPacksCards(page, pageCount));
+    }, [page, pageCount]);
 
 
     //TableBodyfor Example
@@ -45,14 +47,24 @@ export const PacksList = () => {
         );
     });
 
+
     return (
         <>
             <h1>Packs list</h1>
             <Table tableHeaders={["Name", "Cards", "Last Updated", "Created by", "Actions"]} bodyExample={bodyTableJSX}
                    tableBody={cardPacks}/>
-            <Pagination totalCount={cardPacksTotalCount} count={pageCount} page={page} onChangePage={(page) => {
-                dispatch(setPage(page));
-            }} />
+            <div className={s.packsListFooterWrapper}>
+                <Pagination totalCount={cardPacksTotalCount} count={pageCount} page={page} onChangePage={(page) => {
+                    dispatch(setPage(page));
+                }}/>
+                <div className={s.packListPageSelector}>
+                    Show
+                    <MySelect options={[5, 10, 15, 20, 25]} onChangeCountCards={(count) => {
+                        dispatch(setPageCount(+count));
+                    }}/>
+                </div>
+            </div>
+
         </>
     );
 };

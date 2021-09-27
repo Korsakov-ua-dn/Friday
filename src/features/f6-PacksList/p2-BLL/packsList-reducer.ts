@@ -58,7 +58,7 @@ type SetPageActionType = ReturnType<typeof setPage>
 //action
 const setPacks = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS', packs} as const);
 const setPacksTotalCount = (totalCount: number) => ({type: 'PACKS/SET_PACKS_TOTAL_COUNT', totalCount} as const);
-const setPageCount = (count: number) => ({type: 'PACKS/SET_PAGE_COUNT', count} as const);
+export const setPageCount = (count: number) => ({type: 'PACKS/SET_PAGE_COUNT', count} as const);
 export const setPage = (page: number) => ({type: 'PACKS/SET_PAGE', page} as const);
 
 //thunk
