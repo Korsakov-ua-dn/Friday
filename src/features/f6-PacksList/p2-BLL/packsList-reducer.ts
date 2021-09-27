@@ -81,7 +81,8 @@ export const getPacksCards = (page?: number, pageCount?: number, packName?: stri
 
 
 //Function CRUD
-export const addNewPackCard = (payload: { name: string }) => async () => {
+//Create new pack card
+export const addNewPackCard = (payload: { name: string, user_name?: string }) => async () => {
     try {
         const response = await PacksListApi.addNewCardPack(payload);
         if (response.status === 201) {
@@ -92,11 +93,11 @@ export const addNewPackCard = (payload: { name: string }) => async () => {
     }
 };
 
+//Delete  pack card by ID
 export const deletePackCardById = (id: string) => async () => {
     try {
         const response = await PacksListApi.deleteCardPack(id);
         if (response.status === 201) {
-            console.log('удача');
         }
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
@@ -104,3 +105,15 @@ export const deletePackCardById = (id: string) => async () => {
     }
 };
 
+
+export const updatePackCard = (payload: { _id: string, name: string, user_name?: string, private?: boolean }) => async () => {
+    try {
+        const response = await PacksListApi.updateCardPack(payload);
+        console.log(response);
+        if (response.status === 200) {
+        }
+    } catch (err) {
+        //Check and SHOW ERRORS NEED MAKE
+        console.log('error :(', err);
+    }
+};

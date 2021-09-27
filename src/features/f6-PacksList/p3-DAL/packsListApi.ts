@@ -17,10 +17,6 @@ export  type ResponseType<D = {}> = {
     tokenDeathTime: number,
 }
 
-// export type CardsType = {
-//
-//     [key: number]: CardType
-// }
 export type CardType = {
     cardsCount: number,
     created: string,
@@ -55,11 +51,14 @@ export const PacksListApi = {
         });
     },
 
-    addNewCardPack(payload: { name: string }) {
+    addNewCardPack(payload: { name: string, user_name?: string }) {
         return instance.post<ResponseType>(`cards/pack/`, {cardsPack: payload});
     },
     deleteCardPack(id: string) {
         return instance.delete(`cards/pack/?id=${id}`);
-    }
+    },
+    updateCardPack(payload: { _id: string, name: string, user_name?: string, private?: boolean }) {
+        return instance.put(`cards/pack/`, {cardsPack: payload});
+    },
 
 };
