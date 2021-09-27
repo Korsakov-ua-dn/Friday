@@ -3,7 +3,7 @@ import {Table} from "../../../common/c10-Table/Table";
 import {CardType} from "../p3-DAL/packsListApi";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
-import {addNewPackCard, getPacksCards, setPage, setPageCount} from "../p2-BLL/packsList-reducer";
+import {addNewPackCard, deletePackCardById, getPacksCards, setPage, setPageCount} from "../p2-BLL/packsList-reducer";
 import {Pagination} from "./components/Pagination/Pagination";
 import s from './PacksList.module.css';
 import {MySelect} from "./components/Select/MySelect";
@@ -16,7 +16,8 @@ export const PacksList = () => {
     const cardPacksTotalCount = useSelector<AppStoreType, number>(state => state.packsList.cardPacksTotalCount);
     const pageCount = useSelector<AppStoreType, number>(state => state.packsList.pageCount);
     const page = useSelector<AppStoreType, number>(state => state.packsList.page);
-
+    const myId = useSelector<AppStoreType, any>(state => state.signIn.userId);
+    console.log('muId', myId);
     const dispatch = useDispatch();
 
     const [searchPackName, setSearchPackName] = useState<string>('');
@@ -26,18 +27,26 @@ export const PacksList = () => {
     const tableHeaders = ["Name", "Cards", "Last Updated", "Created by", "Actions"];
     //TableBodyfor Example
     const bodyTableJSX = cardPacks.map(table => {
+
         return (
             <tr key={table._id}>
                 <th>{table.name}</th>
                 <td>{table.cardsCount}</td>
                 <td>{table.updated}</td>
                 <td>{table.user_name}</td>
-                <td></td>
+                <td> {myId === table.user_id && <Button onClick={() => {
+                    dispatch(deletePackCardById(table._id));
+                    dispatch(getPacksCards(1));
+                }
+                } red>delete</Button>}
+                    {myId === table.user_id && <Button>edit</Button>}
+                    <Button>learn</Button>
+                </td>
             </tr>
         );
     });
     ;
-    const optionsForSelector = [5, 10, 15, 20, 25];
+    const optionsForSelector = [5, 10, 15];
 
     useEffect(() => {
         dispatch(getPacksCards(page, pageCount, searchPackName));
@@ -75,8 +84,11 @@ export const PacksList = () => {
                     <Button onClick={clickHandlerAddNewPack}> + New Pack</Button>
                 </div>
             </div>
-            <Table tableHeaders={tableHeaders} bodyExample={bodyTableJSX}
-                   tableBody={cardPacks}/>
+            <div className={s.packListTableWrapper}>
+                <Table tableHeaders={tableHeaders} bodyExample={bodyTableJSX}
+                       tableBody={cardPacks}/>
+            </div>
+
             <div className={s.packsListFooterWrapper}>
                 <Pagination totalCount={cardPacksTotalCount} count={pageCount} page={page}
                             onChangePage={clickHandlerChangePage}/>

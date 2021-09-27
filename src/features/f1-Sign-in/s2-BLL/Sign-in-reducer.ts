@@ -4,38 +4,49 @@ import {signAPI} from "../s3-DAL/SignAPI";
 const initialState = {
     user: null as null | UserType,
     loading: false,
-    error: ''
-}
+    error: '',
+    userId: '',
+};
 
 export const signInReducer = (state: SignInStateType = initialState, action: ActionsType): SignInStateType => {
     switch (action.type) {
+        case "SIGN-IN/USER_ID": {
+            return {...state, userId: action.userId};
+        }
         case "SIGN-IN/AUTH-USER":
-            return {...state, user: action.user}
+            return {...state, user: action.user};
         case "SIGN-IN/LOADER":
-            return {...state, loading: action.loading}
+            return {...state, loading: action.loading};
         case "SIGN-IN/ERROR":
-            return {...state, error: action.error}
+            return {...state, error: action.error};
         default:
-            return state
+            return state;
     }
-}
+};
 
 // actions
-const authUserAC = (user: UserType) => ({type: "SIGN-IN/AUTH-USER", user} as const)
-const loaderAC = (loading: boolean) => ({type: "SIGN-IN/LOADER", loading} as const)
-export const errorRequestAC = (error: string) => ({type: "SIGN-IN/ERROR", error} as const)
+const authUserAC = (user: UserType) => ({type: "SIGN-IN/AUTH-USER", user} as const);
+const loaderAC = (loading: boolean) => ({type: "SIGN-IN/LOADER", loading} as const);
+export const errorRequestAC = (error: string) => ({type: "SIGN-IN/ERROR", error} as const);
+//action lergnom
+type GetUserIdActionType = ReturnType<typeof getUserId>;
+const getUserId = (userId: string) => ({type: 'SIGN-IN/USER_ID', userId} as const);
+
 
 // thunks
 export const userAuthRequestTC = (loginData: LoginData) => (dispatch: Dispatch) => {
-    dispatch(loaderAC(true))
+    dispatch(loaderAC(true));
     signAPI.authRequest(loginData)
-        .then(res => dispatch(authUserAC(res.data)))
-        .catch(e => {
-            const errorMessage = e.response?.data?.error || "Unknown error!"
-            dispatch(errorRequestAC(errorMessage))
+        .then(res => {
+            dispatch(authUserAC(res.data));
+            dispatch(getUserId(res.data._id));
         })
-        .finally(() => dispatch(loaderAC(false)))
-}
+        .catch(e => {
+            const errorMessage = e.response?.data?.error || "Unknown error!";
+            dispatch(errorRequestAC(errorMessage));
+        })
+        .finally(() => dispatch(loaderAC(false)));
+};
 // types
 
 type SignInStateType = typeof initialState
@@ -66,3 +77,4 @@ type LoginData = {
 type ActionsType = ReturnType<typeof authUserAC>
     | ReturnType<typeof loaderAC>
     | ReturnType<typeof errorRequestAC>
+    | GetUserIdActionType

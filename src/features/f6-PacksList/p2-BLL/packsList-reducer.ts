@@ -79,6 +79,8 @@ export const getPacksCards = (page?: number, pageCount?: number, packName?: stri
     }
 };
 
+
+//Function CRUD
 export const addNewPackCard = (payload: { name: string }) => async () => {
     try {
         const response = await PacksListApi.addNewCardPack(payload);
@@ -89,3 +91,16 @@ export const addNewPackCard = (payload: { name: string }) => async () => {
         console.log('error :(', err);
     }
 };
+
+export const deletePackCardById = (id: string) => async () => {
+    try {
+        const response = await PacksListApi.deleteCardPack(id);
+        if (response.status === 201) {
+            console.log('удача');
+        }
+    } catch (err) {
+        //Check and SHOW ERRORS NEED MAKE
+        console.log('error :(', err);
+    }
+};
+
