@@ -41,11 +41,12 @@ export type CardType = {
 }
 
 export const PacksListApi = {
-    getCardsPacks(page?: number, pageCount?: number, min?: number, max?: number, userId?: string, sortPacks?: any) {
+    getCardsPacks(page?: number, pageCount?: number, packName?: string, min?: number, max?: number, userId?: string, sortPacks?: any) {
         return instance.get<ResponseType<Array<CardType>>>('cards/pack/', {
             params: {
                 page,
                 pageCount,
+                packName,
                 min,
                 max,
                 userId,

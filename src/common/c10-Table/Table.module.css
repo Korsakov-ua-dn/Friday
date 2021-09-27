@@ -3,6 +3,7 @@
     margin-bottom: 1rem;
     color: #212529;
     background-color: white;
+    border-radius: 8px;
 }
 
 .table thead th {

@@ -28,11 +28,19 @@ const initialState = {
     pageCount: 6,
 };
 
-type ActionTypes = SetPacksActionType | SetPacksTotalCountActionType | SetPageCountActionType | SetPageActionType
+type ActionTypes =
+    SetPacksActionType
+    | SetPacksTotalCountActionType
+    | SetPageCountActionType
+    | SetPageActionType
+    | SetPackNameActionType
 type PacksListStateType = typeof initialState;
 
 export const packsListReducer = (state: PacksListStateType = initialState, action: ActionTypes): PacksListStateType => {
     switch (action.type) {
+        case "PACKS/SET_PACKS_NAME": {
+            return {...state};
+        }
         case "PACKS/SET_PAGE": {
             return {...state, page: action.page};
         }
@@ -55,16 +63,18 @@ type SetPacksActionType = ReturnType<typeof setPacks>
 type SetPacksTotalCountActionType = ReturnType<typeof setPacksTotalCount>
 type SetPageCountActionType = ReturnType<typeof setPageCount>
 type SetPageActionType = ReturnType<typeof setPage>
+type SetPackNameActionType = ReturnType<typeof setPacksByPackName>
 //action
 const setPacks = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS', packs} as const);
 const setPacksTotalCount = (totalCount: number) => ({type: 'PACKS/SET_PACKS_TOTAL_COUNT', totalCount} as const);
 export const setPageCount = (count: number) => ({type: 'PACKS/SET_PAGE_COUNT', count} as const);
 export const setPage = (page: number) => ({type: 'PACKS/SET_PAGE', page} as const);
+export const setPacksByPackName = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS_NAME', packs} as const);
 
 //thunk
-export const getPacksCards = (page?: number, pageCount?: number) => async (dispatch: Dispatch<ActionTypes>) => {
+export const getPacksCards = (page?: number, pageCount?: number, packName?: string) => async (dispatch: Dispatch<ActionTypes>) => {
     try {
-        const response = await PacksListApi.getCardsPacks(page, pageCount);
+        const response = await PacksListApi.getCardsPacks(page, pageCount, packName);
         dispatch(setPacks(response.data.cardPacks));
         dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
         dispatch(setPageCount(response.data.pageCount));
@@ -72,5 +82,12 @@ export const getPacksCards = (page?: number, pageCount?: number) => async (dispa
     } catch (err) {
         console.log('error :(', err);
     }
-
 };
+
+// export const getPacksCardsByPackName = () => (dispatch: Dispatch) => {
+//     try {
+//
+//     } catch (err) {
+//         console.log('error :(', err);
+//     }
+// };

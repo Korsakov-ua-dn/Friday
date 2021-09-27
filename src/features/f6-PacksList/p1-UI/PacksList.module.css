@@ -6,13 +6,22 @@
 
 }
 
+.packsListHeaderWrapper {
+    display: flex;
+    width: 1200px;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 15px 0;
+
+}
+
 
 .packListPageSelector {
     margin-left: 50px;
 }
 
 .packListPageSelector select {
-    margin-left: 5px;
+    margin: 0 5px;
     padding: 10px;
     border: none;
     background-color: white;
