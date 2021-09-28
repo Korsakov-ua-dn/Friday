@@ -77,17 +77,19 @@ export const setPage = (page: number) => ({type: 'PACKS/SET_PAGE', page} as cons
 export const setPreloader = (isFetch: boolean) => ({type: 'PACKS/PRELOADER', isFetch} as const);
 
 //thunk
-export const getPacksCards = (page?: number, pageCount?: number, packName?: string) => async (dispatch: Dispatch<ActionTypes>) => {
+export const getPacksCards = (page?: number, pageCount?: number, packName?: string, userId?: string) => async (dispatch: Dispatch<ActionTypes>) => {
     try {
         dispatch(setPreloader(true));
-        const response = await PacksListApi.getCardsPacks(page, pageCount, packName);
-        dispatch(setPacks(response.data.cardPacks));
-        dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
-        dispatch(setPageCount(response.data.pageCount));
-        dispatch(setPage(response.data.page));
+        const response = await PacksListApi.getCardsPacks(page, pageCount, packName, 0, 10000000, userId);
+        if (response.status === 200) {
+            dispatch(setPacks(response.data.cardPacks));
+            dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
+            dispatch(setPageCount(response.data.pageCount));
+            dispatch(setPage(response.data.page));
+        }
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
-        console.log('error :(', err);
+        console.warn('some error :(');
     } finally {
         dispatch(setPreloader(false));
     }
@@ -133,7 +135,6 @@ export const updatePackCard = (payload: { _id: string, name: string, user_name?:
     try {
         dispatch(setPreloader(true));
         const response = await PacksListApi.updateCardPack(payload);
-        console.log(response);
         if (response.status === 200) {
             dispatch(setPage(0));
         }
