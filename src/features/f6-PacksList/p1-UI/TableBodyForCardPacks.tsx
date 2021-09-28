@@ -4,6 +4,8 @@ import {deletePackCardById, updatePackCard} from "../p2-BLL/packsList-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {CardType} from "../p3-DAL/packsListApi";
+import {CustomNavlink} from "../../../common/c4-Navlink/CustomNavlink";
+import {Path} from "../../../main/m1-UI/Routes";
 
 type TableBodyTypeProps = {
     cardPacks: Array<CardType>
@@ -42,7 +44,8 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
             <tr key={table._id}>
                 <th> {editId === table._id && edit ? <input onChange={(e) => {
                     setChangeNameCardPack(e.currentTarget.value);
-                }} value={changeNameCardPack}/> : table.name}</th>
+                }} value={changeNameCardPack}/> : <CustomNavlink to={Path.TEST_PATH + "/cards/" + table._id}
+                                                                 body={table.name}/>}</th>
                 <td>{table.cardsCount}</td>
                 <td>{table.updated}</td>
                 <td>{editId === table._id && edit ? <input onChange={(e) => {
