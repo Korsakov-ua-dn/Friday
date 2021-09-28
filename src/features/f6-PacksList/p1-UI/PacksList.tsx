@@ -9,7 +9,8 @@ import s from './PacksList.module.css';
 import {MySelect} from "./components/Select/MySelect";
 import {InputText} from "../../../common/c1-Input/InputText";
 import Button from "../../../common/c2-Button/Button";
-import {TableBody} from "./components/TableBody";
+import {TableBodyForCardPacks} from "./components/TableBodyForCardPacks";
+import {setTestData} from "../p4-Test/test";
 
 export const PacksList = () => {
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
@@ -23,7 +24,7 @@ export const PacksList = () => {
     // Data for table
     const tableHeaders = ["Name", "Cards", "Last Updated", "Created by", "Actions"];
     //TableBodyfor Example
-    const tableBody = <TableBody cardPacks={cardPacks}/>;
+    const tableBody = <TableBodyForCardPacks cardPacks={cardPacks}/>;
     //Count cardsPacks into one page
     const optionsForSelector = [5, 10, 15];
 
@@ -31,12 +32,21 @@ export const PacksList = () => {
         dispatch(getPacksCards(page, pageCount, searchPackName));
     }, [page, pageCount, searchPackName]);
 
+    useEffect(() => {
+        const test = setTestData();
+        setPackName(test['name']);
+    }, []);
 
     // Added new pack and new query Cards Pack
     const clickHandlerAddNewPack = () => {
+
         dispatch(addNewPackCard({name: packName}));
-        dispatch(getPacksCards());
-        setPackName('');
+        //Add Test data
+        const test = setTestData();
+        setPackName(test['name']);
+        // setPackName('');
+
+
     };
 
     //Change pageCount (selector options)

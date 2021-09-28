@@ -33,10 +33,13 @@ type ActionTypes =
     | SetPacksTotalCountActionType
     | SetPageCountActionType
     | SetPageActionType
+    | SetRenderActionType
 type PacksListStateType = typeof initialState;
 
 export const packsListReducer = (state: PacksListStateType = initialState, action: ActionTypes): PacksListStateType => {
     switch (action.type) {
+        case "PACKS/RENDER":
+            return {...state};
         case "PACKS/SET_PAGE": {
             return {...state, page: action.page};
         }
@@ -59,11 +62,14 @@ type SetPacksActionType = ReturnType<typeof setPacks>
 type SetPacksTotalCountActionType = ReturnType<typeof setPacksTotalCount>
 type SetPageCountActionType = ReturnType<typeof setPageCount>
 type SetPageActionType = ReturnType<typeof setPage>
+type SetRenderActionType = ReturnType<typeof setRender>
 //action
 const setPacks = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS', packs} as const);
 const setPacksTotalCount = (totalCount: number) => ({type: 'PACKS/SET_PACKS_TOTAL_COUNT', totalCount} as const);
 export const setPageCount = (count: number) => ({type: 'PACKS/SET_PAGE_COUNT', count} as const);
 export const setPage = (page: number) => ({type: 'PACKS/SET_PAGE', page} as const);
+
+export const setRender = () => ({type: 'PACKS/RENDER'} as const);
 
 //thunk
 export const getPacksCards = (page?: number, pageCount?: number, packName?: string) => async (dispatch: Dispatch<ActionTypes>) => {
@@ -82,10 +88,11 @@ export const getPacksCards = (page?: number, pageCount?: number, packName?: stri
 
 //Function CRUD
 //Create new pack card
-export const addNewPackCard = (payload: { name: string, user_name?: string }) => async () => {
+export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<ActionTypes>) => {
     try {
         const response = await PacksListApi.addNewCardPack(payload);
         if (response.status === 201) {
+            dispatch(setPage(0));
         }
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
@@ -94,10 +101,11 @@ export const addNewPackCard = (payload: { name: string, user_name?: string }) =>
 };
 
 //Delete  pack card by ID
-export const deletePackCardById = (id: string) => async () => {
+export const deletePackCardById = (id: string) => async (dispatch: Dispatch) => {
     try {
         const response = await PacksListApi.deleteCardPack(id);
-        if (response.status === 201) {
+        if (response.status === 200) {
+            dispatch(setPage(0));
         }
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
@@ -106,11 +114,12 @@ export const deletePackCardById = (id: string) => async () => {
 };
 
 
-export const updatePackCard = (payload: { _id: string, name: string, user_name?: string, private?: boolean }) => async () => {
+export const updatePackCard = (payload: { _id: string, name: string, user_name?: string, private?: boolean }) => async (dispatch: Dispatch) => {
     try {
         const response = await PacksListApi.updateCardPack(payload);
         console.log(response);
         if (response.status === 200) {
+            dispatch(setPage(0));
         }
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Button from "../../../../common/c2-Button/Button";
-import {deletePackCardById, getPacksCards, updatePackCard} from "../../p2-BLL/packsList-reducer";
+import {deletePackCardById, updatePackCard} from "../../p2-BLL/packsList-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../../main/m2-BLL/store";
 import {CardType} from "../../p3-DAL/packsListApi";
@@ -9,7 +9,7 @@ type TableBodyTypeProps = {
     cardPacks: Array<CardType>
 }
 
-export const TableBody = ({cardPacks}: TableBodyTypeProps) => {
+export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
     const [edit, setEdit] = useState<boolean>(false);
     const [editId, setEditId] = useState<string>('');
     const [changeNameCardPack, setChangeNameCardPack] = useState<string>('');
@@ -22,7 +22,6 @@ export const TableBody = ({cardPacks}: TableBodyTypeProps) => {
         //Delete CardPack
         const clickHandlerDeleteCardPackById = () => {
             dispatch(deletePackCardById(table._id));
-            dispatch(getPacksCards(1));
         };
         //EditCardPackHandler
         const clickHandlerEditPackById = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,7 +33,6 @@ export const TableBody = ({cardPacks}: TableBodyTypeProps) => {
             }
             if (e.currentTarget.innerText === 'update') {
                 dispatch(updatePackCard({_id: table._id, name: changeNameCardPack}));
-                dispatch(getPacksCards(1));
                 myId === table.user_id && setEdit(false);
             }
 
