@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import Button from "../../../common/c2-Button/Button";
 import {deletePackCardById, updatePackCard} from "../p2-BLL/packsList-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -40,22 +40,38 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
             }
         };
 
+        const onChangeHandlerChangeNameCardPack = (e: ChangeEvent<HTMLInputElement>) => {
+            setChangeNameCardPack(e.currentTarget.value);
+        };
+        const onChangeHandlerChangeAuthorCardPack = (e: ChangeEvent<HTMLInputElement>) => {
+            setChangeAuthorCardPack(e.currentTarget.value);
+        };
+
+        let jsDate = new Date(Date.parse(table.updated));
+
+        const lastUpdate = `${jsDate.getDate()}-${jsDate.getMonth() + 1}-${jsDate.getFullYear()}  ${jsDate.getHours()}:${jsDate.getMinutes()}`;
         return (
             <tr key={table._id}>
-                <th> {editId === table._id && edit ? <input onChange={(e) => {
-                    setChangeNameCardPack(e.currentTarget.value);
-                }} value={changeNameCardPack}/> : <CustomNavlink to={Path.TEST_PATH + "/cards/" + table._id}
-                                                                 body={table.name}/>}</th>
+                <th> {editId === table._id && edit ?
+                    <input onChange={onChangeHandlerChangeNameCardPack} value={changeNameCardPack}/> :
+                    <CustomNavlink to={`${Path.CARDS_LIST_PATH}/${table._id}`} body={table.name}/>}
+                </th>
                 <td>{table.cardsCount}</td>
-                <td>{table.updated}</td>
-                <td>{editId === table._id && edit ? <input onChange={(e) => {
-                    setChangeAuthorCardPack(e.currentTarget.value);
-                }} value={changeAuthorCardPack}/> : table.user_name}</td>
-                <td> {myId === table.user_id &&
-                <Button disabled={isFetching} onClick={clickHandlerDeleteCardPackById} red>delete</Button>}
+                <td>{lastUpdate}</td>
+                <td>
+                    {editId === table._id && edit ?
+                        <input onChange={onChangeHandlerChangeAuthorCardPack}
+                               value={changeAuthorCardPack}/> :
+                        table.user_name}
+                </td>
+                <td>
+                    {myId === table.user_id &&
+                    <Button disabled={isFetching} onClick={clickHandlerDeleteCardPackById} red>delete</Button>}
+
                     {myId === table.user_id &&
                     <Button disabled={isFetching}
                             onClick={clickHandlerEditPackById}>{editId === table._id && edit ? 'update' : 'edit'}</Button>}
+
                     <Button disabled={isFetching}>learn</Button>
                 </td>
             </tr>
