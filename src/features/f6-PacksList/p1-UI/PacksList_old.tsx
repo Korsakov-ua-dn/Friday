@@ -30,7 +30,7 @@ export const PacksList = () => {
     const [packName, setPackName] = useState<string>('');
 
     // Data for table
-    const tableHeaders = ["Name", "Cards", "Last Updated", "Created by", "Actions"];
+    // const tableHeaders = ["Name", "Cards", "Last Updated", "Created by", "Actions"];
     //TableBodyfor Example
 
 
@@ -120,8 +120,8 @@ export const PacksList = () => {
                 </div>
             </div>
             <div className={s.packListTableWrapper}>
-                <Table tableHeaders={tableHeaders} bodyExample={bodyTableJSX}
-                       tableBody={cardPacks}/>
+                {/*<Table tableHeaders={tableHeaders} bodyExample={bodyTableJSX}*/}
+                {/*       tableBody={cardPacks}/>*/}
             </div>
 
             <div className={s.packsListFooterWrapper}>

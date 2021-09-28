@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {CardsStateType, setCards} from "../c2-BLL/Cards-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
-import {Table} from "../../../common/c10-Table/Table";
+import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
 import {useRouteMatch} from "react-router-dom";
 
 
@@ -23,7 +23,7 @@ export const CardsContainer = () => {
             .then(res => dispatch(setCards(res.data.cards)));
     }, []);
 
-    const tableHeaders = ["Question", "Answer", "Update", "Grade"];
+    const tableHeaders: Array<HeaderOptionType> = [{headerTitle: "Question"}, {headerTitle: "Answer"}, {headerTitle: "Update"}, {headerTitle: "Grade"}];
     const tableBody = <TableBody cardsList={cardsState.cardsList}/>;
 
     return (

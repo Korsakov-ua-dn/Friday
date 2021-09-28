@@ -2,17 +2,23 @@ import React from "react";
 import s from './Table.module.css';
 import {CardType} from "../../features/f6-PacksList/p3-DAL/packsListApi";
 
+export type HeaderOptionType = {
+    headerTitle: string,
+    link?: string,
+    onClick?: () => void,
+}
+
 type TableTypeProps = {
-    tableHeaders: Array<string>,
+    tableHeaders: Array<HeaderOptionType>,
     tableBody?: Array<CardType>,
-    bodyExample?: any
+    bodyExample?: any;
 }
 
 export const Table = ({tableHeaders, tableBody, bodyExample}: TableTypeProps) => {
     //JSX for headers
     const headersJSX = tableHeaders.map(header => {
         return (
-            <th key={header}>{header}</th>
+            <th key={header.headerTitle}>{header.headerTitle} <span className={s.link} onClick={header.onClick}>{header.link}</span></th>
         );
     });
 

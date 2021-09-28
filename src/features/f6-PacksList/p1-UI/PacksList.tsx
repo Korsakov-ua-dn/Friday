@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Table} from "../../../common/c10-Table/Table";
+import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
 import {CardType} from "../p3-DAL/packsListApi";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
@@ -26,8 +26,24 @@ export const PacksList = () => {
     const [myPacks, setMyPacks] = useState<boolean>(false);
     const myId = useSelector<AppStoreType, string>(state => state.signIn.userId);
 
+    const [sortPack, setSortPack] = useState<string>("");
+    const clickHandlerForSortUpdate = () => {
+        sortPack === "update" ? setSortPack('') :
+            setSortPack("update");
+    };
+
     // Data for table
-    const tableHeaders = ["Name", "Cards", "Last Updated", "Created by", "Actions"];
+    const tableHeaders: Array<HeaderOptionType> = [
+        {headerTitle: 'Name'},
+        {headerTitle: "Cards"},
+        {
+            headerTitle: "Last Updated",
+            link: '⬇⬆',
+            onClick: clickHandlerForSortUpdate
+        },
+        {headerTitle: "Created by"},
+        {headerTitle: "Actions"}];
+
     //TableBodyfor Example
     const tableBody = <TableBodyForCardPacks cardPacks={cardPacks}/>;
     //Count cardsPacks into one page
@@ -35,8 +51,8 @@ export const PacksList = () => {
 
     useEffect(() => {
         const myCardsPacks = myPacks ? myId : '';
-        dispatch(getPacksCards(page, pageCount, searchPackName, myCardsPacks));
-    }, [page, pageCount, searchPackName, dispatch, myPacks]);
+        dispatch(getPacksCards(page, pageCount, searchPackName, myCardsPacks, sortPack));
+    }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack]);
 
     useEffect(() => {
         const test = setTestData();
