@@ -6,7 +6,7 @@ import {forgotReducer} from '../../features/f3-Forgot/f2-BLL/Forgot-reducer';
 import {assistanceReducer} from '../../features/f4-Password-assistance/a2-BLL/assistance-reducer';
 import {profileReducer} from '../../features/f5-Profile/p2-BLL/Profile-reducer';
 import {packsListReducer} from "../../features/f6-PacksList/p2-BLL/packsList-reducer";
-import {cardsReducer} from "../../features/f7-Cards/c2-BLL/Cards-reducer";
+import {cardsReducer} from "../../features/f7-Cards/c2-BLL/cards-reducer";
 
 
 const reducers = combineReducers({

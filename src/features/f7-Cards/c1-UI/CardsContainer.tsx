@@ -1,7 +1,7 @@
-import {cardsApi, ICardType} from "../c3-DAL/cardsApi";
+import {ICardType} from "../c3-DAL/cardsApi";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {CardsStateType, setCards} from "../c2-BLL/Cards-reducer";
+import {CardsStateType, getCardsTC} from "../c2-BLL/cards-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {Table} from "../../../common/c10-Table/Table";
 
@@ -11,8 +11,7 @@ export const CardsContainer = () => {
     const cardsState =  useSelector<AppStoreType, CardsStateType>(state => state.cards)
 
     useEffect(() => {
-        cardsApi.getCards("6152c0f86aa2451b018d7c8a")
-            .then(res => dispatch(setCards(res.data.cards)))
+        dispatch(getCardsTC("6152c0f86aa2451b018d7c8a"))
     }, [])
 
     const tableHeaders = ["Question", "Answer", "Update", "Grade"]
