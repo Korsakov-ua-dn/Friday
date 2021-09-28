@@ -133,7 +133,6 @@ export const updatePackCard = (payload: { _id: string, name: string, user_name?:
     try {
         dispatch(setPreloader(true));
         const response = await PacksListApi.updateCardPack(payload);
-        console.log(response);
         if (response.status === 200) {
             dispatch(setPage(0));
         }

@@ -12,6 +12,7 @@ import Button from "../../../common/c2-Button/Button";
 import {TableBodyForCardPacks} from "./TableBodyForCardPacks";
 import {setTestData} from "../p4-Test/test";
 import {Preloader} from "../../../common/c5-Loader/Preloader";
+import {ToggleCheckBox} from "./components/CheckBoxToggle/ToggleCheckBox";
 
 export const PacksList = () => {
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
@@ -22,6 +23,7 @@ export const PacksList = () => {
     const dispatch = useDispatch();
     const [searchPackName, setSearchPackName] = useState<string>('');
     const [packName, setPackName] = useState<string>('');
+    const [myPacks, setMyPacks] = useState<boolean>(false);
 
     // Data for table
     const tableHeaders = ["Name", "Cards", "Last Updated", "Created by", "Actions"];
@@ -32,7 +34,7 @@ export const PacksList = () => {
 
     useEffect(() => {
         dispatch(getPacksCards(page, pageCount, searchPackName));
-    }, [page, pageCount, searchPackName]);
+    }, [page, pageCount, searchPackName, dispatch, myPacks]);
 
     useEffect(() => {
         const test = setTestData();
@@ -61,13 +63,20 @@ export const PacksList = () => {
         dispatch(setPage(page));
     };
 
+
+
+    const changeCheckedMyPacks = () => {
+        setMyPacks(!myPacks);
+    };
+
     return (
         <>
             <h1>Packs list</h1>
             <div className={s.packsListHeaderWrapper}>
                 {isFetching && <Preloader/>}
-                <div>Show packs cards
-                    <div>My/ALL</div>
+                <div>
+                    <span style={{marginRight: "5px"}}>My Packs</span>
+                    <ToggleCheckBox onChangeChecked={changeCheckedMyPacks} checked={myPacks}></ToggleCheckBox>
                 </div>
                 <div>
                     <InputText value={searchPackName} onChangeText={setSearchPackName}

@@ -58,6 +58,7 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
             </tr>
         );
     });
+
     return (
         <>
             {JSX}
