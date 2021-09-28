@@ -9,14 +9,16 @@ import s from './PacksList.module.css';
 import {MySelect} from "./components/Select/MySelect";
 import {InputText} from "../../../common/c1-Input/InputText";
 import Button from "../../../common/c2-Button/Button";
-import {TableBodyForCardPacks} from "./components/TableBodyForCardPacks";
+import {TableBodyForCardPacks} from "./TableBodyForCardPacks";
 import {setTestData} from "../p4-Test/test";
+import {Preloader} from "../../../common/c5-Loader/Preloader";
 
 export const PacksList = () => {
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
     const cardPacksTotalCount = useSelector<AppStoreType, number>(state => state.packsList.cardPacksTotalCount);
     const pageCount = useSelector<AppStoreType, number>(state => state.packsList.pageCount);
     const page = useSelector<AppStoreType, number>(state => state.packsList.page);
+    const isFetching = useSelector<AppStoreType, boolean>(state => state.packsList.isFetch);
     const dispatch = useDispatch();
     const [searchPackName, setSearchPackName] = useState<string>('');
     const [packName, setPackName] = useState<string>('');
@@ -63,6 +65,7 @@ export const PacksList = () => {
         <>
             <h1>Packs list</h1>
             <div className={s.packsListHeaderWrapper}>
+                {isFetching && <Preloader/>}
                 <div>Show packs cards
                     <div>My/ALL</div>
                 </div>
@@ -70,7 +73,7 @@ export const PacksList = () => {
                     <InputText value={searchPackName} onChangeText={setSearchPackName}
                                label={"Search by Pack Name  🔍"}/>
                     <InputText value={packName} onChangeText={setPackName} label={"Add new Pack Name"}/>
-                    <Button onClick={clickHandlerAddNewPack}> + New Pack</Button>
+                    <Button disabled={isFetching} onClick={clickHandlerAddNewPack}> + New Pack</Button>
                 </div>
             </div>
             <div className={s.packListTableWrapper}>

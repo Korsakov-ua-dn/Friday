@@ -12,7 +12,7 @@ type PaginationTypes = {
 export const Pagination = ({totalCount, count, page, onChangePage, acc = 10}: PaginationTypes) => {
     const [visPre, setVisPre] = useState<boolean>(false);
     const [visNext, setVisNext] = useState<boolean>(false);
-    const [visAcc, setVisAcc] = useState<boolean>(false);
+    // const [visAcc, setVisAcc] = useState<boolean>(false);
     let pageNumbers: number = Math.ceil(totalCount / count);
     let pages = [];
     for (let i = 1; i <= pageNumbers; i++) {

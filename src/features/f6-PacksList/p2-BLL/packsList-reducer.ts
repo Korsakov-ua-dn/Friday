@@ -26,6 +26,7 @@ const initialState = {
     minCardsCount: 0,
     page: 1,
     pageCount: 6,
+    isFetch: false,
 };
 
 type ActionTypes =
@@ -33,13 +34,15 @@ type ActionTypes =
     | SetPacksTotalCountActionType
     | SetPageCountActionType
     | SetPageActionType
-    | SetRenderActionType
+    | SetPreloaderActionType
 type PacksListStateType = typeof initialState;
 
 export const packsListReducer = (state: PacksListStateType = initialState, action: ActionTypes): PacksListStateType => {
     switch (action.type) {
-        case "PACKS/RENDER":
-            return {...state};
+        case "PACKS/PRELOADER": {
+            return {...state, isFetch: action.isFetch};
+        }
+
         case "PACKS/SET_PAGE": {
             return {...state, page: action.page};
         }
@@ -62,18 +65,21 @@ type SetPacksActionType = ReturnType<typeof setPacks>
 type SetPacksTotalCountActionType = ReturnType<typeof setPacksTotalCount>
 type SetPageCountActionType = ReturnType<typeof setPageCount>
 type SetPageActionType = ReturnType<typeof setPage>
-type SetRenderActionType = ReturnType<typeof setRender>
+type SetPreloaderActionType = ReturnType<typeof setPreloader>
+
 //action
 const setPacks = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS', packs} as const);
 const setPacksTotalCount = (totalCount: number) => ({type: 'PACKS/SET_PACKS_TOTAL_COUNT', totalCount} as const);
 export const setPageCount = (count: number) => ({type: 'PACKS/SET_PAGE_COUNT', count} as const);
 export const setPage = (page: number) => ({type: 'PACKS/SET_PAGE', page} as const);
 
-export const setRender = () => ({type: 'PACKS/RENDER'} as const);
+//set query
+export const setPreloader = (isFetch: boolean) => ({type: 'PACKS/PRELOADER', isFetch} as const);
 
 //thunk
 export const getPacksCards = (page?: number, pageCount?: number, packName?: string) => async (dispatch: Dispatch<ActionTypes>) => {
     try {
+        dispatch(setPreloader(true));
         const response = await PacksListApi.getCardsPacks(page, pageCount, packName);
         dispatch(setPacks(response.data.cardPacks));
         dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
@@ -82,6 +88,8 @@ export const getPacksCards = (page?: number, pageCount?: number, packName?: stri
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
+    } finally {
+        dispatch(setPreloader(false));
     }
 };
 
@@ -90,6 +98,8 @@ export const getPacksCards = (page?: number, pageCount?: number, packName?: stri
 //Create new pack card
 export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<ActionTypes>) => {
     try {
+        dispatch(setPreloader(true));
+
         const response = await PacksListApi.addNewCardPack(payload);
         if (response.status === 201) {
             dispatch(setPage(0));
@@ -97,12 +107,15 @@ export const addNewPackCard = (payload: { name: string, user_name?: string }) =>
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
+    } finally {
+        dispatch(setPreloader(false));
     }
 };
 
 //Delete  pack card by ID
 export const deletePackCardById = (id: string) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setPreloader(true));
         const response = await PacksListApi.deleteCardPack(id);
         if (response.status === 200) {
             dispatch(setPage(0));
@@ -110,12 +123,15 @@ export const deletePackCardById = (id: string) => async (dispatch: Dispatch) => 
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
+    } finally {
+        dispatch(setPreloader(false));
     }
 };
 
 
 export const updatePackCard = (payload: { _id: string, name: string, user_name?: string, private?: boolean }) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setPreloader(true));
         const response = await PacksListApi.updateCardPack(payload);
         console.log(response);
         if (response.status === 200) {
@@ -124,5 +140,7 @@ export const updatePackCard = (payload: { _id: string, name: string, user_name?:
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
+    } finally {
+        dispatch(setPreloader(false));
     }
 };

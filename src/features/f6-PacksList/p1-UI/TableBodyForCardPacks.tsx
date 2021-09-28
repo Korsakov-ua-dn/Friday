@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import Button from "../../../../common/c2-Button/Button";
-import {deletePackCardById, updatePackCard} from "../../p2-BLL/packsList-reducer";
+import Button from "../../../common/c2-Button/Button";
+import {deletePackCardById, updatePackCard} from "../p2-BLL/packsList-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStoreType} from "../../../../main/m2-BLL/store";
-import {CardType} from "../../p3-DAL/packsListApi";
+import {AppStoreType} from "../../../main/m2-BLL/store";
+import {CardType} from "../p3-DAL/packsListApi";
 
 type TableBodyTypeProps = {
     cardPacks: Array<CardType>
@@ -16,6 +16,7 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
     const [changeAuthorCardPack, setChangeAuthorCardPack] = useState<string>('');
 
     const myId = useSelector<AppStoreType, string>(state => state.signIn.userId);
+    const isFetching = useSelector<AppStoreType, boolean>(state => state.packsList.isFetch);
     const dispatch = useDispatch();
 
     const JSX = cardPacks.map(table => {
@@ -32,10 +33,9 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
                 setChangeAuthorCardPack(table.user_name);
             }
             if (e.currentTarget.innerText === 'update') {
-                dispatch(updatePackCard({_id: table._id, name: changeNameCardPack}));
+                dispatch(updatePackCard({_id: table._id, name: changeNameCardPack, user_name: changeAuthorCardPack}));
                 myId === table.user_id && setEdit(false);
             }
-
         };
 
         return (
@@ -48,11 +48,12 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
                 <td>{editId === table._id && edit ? <input onChange={(e) => {
                     setChangeAuthorCardPack(e.currentTarget.value);
                 }} value={changeAuthorCardPack}/> : table.user_name}</td>
-                <td> {myId === table.user_id && <Button onClick={clickHandlerDeleteCardPackById} red>delete</Button>}
+                <td> {myId === table.user_id &&
+                <Button disabled={isFetching} onClick={clickHandlerDeleteCardPackById} red>delete</Button>}
                     {myId === table.user_id &&
-                    <Button
-                        onClick={clickHandlerEditPackById}>{editId === table._id && edit ? 'update' : 'edit'}</Button>}
-                    <Button>learn</Button>
+                    <Button disabled={isFetching}
+                            onClick={clickHandlerEditPackById}>{editId === table._id && edit ? 'update' : 'edit'}</Button>}
+                    <Button disabled={isFetching}>learn</Button>
                 </td>
             </tr>
         );
