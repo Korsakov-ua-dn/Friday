@@ -24,6 +24,7 @@ export const PacksList = () => {
     const [searchPackName, setSearchPackName] = useState<string>('');
     const [packName, setPackName] = useState<string>('');
     const [myPacks, setMyPacks] = useState<boolean>(false);
+    const myId = useSelector<AppStoreType, string>(state => state.signIn.userId);
 
     // Data for table
     const tableHeaders = ["Name", "Cards", "Last Updated", "Created by", "Actions"];
@@ -33,7 +34,8 @@ export const PacksList = () => {
     const optionsForSelector = [5, 10, 15];
 
     useEffect(() => {
-        dispatch(getPacksCards(page, pageCount, searchPackName));
+        const myCardsPacks = myPacks ? myId : '';
+        dispatch(getPacksCards(page, pageCount, searchPackName, myCardsPacks));
     }, [page, pageCount, searchPackName, dispatch, myPacks]);
 
     useEffect(() => {
@@ -62,7 +64,6 @@ export const PacksList = () => {
     const clickHandlerChangePage = (page: number) => {
         dispatch(setPage(page));
     };
-
 
 
     const changeCheckedMyPacks = () => {
