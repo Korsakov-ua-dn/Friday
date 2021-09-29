@@ -1,6 +1,5 @@
 import React from "react";
 import s from './Table.module.css';
-import {CardType} from "../../features/f6-PacksList/p3-DAL/packsListApi";
 
 export type HeaderOptionType = {
     headerTitle: string,
@@ -10,15 +9,15 @@ export type HeaderOptionType = {
 
 type TableTypeProps = {
     tableHeaders: Array<HeaderOptionType>,
-    tableBody?: Array<CardType>,
-    bodyExample?: any;
+    tableBody?: any;
 }
 
-export const Table = ({tableHeaders, tableBody, bodyExample}: TableTypeProps) => {
+export const Table = ({tableHeaders, tableBody}: TableTypeProps) => {
     //JSX for headers
     const headersJSX = tableHeaders.map(header => {
         return (
-            <th key={header.headerTitle}>{header.headerTitle} <span className={s.link} onClick={header.onClick}>{header.link}</span></th>
+            <th key={header.headerTitle}>{header.headerTitle} <span className={s.link}
+                                                                    onClick={header.onClick}>{header.link}</span></th>
         );
     });
 
@@ -41,7 +40,7 @@ export const Table = ({tableHeaders, tableBody, bodyExample}: TableTypeProps) =>
                 </tr>
                 </thead>
                 <tbody>
-                {bodyExample}
+                {tableBody}
                 {/*{bodyTableJSX}*/}
                 </tbody>
             </table>

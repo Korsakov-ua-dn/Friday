@@ -103,7 +103,7 @@ export const PacksList = () => {
                 </div>
             </div>
             <div className={s.packListTableWrapper}>
-                <Table tableHeaders={tableHeaders} bodyExample={tableBody}/>
+                <Table tableHeaders={tableHeaders} tableBody={tableBody}/>
             </div>
 
             <div className={s.packsListFooterWrapper}>

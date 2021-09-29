@@ -13,7 +13,7 @@ export const CardsContainer = () => {
     const cardsState = useSelector<AppStoreType, CardsStateType>(state => state.cards);
 
     //Take id card pack
-    let urlParams = useRouteMatch<{ cardPackId: string }>("/cards/:cardPackId");
+    const urlParams = useRouteMatch<{ cardPackId: string }>("/cards/:cardPackId");
     if (urlParams?.isExact) {
         console.log('cardPackId', urlParams.params.cardPackId);
     }
@@ -27,7 +27,7 @@ export const CardsContainer = () => {
     const tableBody = <TableBody cardsList={cardsState.cardsList}/>;
 
     return (
-        <Table tableHeaders={tableHeaders} bodyExample={tableBody}/>
+        <Table tableHeaders={tableHeaders} tableBody={tableBody}/>
     );
 };
 
