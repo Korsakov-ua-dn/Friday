@@ -13,7 +13,8 @@ import {TableBodyForCardPacks} from "./TableBodyForCardPacks";
 import {setTestData} from "../p4-Test/test";
 import {Preloader} from "../../../common/c5-Loader/Preloader";
 import {ToggleCheckBox} from "./components/CheckBoxToggle/ToggleCheckBox";
-import {signAPI} from "../../f1-Sign-in/s3-DAL/SignAPI";
+import {Redirect} from "react-router-dom";
+import {Path} from "../../../main/m1-UI/Routes";
 
 export const PacksList = () => {
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
@@ -26,6 +27,7 @@ export const PacksList = () => {
     const [packName, setPackName] = useState<string>('');
     const [myPacks, setMyPacks] = useState<boolean>(false);
     const myId = useSelector<AppStoreType, string>(state => state.signIn.userId);
+    const isAuth = useSelector<AppStoreType, boolean>(state => state.signIn.isAuth);
 
     const [sortPack, setSortPack] = useState<string>("");
     const clickHandlerForSortUpdate = () => {
@@ -54,16 +56,9 @@ export const PacksList = () => {
     useEffect(() => {
         const myCardsPacks = myPacks ? myId : '';
         dispatch(getPacksCards(page, pageCount, searchPackName, myCardsPacks, sortPack));
-    }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack]);
+    }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack, myId]);
 
     useEffect(() => {
-        signAPI.authMe()
-            .then(res => {
-                console.log('AUTH/ME:', res);
-            }).catch(rej => {
-            console.log(rej.response);
-            console.log(rej);
-        });
         const test = setTestData();
         setPackName(test['name']);
     }, []);
@@ -94,6 +89,10 @@ export const PacksList = () => {
     const changeCheckedMyPacks = () => {
         setMyPacks(!myPacks);
     };
+
+    if (!isAuth) {
+        return <Redirect to={Path.SIGN_IN_PATH}/>;
+    }
 
     return (
         <>

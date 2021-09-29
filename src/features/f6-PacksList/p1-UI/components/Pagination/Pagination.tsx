@@ -12,7 +12,6 @@ type PaginationTypes = {
 export const Pagination = ({totalCount, count, page, onChangePage, acc = 10}: PaginationTypes) => {
     const [visPre, setVisPre] = useState<boolean>(false);
     const [visNext, setVisNext] = useState<boolean>(false);
-    // const [visAcc, setVisAcc] = useState<boolean>(false);
     let pageNumbers: number = Math.ceil(totalCount / count);
     let pages = [];
     for (let i = 1; i <= pageNumbers; i++) {
@@ -21,15 +20,13 @@ export const Pagination = ({totalCount, count, page, onChangePage, acc = 10}: Pa
 
     const previosPage = page !== 1 ? page - 1 : 1;
     const nextPage = page !== pageNumbers ? page + 1 : pageNumbers;
-    let pageNextAcc = page + acc;
+    let pageNextAcc = (page + acc) > pageNumbers ? pageNumbers : page + acc;
     let pagePreviosAcc = (page - acc) < 1 ? 1 : page - acc;
 
     useEffect(() => {
         previosPage === page ? setVisPre(true) : setVisPre(false);
         nextPage === page ? setVisNext(true) : setVisNext(false);
-        pageNextAcc >= pageNumbers ? pageNextAcc = pageNumbers : pageNextAcc = 1;
-        // pagePreviosAcc <= 1 ? pagePreviosAcc = acc : pagePreviosAcc = 1;
-    }, [page]);
+    }, [page, nextPage, previosPage]);
 
     return (
         <div className={s.paginationWrapper}>

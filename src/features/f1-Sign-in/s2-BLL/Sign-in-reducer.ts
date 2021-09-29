@@ -11,6 +11,9 @@ const initialState = {
 
 export const signInReducer = (state: SignInStateType = initialState, action: ActionsType): SignInStateType => {
     switch (action.type) {
+        case "SIGN-IN/CHECK_IS_AUTH": {
+            return {...state, isAuth: action.isAuth};
+        }
         case "SIGN-IN/USER_ID": {
             return {...state, userId: action.userId};
         }
@@ -32,8 +35,20 @@ export const errorRequestAC = (error: string) => ({type: "SIGN-IN/ERROR", error}
 //action lergnom
 type GetUserIdActionType = ReturnType<typeof getUserId>;
 const getUserId = (userId: string) => ({type: 'SIGN-IN/USER_ID', userId} as const);
-type CheckIsAuthActionType = ReturnType<typeof checkIsAuth>
-const checkIsAuth = () => ({type: 'SIGN-IN/CHECK_IS_AUTH'} as const);
+type CheckIsAuthActionType = ReturnType<typeof setIsAuth>
+const setIsAuth = (isAuth: boolean) => ({type: 'SIGN-IN/CHECK_IS_AUTH', isAuth} as const);
+//thunk lergnom no need
+export const checkUserIsAuth = () => async (dispatch: Dispatch<ActionsType>) => {
+    try {
+        const response = await signAPI.authMe();
+
+        if (response.status === 200) {
+            dispatch(setIsAuth(true));
+        }
+    } catch (err) {
+        dispatch(setIsAuth(false));
+    }
+};
 
 
 // thunks
@@ -43,6 +58,7 @@ export const userAuthRequestTC = (loginData: LoginData) => (dispatch: Dispatch) 
         .then(res => {
             dispatch(authUserAC(res.data));
             dispatch(getUserId(res.data._id));
+            dispatch(setIsAuth(true));
         })
         .catch(e => {
             const errorMessage = e.response?.data?.error || "Unknown error!";
@@ -81,3 +97,4 @@ type ActionsType = ReturnType<typeof authUserAC>
     | ReturnType<typeof loaderAC>
     | ReturnType<typeof errorRequestAC>
     | GetUserIdActionType
+    | CheckIsAuthActionType
