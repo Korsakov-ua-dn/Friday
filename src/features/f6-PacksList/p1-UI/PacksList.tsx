@@ -60,7 +60,8 @@ export const PacksList = () => {
         signAPI.authMe()
             .then(res => {
                 console.log('AUTH/ME:', res);
-            }).catch(rej => {
+            })
+            .catch(rej => {
             console.log(rej.response);
             console.log(rej);
         });
