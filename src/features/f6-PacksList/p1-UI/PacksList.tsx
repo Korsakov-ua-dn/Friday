@@ -15,6 +15,7 @@ import {Preloader} from "../../../common/c5-Loader/Preloader";
 import {ToggleCheckBox} from "./components/CheckBoxToggle/ToggleCheckBox";
 import {Redirect} from "react-router-dom";
 import {Path} from "../../../main/m1-UI/Routes";
+import CustomRange from "./components/CustomRange/CustomRange";
 
 export const PacksList = () => {
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
@@ -90,6 +91,13 @@ export const PacksList = () => {
         setMyPacks(!myPacks);
     };
 
+    const getRangeMin = (min: number) => {
+        console.log(min);
+    };
+    const getRangeMax = (max: number) => {
+        console.log(max);
+    };
+
     if (!isAuth) {
         return <Redirect to={Path.SIGN_IN_PATH}/>;
     }
@@ -100,8 +108,12 @@ export const PacksList = () => {
             <div className={s.packsListHeaderWrapper}>
                 {isFetching && <Preloader/>}
                 <div>
-                    <span style={{marginRight: "5px"}}>My Packs</span>
-                    <ToggleCheckBox onChangeChecked={changeCheckedMyPacks} checked={myPacks}></ToggleCheckBox>
+                    <div>
+                        <span style={{marginRight: "5px"}}>My Packs</span>
+                        <ToggleCheckBox onChangeChecked={changeCheckedMyPacks} checked={myPacks}/>
+                    </div>
+                    <div style={{marginTop: "5px"}}>Number of cards <CustomRange getMin={getRangeMin}
+                                                                                 getMax={getRangeMax}/></div>
                 </div>
                 <div>
                     <InputText value={searchPackName} onChangeText={setSearchPackName}

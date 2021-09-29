@@ -1,0 +1,80 @@
+.slider {
+    position: relative;
+    margin: 10px;
+    padding: 3px 0;
+    width: 200px;
+    height: 5px;
+    background: #709fdc;
+    border-radius: 5px;
+
+}
+
+.min {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    width: 0;
+    height: 5px;
+    border-radius: 5px;
+    background: #c2c1c1;
+}
+
+
+.minDrag {
+    position: absolute;
+    right: -7.5px;
+    top: -5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #184298;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.text {
+    content: "";
+    position: absolute;
+    font-size: 13px;
+    top: 18px;
+    left: 4px;
+}
+
+.textNone {
+    display: none;
+}
+
+
+.minDrag:hover {
+    background: #5264AE
+}
+
+.max {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    width: 200px;
+    height: 5px;
+    border-radius: 5px;
+    background: #274684;
+}
+
+.maxDrag {
+    position: absolute;
+    right: -7.5px;
+    top: -5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #071739;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.maxDrag:hover {
+    background: #5264AE
+}
+
+.maxDrag .text {
+    left: 1px;
+}
