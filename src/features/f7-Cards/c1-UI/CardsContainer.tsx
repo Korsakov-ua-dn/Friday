@@ -1,7 +1,7 @@
-import {cardsApi, ICardType} from "../c3-DAL/cardsApi";
+import {ICardType} from "../c3-DAL/cardsApi";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {CardsStateType, setCards} from "../c2-BLL/Cards-reducer";
+import {CardsStateType, getCardsTC} from "../c2-BLL/cards-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
 import {useRouteMatch} from "react-router-dom";
@@ -19,9 +19,8 @@ export const CardsContainer = () => {
     }
 
     useEffect(() => {
-        cardsApi.getCards("6152c0f86aa2451b018d7c8a")
-            .then(res => dispatch(setCards(res.data.cards)));
-    }, []);
+        dispatch(getCardsTC("6152c0f86aa2451b018d7c8a"))
+    }, [])
 
     const tableHeaders: Array<HeaderOptionType> = [{headerTitle: "Question"}, {headerTitle: "Answer"}, {headerTitle: "Update"}, {headerTitle: "Grade"}];
     const tableBody = <TableBody cardsList={cardsState.cardsList}/>;
@@ -37,16 +36,16 @@ type TableBodyPropsType = {
 const TableBody: React.FC<TableBodyPropsType> = ({cardsList}) => {
     return (
         <>
-            {cardsList.map(card => {
+            {cardsList.map(card =>  {
                 return (
-                    <tr key={card._id}>
+                   <tr key={card._id}>
                         <th>{card.question}</th>
                         <th>{card.answer}</th>
                         <th>{card.updated}</th>
                         <th>{card.grade}</th>
-                    </tr>
-                );
+                   </tr>
+                )
             })}
         </>
-    );
-};
+    )
+}

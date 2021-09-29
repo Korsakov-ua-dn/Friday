@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import {ICardType} from "../c3-DAL/cardsApi";
+import {cardsApi, ICardType} from "../c3-DAL/cardsApi";
 
 const initialstate = {
     cardsList: [] as Array<ICardType>,
@@ -24,18 +24,16 @@ const setError = (errorMessage: string) => ({type: "CARDS-LIST/SET_ERROR", error
 
 
 // thunks
-// export const restorePassword = (email: string) => (dispatch: Dispatch) => {
-//     dispatch(setLoading(true))
-//     forgotApi.sendForgotPassword(email)
-//     .then(res => {
-//         dispatch(setSuccess(true))
-//     })
-//     .catch(e => {
-//         const errorMessage = e.response?.data?.error || "Unknown error!"
-//         dispatch(setError(errorMessage))
-//     })
-//     .finally( () => dispatch(setLoading(false)) )
-// }
+export const getCardsTC = (cardsListId: string) => (dispatch: Dispatch) => {
+    dispatch(setLoading(true))
+    cardsApi.getCards(cardsListId)
+        .then(res => dispatch(setCards(res.data.cards)))
+        .catch(e => {
+            const errorMessage = e.response?.data?.error || "Unknown error!"
+            dispatch(setError(errorMessage))
+        })
+        .finally( () => dispatch(setLoading(false)) )
+}
 
 // types
 export type CardsStateType = typeof initialstate
