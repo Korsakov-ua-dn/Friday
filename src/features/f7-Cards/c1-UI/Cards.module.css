@@ -1,0 +1,9 @@
+.footerWrapper {
+    display: flex;
+    width: 1200px;
+    justify-content: flex-start;
+    align-items: center;
+}
+.packListPageSelector {
+    margin-left: 50px;
+}

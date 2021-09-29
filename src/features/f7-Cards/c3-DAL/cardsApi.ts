@@ -7,10 +7,12 @@ const instance = axios.create({
 })
 
 export const cardsApi = {
-    getCards(packListId: string) {
+    getCards(packListId: string, page: number, pageCount: number) {
         return instance.get<ResponseType<Array<ICardType>>>(`/cards/card`, {
             params: {
                 cardsPack_id: packListId,
+                page,
+                pageCount, // количество карточек за один запрос
             }
         })
     },
