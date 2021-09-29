@@ -35,10 +35,17 @@ type ActionTypes =
     | SetPageCountActionType
     | SetPageActionType
     | SetPreloaderActionType
+    | SortByNameCardPackActionType
+
 type PacksListStateType = typeof initialState;
 
 export const packsListReducer = (state: PacksListStateType = initialState, action: ActionTypes): PacksListStateType => {
     switch (action.type) {
+        case "PACKS/SORT_BY_NAME_PACK": {
+            return {
+                ...state, cardPacks: state.cardPacks.sort((a, b) => a.name.localeCompare(b.name))
+            };
+        }
         case "PACKS/PRELOADER": {
             return {...state, isFetch: action.isFetch};
         }
@@ -66,6 +73,7 @@ type SetPacksTotalCountActionType = ReturnType<typeof setPacksTotalCount>
 type SetPageCountActionType = ReturnType<typeof setPageCount>
 type SetPageActionType = ReturnType<typeof setPage>
 type SetPreloaderActionType = ReturnType<typeof setPreloader>
+type SortByNameCardPackActionType = ReturnType<typeof sortByNameCardPack>
 
 //action
 const setPacks = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS', packs} as const);
@@ -75,6 +83,9 @@ export const setPage = (page: number) => ({type: 'PACKS/SET_PAGE', page} as cons
 
 //set query
 export const setPreloader = (isFetch: boolean) => ({type: 'PACKS/PRELOADER', isFetch} as const);
+
+//sortByNameCardPack
+export const sortByNameCardPack = () => ({type: 'PACKS/SORT_BY_NAME_PACK'} as const);
 
 //thunk
 export const getPacksCards = (page?: number, pageCount?: number, packName?: string, userId?: string, sortPacks?: string) => async (dispatch: Dispatch<ActionTypes>) => {

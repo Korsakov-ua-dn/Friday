@@ -13,6 +13,7 @@ import {TableBodyForCardPacks} from "./TableBodyForCardPacks";
 import {setTestData} from "../p4-Test/test";
 import {Preloader} from "../../../common/c5-Loader/Preloader";
 import {ToggleCheckBox} from "./components/CheckBoxToggle/ToggleCheckBox";
+import {signAPI} from "../../f1-Sign-in/s3-DAL/SignAPI";
 
 export const PacksList = () => {
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
@@ -32,9 +33,10 @@ export const PacksList = () => {
             setSortPack("update");
     };
 
+
     // Data for table
     const tableHeaders: Array<HeaderOptionType> = [
-        {headerTitle: 'Name'},
+        {headerTitle: 'Name',},
         {headerTitle: "Cards"},
         {
             headerTitle: "Last Updated",
@@ -55,6 +57,13 @@ export const PacksList = () => {
     }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack]);
 
     useEffect(() => {
+        signAPI.authMe()
+            .then(res => {
+                console.log('AUTH/ME:', res);
+            }).catch(rej => {
+            console.log(rej.response);
+            console.log(rej);
+        });
         const test = setTestData();
         setPackName(test['name']);
     }, []);

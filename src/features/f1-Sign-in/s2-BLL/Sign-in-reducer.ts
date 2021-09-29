@@ -6,6 +6,7 @@ const initialState = {
     loading: false,
     error: '',
     userId: '',
+    isAuth: false,
 };
 
 export const signInReducer = (state: SignInStateType = initialState, action: ActionsType): SignInStateType => {
@@ -31,6 +32,8 @@ export const errorRequestAC = (error: string) => ({type: "SIGN-IN/ERROR", error}
 //action lergnom
 type GetUserIdActionType = ReturnType<typeof getUserId>;
 const getUserId = (userId: string) => ({type: 'SIGN-IN/USER_ID', userId} as const);
+type CheckIsAuthActionType = ReturnType<typeof checkIsAuth>
+const checkIsAuth = () => ({type: 'SIGN-IN/CHECK_IS_AUTH'} as const);
 
 
 // thunks
