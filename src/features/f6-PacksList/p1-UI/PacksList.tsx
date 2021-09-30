@@ -30,6 +30,9 @@ export const PacksList = () => {
     const myId = useSelector<AppStoreType, string>(state => state.signIn.userId);
     const isAuth = useSelector<AppStoreType, boolean>(state => state.signIn.isAuth);
 
+    const [min, setMin] = useState<number>(0);
+    const [max, setMax] = useState<number>(0);
+
     const [sortPack, setSortPack] = useState<string>("");
     const clickHandlerForSortUpdate = () => {
         sortPack === "update" ? setSortPack('') :
@@ -56,8 +59,8 @@ export const PacksList = () => {
 
     useEffect(() => {
         const myCardsPacks = myPacks ? myId : '';
-        dispatch(getPacksCards(page, pageCount, searchPackName, myCardsPacks, sortPack));
-    }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack]);
+        dispatch(getPacksCards(page, pageCount, searchPackName, myCardsPacks, sortPack, min, max));
+    }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack, myId, min, max]);
 
     useEffect(() => {
         const test = setTestData();
@@ -81,7 +84,6 @@ export const PacksList = () => {
         dispatch(setPageCount(+count));
     };
 
-    //Change page (pagination) NEED TO WORK --- Problem WiTH UPDATE SELECTOR AND ADD NEW PACKS
     const clickHandlerChangePage = (page: number) => {
         dispatch(setPage(page));
     };
@@ -92,10 +94,10 @@ export const PacksList = () => {
     };
 
     const getRangeMin = (min: number) => {
-        console.log(min);
+        setMin(min);
     };
     const getRangeMax = (max: number) => {
-        console.log(max);
+        setMax(max);
     };
 
     if (!isAuth) {

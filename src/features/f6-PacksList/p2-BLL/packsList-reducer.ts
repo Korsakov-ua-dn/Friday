@@ -88,10 +88,10 @@ export const setPreloader = (isFetch: boolean) => ({type: 'PACKS/PRELOADER', isF
 export const sortByNameCardPack = () => ({type: 'PACKS/SORT_BY_NAME_PACK'} as const);
 
 //thunk
-export const getPacksCards = (page?: number, pageCount?: number, packName?: string, userId?: string, sortPacks?: string) => async (dispatch: Dispatch<ActionTypes>) => {
+export const getPacksCards = (page?: number, pageCount?: number, packName?: string, userId?: string, sortPacks?: string, min?: number, max?: number) => async (dispatch: Dispatch<ActionTypes>) => {
     try {
         dispatch(setPreloader(true));
-        const response = await PacksListApi.getCardsPacks(page, pageCount, packName, 0, 10000000, userId, sortPacks);
+        const response = await PacksListApi.getCardsPacks(page, pageCount, packName, min, max, userId, sortPacks);
         if (response.status === 200) {
             dispatch(setPacks(response.data.cardPacks));
             dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
