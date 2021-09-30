@@ -7,3 +7,23 @@
 .packListPageSelector {
     margin-left: 50px;
 }
+.backWrapper {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.back {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.back:hover {
+    opacity: 0.6;
+}
+.back span {
+    margin-left: 20px;
+}

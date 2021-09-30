@@ -1,4 +1,4 @@
-import {ICardType} from "../c3-DAL/cardsApi";
+import {ICardType} from "../../c3-DAL/cardsApi";
 import React from "react";
 
 type CardsTableBody = {
