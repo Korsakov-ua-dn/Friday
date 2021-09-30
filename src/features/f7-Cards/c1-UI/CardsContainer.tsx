@@ -3,11 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {getCardsTC, setPage} from "../c2-BLL/cards-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
-import {useHistory, useRouteMatch} from "react-router-dom";
+import {Redirect, useHistory, useRouteMatch} from "react-router-dom";
 import {TableBody} from "./Component/CardsTableBody";
 import s from "./Cards.module.css";
 import {Pagination} from "../../f6-PacksList/p1-UI/components/Pagination/Pagination";
 import {ICardType} from "../c3-DAL/cardsApi";
+import {Path} from "../../../main/m1-UI/Routes";
+import {Search} from "./Component/Search";
 // import {MySelect} from "../../f6-PacksList/p1-UI/components/Select/MySelect";
 
 
@@ -19,7 +21,7 @@ export const CardsContainer = () => {
     const cardsTotalCount = useSelector<AppStoreType, number>(state => state.cards.cardsTotalCount);
     const page = useSelector<AppStoreType, number>(state => state.cards.page);
     const pageCount = useSelector<AppStoreType, number>(state => state.cards.pageCount);
-    // const cardsList = useSelector<AppStoreType, CardsStateType>(state => state.cards.cardsList);
+    const isAuth = useSelector<AppStoreType, boolean>(state => state.signIn.isAuth);
 
     //Take id card pack
     const urlParams = useRouteMatch<{ cardPackId: string }>("/cards/:cardPackId");
@@ -29,7 +31,7 @@ export const CardsContainer = () => {
 
     useEffect(() => {
         urlParams && dispatch(getCardsTC(urlParams.params.cardPackId, page, pageCount))
-    }, [page, pageCount, dispatch])
+    }, [urlParams?.params.cardPackId, page, pageCount, dispatch])
 
     const clickHandlerChangePage = (page: number) => {
         dispatch(setPage(page));
@@ -41,6 +43,7 @@ export const CardsContainer = () => {
     const tableHeaders: Array<HeaderOptionType> = [{headerTitle: "Question"}, {headerTitle: "Answer"}, {headerTitle: "Update"}, {headerTitle: "Grade"}];
     const tableBody = <TableBody cardsList={cardsList}/>;
 
+    if(!isAuth) return <Redirect to={Path.SIGN_IN_PATH}/>
     return (
         <>
             <div className={s.backWrapper}>
@@ -51,6 +54,7 @@ export const CardsContainer = () => {
                     <span>Back to Pack List</span>
                 </div>
             </div>
+            <Search/>
             <Table tableHeaders={tableHeaders} tableBody={tableBody}/>
             <div className={s.footerWrapper}>
                 <Pagination

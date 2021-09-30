@@ -1,0 +1,13 @@
+.wrapper {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.wrapper input {
+    height: 50px;
+    width: 100%;
+    padding-left: 40px;
+    border: none;
+    border-radius: 7px;
+    outline: none;
+    font-size: 16px;
+}
