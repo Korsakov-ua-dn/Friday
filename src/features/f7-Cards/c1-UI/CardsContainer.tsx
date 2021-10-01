@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getCardsTC, setPage} from "../c2-BLL/cards-reducer";
+import {addCardTC, getCardsTC, setPage} from "../c2-BLL/cards-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
 import {Redirect, useHistory, useRouteMatch} from "react-router-dom";
@@ -10,6 +10,8 @@ import {Pagination} from "../../f6-PacksList/p1-UI/components/Pagination/Paginat
 import {ICardType} from "../c3-DAL/cardsApi";
 import {Path} from "../../../main/m1-UI/Routes";
 import {Search} from "./Component/Search";
+import Button from "../../../common/c2-Button/Button";
+import {Preloader} from "../../../common/c5-Loader/Preloader";
 // import {MySelect} from "../../f6-PacksList/p1-UI/components/Select/MySelect";
 
 
@@ -22,6 +24,7 @@ export const CardsContainer = () => {
     const page = useSelector<AppStoreType, number>(state => state.cards.page);
     const pageCount = useSelector<AppStoreType, number>(state => state.cards.pageCount);
     const isAuth = useSelector<AppStoreType, boolean>(state => state.signIn.isAuth);
+    const loading = useSelector<AppStoreType, boolean>(state => state.cards.loading);
 
     //Take id card pack
     const urlParams = useRouteMatch<{ cardPackId: string }>("/cards/:cardPackId");
@@ -33,8 +36,11 @@ export const CardsContainer = () => {
         urlParams && dispatch(getCardsTC(urlParams.params.cardPackId, page, pageCount))
     }, [urlParams?.params.cardPackId, page, pageCount, dispatch])
 
-    const clickHandlerChangePage = (page: number) => {
-        dispatch(setPage(page));
+    const changePageHandler = (page: number) => {
+        dispatch(setPage(page))
+    }
+    const addCardHandler = () => {
+        dispatch(addCardTC())
     }
     const historyBack = () => {
         history.goBack()
@@ -53,15 +59,17 @@ export const CardsContainer = () => {
                     </svg>
                     <span>Back to Pack List</span>
                 </div>
+                <Button onClick={addCardHandler} className={s.addCard}>add new card</Button>
             </div>
             <Search/>
+            {loading && <Preloader/>}
             <Table tableHeaders={tableHeaders} tableBody={tableBody}/>
             <div className={s.footerWrapper}>
                 <Pagination
                     totalCount={cardsTotalCount}
                     count={pageCount}
                     page={page}
-                    onChangePage={clickHandlerChangePage}/>
+                    onChangePage={changePageHandler}/>
             </div>
         </>
     );

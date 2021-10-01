@@ -1,16 +1,7 @@
-.footerWrapper {
-    display: flex;
-    width: 1200px;
-    justify-content: flex-start;
-    align-items: center;
-}
-.packListPageSelector {
-    margin-left: 50px;
-}
 .backWrapper {
     display: flex;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -26,4 +17,13 @@
 }
 .back span {
     margin-left: 20px;
+}
+.addCard {
+    width: 150px;
+}
+.footerWrapper {
+    display: flex;
+    width: 1200px;
+    justify-content: flex-start;
+    align-items: center;
 }

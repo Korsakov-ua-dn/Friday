@@ -7,7 +7,7 @@ const instance = axios.create({
 })
 
 export const cardsApi = {
-    getCards(packListId: string, page: number, pageCount: number) {
+    getCards(packListId: string, page?: number, pageCount?: number) {
         return instance.get<ResponseType<Array<ICardType>>>(`/cards/card`, {
             params: {
                 cardsPack_id: packListId,
@@ -17,15 +17,15 @@ export const cardsApi = {
         })
     },
 
-    // addNewCardPack(payload: { name: string, user_name?: string }) {
-    //     return instance.post<ResponseType>(`cards/pack/`, {cardsPack: payload});
-    // },
-    // deleteCardPack(id: string) {
-    //     return instance.delete(`cards/pack/?id=${id}`);
-    // },
-    // updateCardPack(payload: { _id: string, name: string, user_name?: string, private?: boolean }) {
-    //     return instance.put(`cards/pack/`, {cardsPack: payload});
-    // },
+    addNewCard(payload: {cardsPack_id: string, question?: string, answer?: string}) {
+        return instance.post<ResponseType>(`/cards/card`, {card: payload});
+    },
+    deleteCard(id: string) {
+        return instance.delete(`/cards/card?id=${id}`);
+    },
+    updateCard(payload: { _id: string, question: string, answer: string }) {
+        return instance.put(`/cards/card`, {card: payload});
+    },
 
 }
 
