@@ -1,13 +1,19 @@
 .wrapper {
+    display: flex;
+    align-items: center;
     width: 100%;
     margin-bottom: 20px;
 }
 .wrapper input {
     height: 50px;
     width: 100%;
+    margin-right: 20px;
     padding-left: 40px;
     border: none;
     border-radius: 7px;
     outline: none;
     font-size: 16px;
+}
+.btnSearch {
+    width: 200px;
 }

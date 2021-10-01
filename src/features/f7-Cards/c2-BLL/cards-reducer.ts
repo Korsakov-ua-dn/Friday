@@ -9,7 +9,9 @@ const initialstate = {
     page: 0,
     pageCount: 0,
     loading: false,
-    errorMessage: ''
+    errorMessage: '',
+    searchQuestion: '',
+    searchAnswer: '',
 }
 
 export const cardsReducer = (state: CardsStateType = initialstate, action: CardsActionType): CardsStateType => {
@@ -21,6 +23,8 @@ export const cardsReducer = (state: CardsStateType = initialstate, action: Cards
         case "CARDS-LIST/SET_PAGE": return {...state, page: action.page}
         case "CARDS-LIST/SET_PAGE_COUNT": return {...state, pageCount: action.pageCount}
         case "CARDS-LIST/SET_CARD-PACK-ID": return {...state, cardsPack_id: action.cardsPack_id}
+        case "CARDS-LIST/SET_SEARCH_QUESTION": return {...state, searchQuestion: action.value}
+        case "CARDS-LIST/SET_SEARCH_ANSWER": return {...state, searchAnswer: action.value}
         default: return state
     }
 }
@@ -33,6 +37,8 @@ const setCardsTotalCount = (cardsTotalCount: number) => ({type: "CARDS-LIST/SET_
 export const setPage = (page: number) => ({type: "CARDS-LIST/SET_PAGE", page} as const)
 const setPageCount = (pageCount: number) => ({type: "CARDS-LIST/SET_PAGE_COUNT", pageCount} as const)
 const setCardPackId = (cardsPack_id: string) => ({type: "CARDS-LIST/SET_CARD-PACK-ID", cardsPack_id} as const)
+export const setSearchQuestion = (value: string) => ({type: "CARDS-LIST/SET_SEARCH_QUESTION", value} as const)
+export const setSearchAnswer = (value: string) => ({type: "CARDS-LIST/SET_SEARCH_ANSWER", value} as const)
 
 // thunks
 export const getCardsTC = (cardsListId: string, page?: number, pageCount?: number) => (dispatch: Dispatch) => {
@@ -111,6 +117,8 @@ export type CardsActionType = ReturnType<typeof setCards>
     | ReturnType<typeof setPage>
     | ReturnType<typeof setPageCount>
     | ReturnType<typeof setCardPackId>
+    | ReturnType<typeof setSearchQuestion>
+    | ReturnType<typeof setSearchAnswer>
 
 export type ThunkTypes<ReturnType = void> = ThunkAction<
     ReturnType,

@@ -12,8 +12,6 @@ import {Path} from "../../../main/m1-UI/Routes";
 import {Search} from "./Component/Search";
 import Button from "../../../common/c2-Button/Button";
 import {Preloader} from "../../../common/c5-Loader/Preloader";
-// import {MySelect} from "../../f6-PacksList/p1-UI/components/Select/MySelect";
-
 
 export const CardsContainer = () => {
 
@@ -26,25 +24,18 @@ export const CardsContainer = () => {
     const isAuth = useSelector<AppStoreType, boolean>(state => state.signIn.isAuth);
     const loading = useSelector<AppStoreType, boolean>(state => state.cards.loading);
 
-    //Take id card pack
     const urlParams = useRouteMatch<{ cardPackId: string }>("/cards/:cardPackId");
-    if (urlParams?.isExact) {
-        console.log('cardPackId', urlParams.params.cardPackId);
-    }
+    // if (urlParams?.isExact) {
+    //     console.log('cardPackId', urlParams.params.cardPackId);
+    // }
 
     useEffect(() => {
         urlParams && dispatch(getCardsTC(urlParams.params.cardPackId, page, pageCount))
     }, [urlParams?.params.cardPackId, page, pageCount, dispatch])
 
-    const changePageHandler = (page: number) => {
-        dispatch(setPage(page))
-    }
-    const addCardHandler = () => {
-        dispatch(addCardTC())
-    }
-    const historyBack = () => {
-        history.goBack()
-    }
+    const changePageHandler = (page: number) => dispatch(setPage(page))
+    const addCardHandler = () => dispatch(addCardTC())
+    const historyBack = () => history.goBack()
 
     const tableHeaders: Array<HeaderOptionType> = [{headerTitle: "Question"}, {headerTitle: "Answer"}, {headerTitle: "Update"}, {headerTitle: "Grade"}];
     const tableBody = <TableBody cardsList={cardsList}/>;
