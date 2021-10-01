@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './CustomRange.module.css';
 
 
@@ -20,6 +20,12 @@ const CustomRange: React.FC<SuperDoubleRangePropsType> = ({getMin, getMax, width
 
     const [minEnabled, setMinEnabled] = useState<boolean>(false);
     const [maxEnabled, setMaxEnabled] = useState<boolean>(false);
+
+    useEffect(()=>{
+        getMin(minVal);
+        getMax(maxVal);
+    },[minVal,maxVal])
+
 
     const mouseMoveHandler = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.currentTarget.id === 'min') {
@@ -62,10 +68,6 @@ const CustomRange: React.FC<SuperDoubleRangePropsType> = ({getMin, getMax, width
         setEdit(false);
         setMax(maxVal);
     };
-
-
-    getMin(minVal);
-    getMax(maxVal);
 
 
     return (

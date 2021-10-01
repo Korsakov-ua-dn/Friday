@@ -19,6 +19,9 @@ export const signAPI = {
     },
     authMe() {
         return instance.post('auth/me');
-    }
+    },
+    authMeUpdate(newName: string, avatar: string) {
+        return instance.put('auth/me', {newName, avatar});
+    },
 
 };

@@ -39,7 +39,6 @@ export const PacksList = () => {
             setSortPack("update");
     };
 
-
     // Data for table
     const tableHeaders: Array<HeaderOptionType> = [
         {headerTitle: 'Name',},
@@ -67,16 +66,14 @@ export const PacksList = () => {
         setPackName(test['name']);
     }, []);
 
-    // Added new pack and new query Cards Pack
-    const clickHandlerAddNewPack = () => {
 
+    // 0Added new pack and new query Cards Pack
+    const clickHandlerAddNewPack = () => {
         dispatch(addNewPackCard({name: packName}));
         //Add Test data
         const test = setTestData();
         setPackName(test['name']);
         // setPackName('');
-
-
     };
 
     //Change pageCount (selector options)
