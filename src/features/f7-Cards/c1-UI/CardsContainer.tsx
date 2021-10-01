@@ -46,7 +46,7 @@ export const CardsContainer = () => {
             <div className={s.backWrapper}>
                 <div className={s.back} onClick={historyBack}>
                     <svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 5.5H2M2 5.5L6.66667 1M2 5.5L6.66667 10" stroke="#2D2E46" stroke-width="2"/>
+                        <path d="M16 5.5H2M2 5.5L6.66667 1M2 5.5L6.66667 10" stroke="#2D2E46" strokeWidth="2"/>
                     </svg>
                     <span>Back to Pack List</span>
                 </div>
