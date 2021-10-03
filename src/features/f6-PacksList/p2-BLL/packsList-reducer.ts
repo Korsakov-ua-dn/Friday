@@ -1,5 +1,7 @@
 import {CardType, PacksListApi} from "../p3-DAL/packsListApi";
 import {Dispatch} from "redux";
+import {AppStoreType} from "../../../main/m2-BLL/store";
+import {ThunkAction} from "redux-thunk";
 
 const initialState = {
     cardPacks: [
@@ -88,16 +90,16 @@ export const setPreloader = (isFetch: boolean) => ({type: 'PACKS/PRELOADER', isF
 export const sortByNameCardPack = () => ({type: 'PACKS/SORT_BY_NAME_PACK'} as const);
 
 //thunk
-export const getPacksCards = (page?: number, pageCount?: number, packName?: string, userId?: string, sortPacks?: string, min?: number, max?: number) => async (dispatch: Dispatch<ActionTypes>) => {
+export const getPacksCards = (packName?: string, userId?: string, sortPacks?: string) => async (dispatch: Dispatch<ActionTypes>, getState: () => AppStoreType) => {
+    const {pageCount, page, minCardsCount, maxCardsCount} = getState().packsList;
     try {
+
         dispatch(setPreloader(true));
         const response = await PacksListApi.getCardsPacks(page, pageCount, packName, 0, 1000, userId, sortPacks);
-        if (response.status === 200) {
-            dispatch(setPacks(response.data.cardPacks));
-            dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
-            dispatch(setPageCount(response.data.pageCount));
-            dispatch(setPage(response.data.page));
-        }
+        dispatch(setPacks(response.data.cardPacks));
+        dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
+        dispatch(setPageCount(response.data.pageCount));
+        dispatch(setPage(response.data.page));
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.warn('some error :(');
@@ -109,14 +111,12 @@ export const getPacksCards = (page?: number, pageCount?: number, packName?: stri
 
 //Function CRUD
 //Create new pack card
-export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<ActionTypes>) => {
+export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<ActionTypes>, getState: () => AppStoreType) => {
     try {
         dispatch(setPreloader(true));
-
-        const response = await PacksListApi.addNewCardPack(payload);
-        if (response.status === 201) {
-            dispatch(setPage(0));
-        }
+        await PacksListApi.addNewCardPack(payload);
+        // @ts-ignore
+        dispatch(getPacksCards());
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
@@ -129,10 +129,8 @@ export const addNewPackCard = (payload: { name: string, user_name?: string }) =>
 export const deletePackCardById = (id: string) => async (dispatch: Dispatch) => {
     try {
         dispatch(setPreloader(true));
-        const response = await PacksListApi.deleteCardPack(id);
-        if (response.status === 200) {
-            dispatch(setPage(0));
-        }
+        await PacksListApi.deleteCardPack(id);
+        dispatch(setPage(0));
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
@@ -145,10 +143,8 @@ export const deletePackCardById = (id: string) => async (dispatch: Dispatch) => 
 export const updatePackCard = (payload: { _id: string, name: string, private?: boolean }) => async (dispatch: Dispatch) => {
     try {
         dispatch(setPreloader(true));
-        const response = await PacksListApi.updateCardPack(payload);
-        if (response.status === 200) {
-            dispatch(setPage(0));
-        }
+        await PacksListApi.updateCardPack(payload);
+        dispatch(setPage(0));
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
@@ -156,3 +152,8 @@ export const updatePackCard = (payload: { _id: string, name: string, private?: b
         dispatch(setPreloader(false));
     }
 };
+
+export type ThunkTypes<ReturnType = void> = ThunkAction<ReturnType,
+    PacksListStateType,
+    unknown,
+    ActionTypes>

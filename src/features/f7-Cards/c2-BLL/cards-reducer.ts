@@ -1,6 +1,6 @@
-import {Dispatch} from 'redux'
+import {Dispatch} from 'redux';
 import {cardsApi, ICardType} from "../c3-DAL/cardsApi";
-import {ThunkAction} from 'redux-thunk'
+import {ThunkAction} from 'redux-thunk';
 
 const initialstate = {
     cardsList: [] as Array<ICardType>,
@@ -54,7 +54,7 @@ export const setSearchQuestion = (value: string) => ({type: "CARDS-LIST/SET_SEAR
 export const setSearchAnswer = (value: string) => ({type: "CARDS-LIST/SET_SEARCH_ANSWER", value} as const)
 
 // thunks
-export const getCardsTC = () => (dispatch: Dispatch, getState: any) => {
+export const    getCardsTC = () => (dispatch: Dispatch, getState: any) => {
     const {cardsPack_id, page, pageCount} = getState().cards
 
     dispatch(setLoading(true))

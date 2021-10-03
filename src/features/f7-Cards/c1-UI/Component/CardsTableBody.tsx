@@ -11,7 +11,7 @@ type CardsTableBody = {
     cardsList: Array<ICardType>
 }
 export const TableBody: React.FC<CardsTableBody> = ({cardsList}) => {
-    debugger
+    // debugger
     const [edit, setEdit] = useState<boolean>(false)
     const [editId, setEditId] = useState<string>('')
     const [question, setQuestion] = useState<string>('')

@@ -63,7 +63,7 @@ export const PacksList = () => {
 
     useEffect(() => {
         const myCardsPacks = myPacks ? myId : '';
-        dispatch(getPacksCards(page, pageCount, searchPackName, myCardsPacks, sortPack, min, max));
+        dispatch(getPacksCards(searchPackName, myCardsPacks, sortPack));
     }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack, myId]);
 
     useEffect(() => {

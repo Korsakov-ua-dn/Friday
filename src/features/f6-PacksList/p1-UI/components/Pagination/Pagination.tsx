@@ -13,7 +13,6 @@ export const Pagination = ({totalCount, count, page, onChangePage, acc = 10}: Pa
     const [visPre, setVisPre] = useState<boolean>(false);
     const [visNext, setVisNext] = useState<boolean>(false);
 
-
     let pageNumbers: number = Math.ceil(totalCount / count);
 
     let pages = [];
@@ -31,7 +30,7 @@ export const Pagination = ({totalCount, count, page, onChangePage, acc = 10}: Pa
         nextPage === page ? setVisNext(true) : setVisNext(false);
     }, [page, nextPage, previosPage]);
 
-    if (isNaN(pageNumbers)) {
+    if (isNaN(pageNumbers) || totalCount === 0) {
         return <div></div>;
     }
     return (
