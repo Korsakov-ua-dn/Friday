@@ -8,37 +8,38 @@ import {SignIn} from "./Sign-in";
 
 
 export const SignInContainer: React.FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user)
-    const loading = useSelector<AppStoreType, boolean>(state => state.signIn.loading)
-    const error = useSelector<AppStoreType, string>(state => state.signIn.error)
+    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
+    const loading = useSelector<AppStoreType, boolean>(state => state.signIn.loading);
+    const error = useSelector<AppStoreType, string>(state => state.signIn.error);
+    const isInitialized = useSelector<AppStoreType, boolean>(state => state.app.initialized);
 
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
-    const [rememberMe, setRememberMe] = useState<boolean>(false)
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [rememberMe, setRememberMe] = useState<boolean>(false);
 
     const onChangeEmail = useCallback((email: string) => {
-        error && dispatch(errorRequestAC(''))
-        setEmail(email)
-    }, [error, dispatch])
+        error && dispatch(errorRequestAC(''));
+        setEmail(email);
+    }, [error, dispatch]);
 
     const onChangePassword = useCallback((password: string) => {
-        error && dispatch(errorRequestAC(''))
-        setPassword(password)
-    }, [error, dispatch])
+        error && dispatch(errorRequestAC(''));
+        setPassword(password);
+    }, [error, dispatch]);
 
     const onChangeRememberMe = useCallback((checked: boolean) => {
-        error && dispatch(errorRequestAC(''))
-        setRememberMe(checked)
-    }, [error, dispatch])
+        error && dispatch(errorRequestAC(''));
+        setRememberMe(checked);
+    }, [error, dispatch]);
 
     const requestLogin = () => {
-        dispatch(userAuthRequestTC({email, password, rememberMe}))
-    }
+        dispatch(userAuthRequestTC({email, password, rememberMe}));
+    };
 
-    if (user) {
-        return <Redirect to={Path.PROFILE_PATH}/>
+    if (user && isInitialized) {
+        return <Redirect to={Path.PROFILE_PATH}/>;
     }
 
     return (
@@ -53,5 +54,5 @@ export const SignInContainer: React.FC = () => {
             rememberMe={rememberMe}
             requestLogin={requestLogin}
         />
-    )
-}
+    );
+};

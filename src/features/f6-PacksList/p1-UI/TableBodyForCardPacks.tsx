@@ -9,15 +9,13 @@ import {Path} from "../../../main/m1-UI/Routes";
 
 type TableBodyTypeProps = {
     cardPacks: Array<CardType>
+    myId: string
 }
 
-export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
+export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => {
     const [edit, setEdit] = useState<boolean>(false);
     const [editId, setEditId] = useState<string>('');
     const [changeNameCardPack, setChangeNameCardPack] = useState<string>('');
-    const [changeAuthorCardPack, setChangeAuthorCardPack] = useState<string>('');
-
-    const myId = useSelector<AppStoreType, string>(state => state.signIn.userId);
     const isFetching = useSelector<AppStoreType, boolean>(state => state.packsList.isFetch);
     const dispatch = useDispatch();
 
@@ -32,10 +30,9 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
                 myId === table.user_id && setEdit(true);
                 setEditId(table._id);
                 setChangeNameCardPack(table.name);
-                setChangeAuthorCardPack(table.user_name);
             }
             if (e.currentTarget.innerText === 'update') {
-                dispatch(updatePackCard({_id: table._id, name: changeNameCardPack, user_name: changeAuthorCardPack}));
+                dispatch(updatePackCard({_id: table._id, name: changeNameCardPack}));
                 myId === table.user_id && setEdit(false);
             }
         };
@@ -43,9 +40,7 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
         const onChangeHandlerChangeNameCardPack = (e: ChangeEvent<HTMLInputElement>) => {
             setChangeNameCardPack(e.currentTarget.value);
         };
-        const onChangeHandlerChangeAuthorCardPack = (e: ChangeEvent<HTMLInputElement>) => {
-            setChangeAuthorCardPack(e.currentTarget.value);
-        };
+
 
         let jsDate = new Date(Date.parse(table.updated));
 
@@ -59,10 +54,7 @@ export const TableBodyForCardPacks = ({cardPacks}: TableBodyTypeProps) => {
                 <td>{table.cardsCount}</td>
                 <td>{lastUpdate}</td>
                 <td>
-                    {editId === table._id && edit ?
-                        <input onChange={onChangeHandlerChangeAuthorCardPack}
-                               value={changeAuthorCardPack}/> :
-                        table.user_name}
+                    {table.user_name}
                 </td>
                 <td>
                     {myId === table.user_id &&

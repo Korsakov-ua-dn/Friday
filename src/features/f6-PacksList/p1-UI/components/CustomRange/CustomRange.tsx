@@ -9,7 +9,7 @@ type SuperDoubleRangePropsType = {
 }
 
 const CustomRange: React.FC<SuperDoubleRangePropsType> = ({getMin, getMax, width = 100}) => {
-
+    console.log("RANGE COMPONENT");
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(width - 10);
     const [minPoint, setMinPoint] = useState<number>(0);
@@ -21,10 +21,10 @@ const CustomRange: React.FC<SuperDoubleRangePropsType> = ({getMin, getMax, width
     const [minEnabled, setMinEnabled] = useState<boolean>(false);
     const [maxEnabled, setMaxEnabled] = useState<boolean>(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         getMin(minVal);
         getMax(maxVal);
-    },[minVal,maxVal])
+    }, [getMin, getMax, maxVal, minVal]);
 
 
     const mouseMoveHandler = (e: React.MouseEvent<HTMLDivElement>) => {

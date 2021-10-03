@@ -5,12 +5,14 @@ import {registrationNewUser, returnServerError} from '../r2-BLL/Sign-up-reducer'
 import {Redirect} from "react-router-dom";
 import {SignUp} from "./SignUp";
 import {Path} from "../../../main/m1-UI/Routes";
+import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 
 export const SignUpContainer: React.FC = () => {
 
     const serverError = useSelector<AppStoreType, Array<string>>(state => state.register.error);
-    const isSignUp = useSelector<AppStoreType, boolean>(state => state.register.isSign);
     const isFetching = useSelector<AppStoreType, boolean>(state => state.register.isFetch);
+    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
+
 
     const dispatch = useDispatch();
 
@@ -27,9 +29,9 @@ export const SignUpContainer: React.FC = () => {
     };
 
 
-    if (isSignUp) {
+    if (user) {
         return <Redirect to={Path.SIGN_IN_PATH}/>;
-    } //Redirect if success registration
+    }
 
     return (
         <SignUp

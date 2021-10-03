@@ -57,7 +57,7 @@ export const PacksListApi = {
     deleteCardPack(id: string) {
         return instance.delete(`cards/pack/?id=${id}`);
     },
-    updateCardPack(payload: { _id: string, name: string, user_name?: string, private?: boolean }) {
+    updateCardPack(payload: { _id: string, name: string, private?: boolean }) {
         return instance.put(`cards/pack/`, {cardsPack: payload});
     },
 

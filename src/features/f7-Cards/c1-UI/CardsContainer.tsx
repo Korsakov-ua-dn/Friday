@@ -12,6 +12,7 @@ import {Path} from "../../../main/m1-UI/Routes";
 import {Search} from "./Component/Search";
 import Button from "../../../common/c2-Button/Button";
 import {Preloader} from "../../../common/c5-Loader/Preloader";
+import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 
 export const CardsContainer = () => {
 
@@ -21,8 +22,10 @@ export const CardsContainer = () => {
     const cardsTotalCount = useSelector<AppStoreType, number>(state => state.cards.cardsTotalCount);
     const page = useSelector<AppStoreType, number>(state => state.cards.page);
     const pageCount = useSelector<AppStoreType, number>(state => state.cards.pageCount);
-    const isAuth = useSelector<AppStoreType, boolean>(state => state.signIn.isAuth);
     const loading = useSelector<AppStoreType, boolean>(state => state.cards.loading);
+    const isInitialized = useSelector<AppStoreType, boolean>(state => state.app.initialized);
+    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
+
 
     const urlParams = useRouteMatch<{ cardPackId: string }>("/cards/:cardPackId");
     // if (urlParams?.isExact) {
@@ -30,17 +33,24 @@ export const CardsContainer = () => {
     // }
 
     useEffect(() => {
-        urlParams && dispatch(getCardsTC(urlParams.params.cardPackId, page, pageCount))
-    }, [urlParams?.params.cardPackId, page, pageCount, dispatch])
+        urlParams && dispatch(getCardsTC(urlParams.params.cardPackId, page, pageCount));
+    }, [urlParams?.params.cardPackId, page, pageCount, dispatch]);
 
-    const changePageHandler = (page: number) => dispatch(setPage(page))
-    const addCardHandler = () => dispatch(addCardTC())
-    const historyBack = () => history.goBack()
+    const changePageHandler = (page: number) => dispatch(setPage(page));
+    const addCardHandler = () => dispatch(addCardTC());
+    const historyBack = () => history.goBack();
 
     const tableHeaders: Array<HeaderOptionType> = [{headerTitle: "Question"}, {headerTitle: "Answer"}, {headerTitle: "Update"}, {headerTitle: "Grade"}];
     const tableBody = <TableBody cardsList={cardsList}/>;
 
-    if(!isAuth) return <Redirect to={Path.SIGN_IN_PATH}/>
+
+    if (!isInitialized) {
+        return <Preloader/>;
+    }
+    if (!user) {
+        return <Redirect to={Path.SIGN_IN_PATH}/>;
+    }
+
     return (
         <>
             <div className={s.backWrapper}>

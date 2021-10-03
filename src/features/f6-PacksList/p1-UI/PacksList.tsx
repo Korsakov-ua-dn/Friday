@@ -16,6 +16,7 @@ import {ToggleCheckBox} from "./components/CheckBoxToggle/ToggleCheckBox";
 import {Redirect} from "react-router-dom";
 import {Path} from "../../../main/m1-UI/Routes";
 import CustomRange from "./components/CustomRange/CustomRange";
+import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 
 export const PacksList = () => {
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
@@ -27,8 +28,12 @@ export const PacksList = () => {
     const [searchPackName, setSearchPackName] = useState<string>('');
     const [packName, setPackName] = useState<string>('');
     const [myPacks, setMyPacks] = useState<boolean>(false);
-    const myId = useSelector<AppStoreType, string>(state => state.signIn.userId);
-    const isAuth = useSelector<AppStoreType, boolean>(state => state.signIn.isAuth);
+    const isInitialized = useSelector<AppStoreType, boolean>(state => state.app.initialized);
+    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
+    let myId = '';
+    if (user) {
+        myId = user._id;
+    }
 
     const [min, setMin] = useState<number>(0);
     const [max, setMax] = useState<number>(0);
@@ -52,14 +57,14 @@ export const PacksList = () => {
         {headerTitle: "Actions"}];
 
     //TableBodyfor Example
-    const tableBody = <TableBodyForCardPacks cardPacks={cardPacks}/>;
+    const tableBody = <TableBodyForCardPacks myId={myId} cardPacks={cardPacks}/>;
     //Count cardsPacks into one page
     const optionsForSelector = [5, 10, 15];
 
     useEffect(() => {
         const myCardsPacks = myPacks ? myId : '';
         dispatch(getPacksCards(page, pageCount, searchPackName, myCardsPacks, sortPack, min, max));
-    }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack, myId, min, max]);
+    }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack, myId]);
 
     useEffect(() => {
         const test = setTestData();
@@ -97,7 +102,10 @@ export const PacksList = () => {
         setMax(max);
     };
 
-    if (!isAuth) {
+    if (!isInitialized) {
+        return <Preloader/>;
+    }
+    if (!user) {
         return <Redirect to={Path.SIGN_IN_PATH}/>;
     }
 
@@ -111,8 +119,10 @@ export const PacksList = () => {
                         <span style={{marginRight: "5px"}}>My Packs</span>
                         <ToggleCheckBox onChangeChecked={changeCheckedMyPacks} checked={myPacks}/>
                     </div>
-                    <div style={{marginTop: "5px"}}>Number of cards <CustomRange getMin={getRangeMin}
-                                                                                 getMax={getRangeMax}/></div>
+                    <div style={{marginTop: "5px"}}>Number of cards <CustomRange getMin={() => {
+                    }}
+                                                                                 getMax={() => {
+                                                                                 }}/></div>
                 </div>
                 <div>
                     <InputText value={searchPackName} onChangeText={setSearchPackName}

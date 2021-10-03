@@ -91,7 +91,7 @@ export const sortByNameCardPack = () => ({type: 'PACKS/SORT_BY_NAME_PACK'} as co
 export const getPacksCards = (page?: number, pageCount?: number, packName?: string, userId?: string, sortPacks?: string, min?: number, max?: number) => async (dispatch: Dispatch<ActionTypes>) => {
     try {
         dispatch(setPreloader(true));
-        const response = await PacksListApi.getCardsPacks(page, pageCount, packName, min, max, userId, sortPacks);
+        const response = await PacksListApi.getCardsPacks(page, pageCount, packName, 0, 1000, userId, sortPacks);
         if (response.status === 200) {
             dispatch(setPacks(response.data.cardPacks));
             dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
@@ -142,7 +142,7 @@ export const deletePackCardById = (id: string) => async (dispatch: Dispatch) => 
 };
 
 
-export const updatePackCard = (payload: { _id: string, name: string, user_name?: string, private?: boolean }) => async (dispatch: Dispatch) => {
+export const updatePackCard = (payload: { _id: string, name: string, private?: boolean }) => async (dispatch: Dispatch) => {
     try {
         dispatch(setPreloader(true));
         const response = await PacksListApi.updateCardPack(payload);
