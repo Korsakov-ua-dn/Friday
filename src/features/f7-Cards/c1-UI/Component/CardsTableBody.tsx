@@ -5,20 +5,26 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../../main/m2-BLL/store";
 import {deleteCardTC, updateCardTC} from "../../c2-BLL/cards-reducer";
 import s from './CardsTableBody.module.css'
+import {UserType} from "../../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 
 type CardsTableBody = {
     cardsList: Array<ICardType>
 }
 export const TableBody: React.FC<CardsTableBody> = ({cardsList}) => {
+    debugger
     const [edit, setEdit] = useState<boolean>(false)
     const [editId, setEditId] = useState<string>('')
     const [question, setQuestion] = useState<string>('')
     const [answer, setAnswer] = useState<string>('')
 
     const dispatch = useDispatch()
-    const myId = useSelector<AppStoreType, string>(state => state.signIn.userId)
     const searchQuestion = useSelector<AppStoreType, string>(state => state.cards.searchQuestion)
     const searchAnswer = useSelector<AppStoreType, string>(state => state.cards.searchAnswer)
+    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user)
+
+    let myId = ''
+    if (user) myId = user._id
+
     const cardListView = cardsList
         .filter(card => card.question.indexOf(searchQuestion) > -1)
         .filter(card => card.answer.indexOf(searchAnswer) > -1)

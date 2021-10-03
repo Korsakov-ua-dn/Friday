@@ -19,26 +19,26 @@ import CustomRange from "./components/CustomRange/CustomRange";
 import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 
 export const PacksList = () => {
+    const [packName, setPackName] = useState<string>('');
+    const [myPacks, setMyPacks] = useState<boolean>(false);
+    const [searchPackName, setSearchPackName] = useState<string>('');
+
+    const dispatch = useDispatch();
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
     const cardPacksTotalCount = useSelector<AppStoreType, number>(state => state.packsList.cardPacksTotalCount);
     const pageCount = useSelector<AppStoreType, number>(state => state.packsList.pageCount);
     const page = useSelector<AppStoreType, number>(state => state.packsList.page);
     const isFetching = useSelector<AppStoreType, boolean>(state => state.packsList.isFetch);
-    const dispatch = useDispatch();
-    const [searchPackName, setSearchPackName] = useState<string>('');
-    const [packName, setPackName] = useState<string>('');
-    const [myPacks, setMyPacks] = useState<boolean>(false);
     const isInitialized = useSelector<AppStoreType, boolean>(state => state.app.initialized);
     const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
+
     let myId = '';
-    if (user) {
-        myId = user._id;
-    }
+    if (user) myId = user._id;
 
     const [min, setMin] = useState<number>(0);
     const [max, setMax] = useState<number>(0);
-
     const [sortPack, setSortPack] = useState<string>("");
+
     const clickHandlerForSortUpdate = () => {
         sortPack === "update" ? setSortPack('') :
             setSortPack("update");

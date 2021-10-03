@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addCardTC, getCardsTC, setPage} from "../c2-BLL/cards-reducer";
+import {addCardTC, getCardsTC, setCardPackId, setPage} from "../c2-BLL/cards-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
-import {Redirect, useHistory, useParams, useRouteMatch} from "react-router-dom";
+import {Redirect, useHistory, useParams} from "react-router-dom";
 import {TableBody} from "./Component/CardsTableBody";
 import s from "./Cards.module.css";
 import {Pagination} from "../../f6-PacksList/p1-UI/components/Pagination/Pagination";
@@ -29,23 +29,26 @@ export const CardsContainer = () => {
     const { cardPackId } = useParams<{ cardPackId: string }>()
 
     useEffect(() => {
-        cardPackId && dispatch(getCardsTC(cardPackId));
-    }, []);
+        dispatch(setCardPackId(cardPackId))
+    }, [cardPackId])
 
-    const changePageHandler = (page: number) => dispatch(setPage(page));
-    const addCardHandler = () => dispatch(addCardTC());
-    const historyBack = () => history.goBack();
+    useEffect(() => {
+        cardPackId && dispatch(getCardsTC())
+    }, [page, pageCount, cardPackId])
+
+    const changePageHandler = (page: number) => dispatch(setPage(page))
+    const addCardHandler = () => dispatch(addCardTC())
+    const historyBack = () => {
+        dispatch(setPage(1))
+        history.goBack()
+    }
 
     const tableHeaders: Array<HeaderOptionType> = [{headerTitle: "Question"}, {headerTitle: "Answer"}, {headerTitle: "Update"}, {headerTitle: "Grade"}];
     const tableBody = <TableBody cardsList={cardsList}/>;
 
 
-    if (!isInitialized) {
-        return <Preloader/>;
-    }
-    if (!user) {
-        return <Redirect to={Path.SIGN_IN_PATH}/>;
-    }
+    if (!isInitialized) return <Preloader/>
+    if (!user) return <Redirect to={Path.SIGN_IN_PATH}/>
 
     return (
         <>

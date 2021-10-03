@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {CardType} from "../p3-DAL/packsListApi";
 import {CustomNavlink} from "../../../common/c4-Navlink/CustomNavlink";
-import {Path} from "../../../main/m1-UI/Routes";
 
 type TableBodyTypeProps = {
     cardPacks: Array<CardType>

@@ -9,7 +9,7 @@ export type HeaderOptionType = {
 
 type TableTypeProps = {
     tableHeaders: Array<HeaderOptionType>,
-    tableBody?: any;
+    tableBody?: React.ReactNode;
 }
 
 export const Table = ({tableHeaders, tableBody}: TableTypeProps) => {
