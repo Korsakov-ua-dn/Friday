@@ -20,7 +20,7 @@ export enum Path {
     PROFILE_PATH = '/profile',
     TEST_PATH = '/test',
     LERGNOM_PACKS_LIST_PATH = '/packs-list',
-    CARDS_LIST_PATH = '/cards',
+    CARDS_LIST_PATH = '/cards/:cardPackId',
 }
 
 const Routes: React.FC = () => {

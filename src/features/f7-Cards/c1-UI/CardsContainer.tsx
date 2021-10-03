@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addCardTC, getCardsTC, setPage} from "../c2-BLL/cards-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
-import {Redirect, useHistory, useRouteMatch} from "react-router-dom";
+import {Redirect, useHistory, useParams, useRouteMatch} from "react-router-dom";
 import {TableBody} from "./Component/CardsTableBody";
 import s from "./Cards.module.css";
 import {Pagination} from "../../f6-PacksList/p1-UI/components/Pagination/Pagination";
@@ -26,15 +26,11 @@ export const CardsContainer = () => {
     const isInitialized = useSelector<AppStoreType, boolean>(state => state.app.initialized);
     const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
 
-
-    const urlParams = useRouteMatch<{ cardPackId: string }>("/cards/:cardPackId");
-    // if (urlParams?.isExact) {
-    //     console.log('cardPackId', urlParams.params.cardPackId);
-    // }
+    const { cardPackId } = useParams<{ cardPackId: string }>()
 
     useEffect(() => {
-        urlParams && dispatch(getCardsTC(urlParams.params.cardPackId, page, pageCount));
-    }, [urlParams?.params.cardPackId, page, pageCount, dispatch]);
+        cardPackId && dispatch(getCardsTC(cardPackId, page, pageCount));
+    }, []);
 
     const changePageHandler = (page: number) => dispatch(setPage(page));
     const addCardHandler = () => dispatch(addCardTC());

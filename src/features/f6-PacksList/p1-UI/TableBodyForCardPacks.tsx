@@ -49,7 +49,7 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
             <tr key={table._id}>
                 <th> {editId === table._id && edit ?
                     <input onChange={onChangeHandlerChangeNameCardPack} value={changeNameCardPack}/> :
-                    <CustomNavlink to={`${Path.CARDS_LIST_PATH}/${table._id}`} body={table.name}/>}
+                    <CustomNavlink to={`/cards/${table._id}`} body={table.name}/>}
                 </th>
                 <td>{table.cardsCount}</td>
                 <td>{lastUpdate}</td>
