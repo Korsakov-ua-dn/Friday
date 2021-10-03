@@ -6,8 +6,8 @@ const initialstate = {
     cardsList: [] as Array<ICardType>,
     cardsPack_id: '',
     cardsTotalCount: 0,
-    page: 0,
-    pageCount: 0,
+    page: 1,
+    pageCount: 5,
     loading: false,
     errorMessage: '',
     searchQuestion: '',
@@ -41,27 +41,30 @@ export const setSearchQuestion = (value: string) => ({type: "CARDS-LIST/SET_SEAR
 export const setSearchAnswer = (value: string) => ({type: "CARDS-LIST/SET_SEARCH_ANSWER", value} as const)
 
 // thunks
-export const getCardsTC = (cardsListId: string, page?: number, pageCount?: number) => (dispatch: Dispatch) => {
+export const getCardsTC = (cardsPack_id: string):ThunkTypes => (dispatch, getState: any) => {
+    dispatch(setCardPackId(cardsPack_id))
+    const state = getState().cards
+    const page = state.page
+    const pageCount = state.pageCount
+
     dispatch(setLoading(true))
-    cardsApi.getCards(cardsListId, page, pageCount)
+    cardsApi.getCards(cardsPack_id, page, pageCount)
         .then(res => {
             dispatch(setCardsTotalCount(res.data.cardsTotalCount))
-            dispatch(setPage(res.data.page))
-            dispatch(setPageCount(res.data.pageCount))
             dispatch(setCards(res.data.cards))
-            dispatch(setCardPackId(cardsListId))
         })
         .catch(e => {
             const errorMessage = e.response?.data?.error || "Unknown error!"
             dispatch(setError(errorMessage))
         })
-        .finally( () => dispatch(setLoading(false)) )
+        .finally( () => {
+            dispatch(setLoading(false))
+        } )
 }
 export const addCardTC = ():ThunkTypes =>
     (dispatch, getState: any) => {
     const state = getState().cards
     const cardsPack_id = state.cardsPack_id
-    const pageCount = state.pageCount
     const payload = {
         cardsPack_id,
         question: "Yo, or not Yo Bro?",
@@ -69,7 +72,7 @@ export const addCardTC = ():ThunkTypes =>
     }
     dispatch(setLoading(true))
     cardsApi.addNewCard(payload)
-        .then(res => dispatch(getCardsTC(cardsPack_id, 1, pageCount)))
+        .then(res => dispatch(getCardsTC(cardsPack_id)))
         .catch(e => {
             const errorMessage = e.response?.data?.error || "Unknown error!"
             dispatch(setError(errorMessage))
@@ -79,10 +82,9 @@ export const deleteCardTC = (id: string):ThunkTypes =>
     (dispatch, getState: any) => {
     const state = getState().cards
     const cardsPack_id = state.cardsPack_id
-    const pageCount = state.pageCount
     dispatch(setLoading(true))
     cardsApi.deleteCard(id)
-        .then(res => dispatch(getCardsTC(cardsPack_id, 1, pageCount)))
+        .then(res => dispatch(getCardsTC(cardsPack_id)))
         .catch(e => {
             const errorMessage = e.response?.data?.error || "Unknown error!"
             dispatch(setError(errorMessage))
@@ -92,7 +94,6 @@ export const updateCardTC  = (_id: string, question: string, answer: string):Thu
     (dispatch, getState: any) => {
     const state = getState().cards
     const cardsPack_id = state.cardsPack_id
-    const pageCount = state.pageCount
     const payload = {
         _id,
         question,
@@ -100,7 +101,7 @@ export const updateCardTC  = (_id: string, question: string, answer: string):Thu
     }
     dispatch(setLoading(true))
     cardsApi.updateCard(payload)
-        .then(res => dispatch(getCardsTC(cardsPack_id, 1, pageCount)))
+        .then(res => dispatch(getCardsTC(cardsPack_id)))
         .catch(e => {
             const errorMessage = e.response?.data?.error || "Unknown error!"
             dispatch(setError(errorMessage))

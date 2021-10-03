@@ -29,7 +29,7 @@ export const CardsContainer = () => {
     const { cardPackId } = useParams<{ cardPackId: string }>()
 
     useEffect(() => {
-        cardPackId && dispatch(getCardsTC(cardPackId, page, pageCount));
+        cardPackId && dispatch(getCardsTC(cardPackId));
     }, []);
 
     const changePageHandler = (page: number) => dispatch(setPage(page));
