@@ -29,14 +29,14 @@ export const signInReducer = (state: SignInStateType = initialState, action: Act
 };
 
 // actions
-const authUserAC = (user: UserType) => ({type: "SIGN-IN/AUTH-USER", user} as const);
+export const authUserAC = (user: UserType | null) => ({type: "SIGN-IN/AUTH-USER", user} as const);
 const loaderAC = (loading: boolean) => ({type: "SIGN-IN/LOADER", loading} as const);
 export const errorRequestAC = (error: string) => ({type: "SIGN-IN/ERROR", error} as const);
 //action lergnom
 type GetUserIdActionType = ReturnType<typeof getUserId>;
 const getUserId = (userId: string) => ({type: 'SIGN-IN/USER_ID', userId} as const);
 type CheckIsAuthActionType = ReturnType<typeof setIsAuth>
-const setIsAuth = (isAuth: boolean) => ({type: 'SIGN-IN/CHECK_IS_AUTH', isAuth} as const);
+export const setIsAuth = (isAuth: boolean) => ({type: 'SIGN-IN/CHECK_IS_AUTH', isAuth} as const);
 
 //thunk lergnom no need
 export const checkUserIsAuth = () => async (dispatch: Dispatch<ActionsType>) => {
@@ -44,6 +44,7 @@ export const checkUserIsAuth = () => async (dispatch: Dispatch<ActionsType>) => 
         const response = await signAPI.authMe();
         if (response.status === 200) {
             dispatch(authUserAC(response.data));
+            dispatch(setIsAuth(true));
         }
     } catch (err) {
     }
@@ -57,6 +58,7 @@ export const userAuthRequestTC = (loginData: LoginData) => (dispatch: Dispatch) 
         .then(res => {
             dispatch(authUserAC(res.data));
             dispatch(getUserId(res.data._id));
+
         })
         .catch(e => {
             const errorMessage = e.response?.data?.error || "Unknown error!";

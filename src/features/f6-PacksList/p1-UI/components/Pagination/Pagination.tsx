@@ -12,7 +12,10 @@ type PaginationTypes = {
 export const Pagination = ({totalCount, count, page, onChangePage, acc = 10}: PaginationTypes) => {
     const [visPre, setVisPre] = useState<boolean>(false);
     const [visNext, setVisNext] = useState<boolean>(false);
+
+
     let pageNumbers: number = Math.ceil(totalCount / count);
+
     let pages = [];
     for (let i = 1; i <= pageNumbers; i++) {
         pages.push(i);
@@ -28,6 +31,9 @@ export const Pagination = ({totalCount, count, page, onChangePage, acc = 10}: Pa
         nextPage === page ? setVisNext(true) : setVisNext(false);
     }, [page, nextPage, previosPage]);
 
+    if (isNaN(pageNumbers)) {
+        return <div></div>;
+    }
     return (
         <div className={s.paginationWrapper}>
             <ul className={s.pagination}>

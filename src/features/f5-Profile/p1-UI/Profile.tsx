@@ -1,33 +1,33 @@
 import React from "react";
-import classes from './Profile.module.css'
+import classes from './Profile.module.css';
 import Button from "../../../common/c2-Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
-import {Redirect} from "react-router-dom";
-import {Path} from "../../../main/m1-UI/Routes";
 import {InputText} from "../../../common/c1-Input/InputText";
 import {logoutThunk, ProfileState} from "../p2-BLL/Profile-reducer";
+import {Redirect} from "react-router-dom";
+import {Path} from "../../../main/m1-UI/Routes";
 import {Preloader} from "../../../common/c5-Loader/Preloader";
 
 
 export const Profile: React.FC = () => {
 
-    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user)
-    const profile = useSelector<AppStoreType, ProfileState >(state => state.profile)
-    const dispatch = useDispatch()
+    const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
+    const profile = useSelector<AppStoreType, ProfileState>(state => state.profile);
+    const dispatch = useDispatch();
 
     if (profile.loading) {
         return (
             <Preloader/>
-        )
+        );
     }
 
+
     if (!user) {
-        return (
-            <Redirect to={Path.SIGN_IN_PATH}/>
-        )
+        return <Redirect to={Path.SIGN_IN_PATH}/>;
     }
+
 
     return (
         <>
@@ -63,5 +63,5 @@ export const Profile: React.FC = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
