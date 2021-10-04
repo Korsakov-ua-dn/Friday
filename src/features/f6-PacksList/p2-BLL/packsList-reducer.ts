@@ -47,6 +47,11 @@ type ActionTypes =
 
 type PacksListStateType = typeof initialState;
 
+export type ThunkType<TActions extends Action> = ThunkAction<Promise<void>,
+    AppStoreType,
+    unknown,
+    TActions>
+
 export const packsListReducer = (state: PacksListStateType = initialState, action: ActionTypes): PacksListStateType => {
     switch (action.type) {
         case "PACKS/SET_MY_PACKS": {
@@ -112,7 +117,7 @@ export const setPreloader = (isFetch: boolean) => ({type: 'PACKS/PRELOADER', isF
 export const sortByNameCardPack = () => ({type: 'PACKS/SORT_BY_NAME_PACK'} as const);
 
 
-//thunk
+// main thunk
 export const getPacksCards = (packName?: string, sortPacks?: string) => async (dispatch: Dispatch<ActionTypes>, getState: () => AppStoreType) => {
     const {pageCount, page, minCardsCount, maxCardsCount, myPacks} = getState().packsList;
     let user = getState().signIn.user;
@@ -128,9 +133,7 @@ export const getPacksCards = (packName?: string, sortPacks?: string) => async (d
         dispatch(setPageCount(response.data.pageCount));
         dispatch(setPage(response.data.page));
     } catch (err) {
-        console.log(err);
-        // const errorMessage = err?.response?.data?.error || "some error :("
-        // dispatch(setError(errorMessage))
+        console.log('error :(', err);
     } finally {
         dispatch(setPreloader(false));
     }
@@ -139,15 +142,13 @@ export const getPacksCards = (packName?: string, sortPacks?: string) => async (d
 
 //Function CRUD
 //Create new pack card
-export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<ActionTypes | any>, getState: () => AppStoreType) => {
+export const addNewPackCard = (payload: { name: string, user_name?: string }): ThunkType<SetPreloaderActionType | SetPageActionType> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.addNewCardPack(payload);
-        dispatch(getPacksCards());
+        await dispatch(getPacksCards());
         dispatch(setPage(1));
     } catch (err) {
-
-        //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
     } finally {
         dispatch(setPreloader(false));
@@ -155,15 +156,14 @@ export const addNewPackCard = (payload: { name: string, user_name?: string }) =>
 };
 
 //Delete  pack card by ID
-export const deletePackCardById = (id: string): ThunkType<any> => async (dispatch) => {
+export const deletePackCardById = (id: string): ThunkType<SetPreloaderActionType | SetPageActionType> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.deleteCardPack(id);
-        dispatch(getPacksCards());
+        await dispatch(getPacksCards());
         dispatch(setPage(1));
 
     } catch (err) {
-        //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
     } finally {
         dispatch(setPreloader(false));
@@ -171,44 +171,41 @@ export const deletePackCardById = (id: string): ThunkType<any> => async (dispatc
 };
 
 
-export const updatePackCard = (payload: { _id: string, name: string, private?: boolean }): ThunkType<any> => async (dispatch) => {
+export const updatePackCard = (payload: { _id: string, name: string, private?: boolean }): ThunkType<SetPreloaderActionType | SetPacksActionType | SetPageActionType> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.updateCardPack(payload);
-        dispatch(getPacksCards());
+        await dispatch(getPacksCards());
         dispatch(setPage(1));
 
     } catch (err) {
-        //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
     } finally {
         dispatch(setPreloader(false));
     }
 };
 
-export const getMinCountPackCard = (min: number): ThunkType<SetPreloaderActionType | SetMinCardsCountActionType | SetPageActionType | any> => async (dispatch) => {
+export const getMinCountPackCard = (min: number): ThunkType<SetPreloaderActionType | SetMinCardsCountActionType | SetPageActionType> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         dispatch(setMinCardsCount(min));
-        dispatch(getPacksCards());
+        await dispatch(getPacksCards());
         dispatch(setPage(1));
     } catch (err) {
-        //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
     } finally {
         dispatch(setPreloader(false));
     }
 };
 
-export const getMaxCountPackCard = (max: number): ThunkType<SetPreloaderActionType | SetMaxCardsCountActionType | SetPageActionType | any> => async (dispatch) => {
+export const getMaxCountPackCard = (max: number): ThunkType<SetPreloaderActionType | SetMaxCardsCountActionType | SetPageActionType> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         dispatch(setMaxCardsCount(max));
-        dispatch(getPacksCards());
+        await dispatch(getPacksCards());
         dispatch(setPage(1));
 
     } catch (err) {
-        //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
     } finally {
         dispatch(setPreloader(false));
@@ -220,9 +217,4 @@ export const getMyPacksCards = (status: boolean) => (dispatch: Dispatch<SetMyPac
     dispatch(setMyPacks(status));
 };
 
-
-export type ThunkType<TActions extends Action> = ThunkAction<Promise<void>,
-    PacksListStateType,
-    unknown,
-    TActions>
 
