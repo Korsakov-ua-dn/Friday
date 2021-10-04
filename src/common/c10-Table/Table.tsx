@@ -21,15 +21,6 @@ export const Table = ({tableHeaders, tableBody}: TableTypeProps) => {
         );
     });
 
-    // const bodyTableJSX = tableBody ? tableBody.map(table => {
-    //     return (<tr >
-    //         <th key={table._id} scope="row">{table.name}</th>
-    //         <td>{table.cardsCount}</td>
-    //         <td>{table.updated}</td>
-    //         <td>{table.user_name}</td>
-    //         <td></td>
-    //     </tr>);
-    // }) : ['null'];
 
     return (
         <>

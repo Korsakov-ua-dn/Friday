@@ -29,6 +29,7 @@ const initialState = {
     page: 1,
     pageCount: 6,
     isFetch: false,
+    errorMessage: '',
 };
 
 type ActionTypes =
@@ -38,11 +39,21 @@ type ActionTypes =
     | SetPageActionType
     | SetPreloaderActionType
     | SortByNameCardPackActionType
+    | ReturnType<typeof setError>
+    | ReturnType<typeof setMaxCardsCount>
+    | ReturnType<typeof setMinCardsCount>
 
 type PacksListStateType = typeof initialState;
 
 export const packsListReducer = (state: PacksListStateType = initialState, action: ActionTypes): PacksListStateType => {
     switch (action.type) {
+        case "PACKS/SET_MAX_CARDS_COUNT": {
+            return {...state, maxCardsCount: action.max};
+        }
+        case "PACKS/SET_MIN_CARDS_COUNT": {
+            return {...state, minCardsCount: action.min};
+        }
+
         case "PACKS/SORT_BY_NAME_PACK": {
             return {
                 ...state, cardPacks: state.cardPacks.sort((a, b) => a.name.localeCompare(b.name))
@@ -82,6 +93,9 @@ const setPacks = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS', packs} a
 const setPacksTotalCount = (totalCount: number) => ({type: 'PACKS/SET_PACKS_TOTAL_COUNT', totalCount} as const);
 export const setPageCount = (count: number) => ({type: 'PACKS/SET_PAGE_COUNT', count} as const);
 export const setPage = (page: number) => ({type: 'PACKS/SET_PAGE', page} as const);
+const setError = (errorMessage: string) => ({type: "PACKS/SET_ERROR", errorMessage} as const);
+const setMinCardsCount = (min: number) => ({type: "PACKS/SET_MIN_CARDS_COUNT", min} as const);
+const setMaxCardsCount = (max: number) => ({type: "PACKS/SET_MAX_CARDS_COUNT", max} as const);
 
 //set query
 export const setPreloader = (isFetch: boolean) => ({type: 'PACKS/PRELOADER', isFetch} as const);
@@ -95,14 +109,15 @@ export const getPacksCards = (packName?: string, userId?: string, sortPacks?: st
     try {
 
         dispatch(setPreloader(true));
-        const response = await PacksListApi.getCardsPacks(page, pageCount, packName, 0, 1000, userId, sortPacks);
+        const response = await PacksListApi.getCardsPacks(page, pageCount, packName, minCardsCount, maxCardsCount, userId, sortPacks);
         dispatch(setPacks(response.data.cardPacks));
         dispatch(setPacksTotalCount(response.data.cardPacksTotalCount));
         dispatch(setPageCount(response.data.pageCount));
         dispatch(setPage(response.data.page));
     } catch (err) {
-        //Check and SHOW ERRORS NEED MAKE
-        console.warn('some error :(');
+        console.log(err);
+        // const errorMessage = err?.response?.data?.error || "some error :("
+        // dispatch(setError(errorMessage))
     } finally {
         dispatch(setPreloader(false));
     }
@@ -111,13 +126,14 @@ export const getPacksCards = (packName?: string, userId?: string, sortPacks?: st
 
 //Function CRUD
 //Create new pack card
-export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<ActionTypes>, getState: () => AppStoreType) => {
+export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<any>, getState: () => AppStoreType) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.addNewCardPack(payload);
-        // @ts-ignore
         dispatch(getPacksCards());
+        dispatch(setPage(1));
     } catch (err) {
+
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
     } finally {
@@ -126,11 +142,13 @@ export const addNewPackCard = (payload: { name: string, user_name?: string }) =>
 };
 
 //Delete  pack card by ID
-export const deletePackCardById = (id: string) => async (dispatch: Dispatch) => {
+export const deletePackCardById = (id: string) => async (dispatch: Dispatch<any>) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.deleteCardPack(id);
-        dispatch(setPage(0));
+        dispatch(getPacksCards());
+        dispatch(setPage(1));
+
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
@@ -140,11 +158,14 @@ export const deletePackCardById = (id: string) => async (dispatch: Dispatch) => 
 };
 
 
-export const updatePackCard = (payload: { _id: string, name: string, private?: boolean }) => async (dispatch: Dispatch) => {
+export const updatePackCard = (payload: { _id: string, name: string, private?: boolean }): ThunkTypes => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.updateCardPack(payload);
-        dispatch(setPage(0));
+        // @ts-ignore
+        dispatch(getPacksCards());
+        dispatch(setPage(1));
+
     } catch (err) {
         //Check and SHOW ERRORS NEED MAKE
         console.log('error :(', err);
@@ -152,8 +173,41 @@ export const updatePackCard = (payload: { _id: string, name: string, private?: b
         dispatch(setPreloader(false));
     }
 };
+
+export const getMinCountPackCard = (min: number): ThunkTypes => (dispatch) => {
+    try {
+        dispatch(setPreloader(true));
+        dispatch(setMinCardsCount(min));
+        // @ts-ignore
+        dispatch(getPacksCards());
+        dispatch(setPage(1));
+    } catch (err) {
+        //Check and SHOW ERRORS NEED MAKE
+        console.log('error :(', err);
+    } finally {
+        dispatch(setPreloader(false));
+    }
+};
+
+export const getMaxCountPackCard = (max: number): ThunkTypes => (dispatch) => {
+    try {
+        dispatch(setPreloader(true));
+        dispatch(setMaxCardsCount(max));
+        // @ts-ignore
+        dispatch(getPacksCards());
+        dispatch(setPage(1));
+
+    } catch (err) {
+        //Check and SHOW ERRORS NEED MAKE
+        console.log('error :(', err);
+    } finally {
+        dispatch(setPreloader(false));
+    }
+};
+
 
 export type ThunkTypes<ReturnType = void> = ThunkAction<ReturnType,
     PacksListStateType,
     unknown,
     ActionTypes>
+

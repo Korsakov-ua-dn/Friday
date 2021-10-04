@@ -3,7 +3,14 @@ import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
 import {CardType} from "../p3-DAL/packsListApi";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
-import {addNewPackCard, getPacksCards, setPage, setPageCount} from "../p2-BLL/packsList-reducer";
+import {
+    addNewPackCard,
+    getMaxCountPackCard,
+    getMinCountPackCard,
+    getPacksCards,
+    setPage,
+    setPageCount
+} from "../p2-BLL/packsList-reducer";
 import {Pagination} from "./components/Pagination/Pagination";
 import s from './PacksList.module.css';
 import {MySelect} from "./components/Select/MySelect";
@@ -33,10 +40,9 @@ export const PacksList = () => {
     const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
 
     let myId = '';
-    if (user) myId = user._id;
-
-    const [min, setMin] = useState<number>(0);
-    const [max, setMax] = useState<number>(0);
+    if (user) {
+        myId = user._id;
+    }
     const [sortPack, setSortPack] = useState<string>("");
 
     const clickHandlerForSortUpdate = () => {
@@ -56,8 +62,6 @@ export const PacksList = () => {
         {headerTitle: "Created by"},
         {headerTitle: "Actions"}];
 
-    //TableBodyfor Example
-    const tableBody = <TableBodyForCardPacks myId={myId} cardPacks={cardPacks}/>;
     //Count cardsPacks into one page
     const optionsForSelector = [5, 10, 15];
 
@@ -96,10 +100,12 @@ export const PacksList = () => {
     };
 
     const getRangeMin = (min: number) => {
-        setMin(min);
+        console.log(min);
+        dispatch(getMinCountPackCard(min));
+
     };
     const getRangeMax = (max: number) => {
-        setMax(max);
+        dispatch(getMaxCountPackCard(max));
     };
 
     if (!isInitialized) {
@@ -119,10 +125,8 @@ export const PacksList = () => {
                         <span style={{marginRight: "5px"}}>My Packs</span>
                         <ToggleCheckBox onChangeChecked={changeCheckedMyPacks} checked={myPacks}/>
                     </div>
-                    <div style={{marginTop: "5px"}}>Number of cards <CustomRange getMin={() => {
-                    }}
-                                                                                 getMax={() => {
-                                                                                 }}/></div>
+                    <div style={{marginTop: "5px"}}>Number of cards <CustomRange getMin={getRangeMin}
+                                                                                 getMax={getRangeMax}/></div>
                 </div>
                 <div>
                     <InputText value={searchPackName} onChangeText={setSearchPackName}
@@ -132,7 +136,8 @@ export const PacksList = () => {
                 </div>
             </div>
             <div className={s.packListTableWrapper}>
-                <Table tableHeaders={tableHeaders} tableBody={tableBody}/>
+                <Table tableHeaders={tableHeaders}
+                       tableBody={<TableBodyForCardPacks myId={myId} cardPacks={cardPacks}/>}/>
             </div>
 
             <div className={s.packsListFooterWrapper}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import s from './CustomRange.module.css';
 
 
@@ -9,7 +9,6 @@ type SuperDoubleRangePropsType = {
 }
 
 const CustomRange: React.FC<SuperDoubleRangePropsType> = ({getMin, getMax, width = 100}) => {
-    console.log("RANGE COMPONENT");
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(width - 10);
     const [minPoint, setMinPoint] = useState<number>(0);
@@ -20,11 +19,6 @@ const CustomRange: React.FC<SuperDoubleRangePropsType> = ({getMin, getMax, width
 
     const [minEnabled, setMinEnabled] = useState<boolean>(false);
     const [maxEnabled, setMaxEnabled] = useState<boolean>(false);
-
-    useEffect(() => {
-        getMin(minVal);
-        getMax(maxVal);
-    }, [getMin, getMax, maxVal, minVal]);
 
 
     const mouseMoveHandler = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -56,8 +50,14 @@ const CustomRange: React.FC<SuperDoubleRangePropsType> = ({getMin, getMax, width
         e.currentTarget.id === 'max' && setMaxEnabled(true);
     };
     const mouseUpHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.currentTarget.id === 'min' && setMinEnabled(false);
-        e.currentTarget.id === 'max' && setMaxEnabled(false);
+        if (e.currentTarget.id === 'min') {
+            setMinEnabled(false);
+            getMin(minVal);
+        }
+        if (e.currentTarget.id === 'max') {
+            setMaxEnabled(false);
+            getMax(maxVal);
+        }
     };
 
     const setValueMin = () => {
