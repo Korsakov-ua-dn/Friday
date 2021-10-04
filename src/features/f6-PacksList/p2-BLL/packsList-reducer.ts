@@ -40,10 +40,9 @@ type ActionTypes =
     | SetPageActionType
     | SetPreloaderActionType
     | SortByNameCardPackActionType
-    | ReturnType<typeof setError>
-    | ReturnType<typeof setMaxCardsCount>
-    | ReturnType<typeof setMinCardsCount>
-    | ReturnType<typeof setMyPacks>
+    | SetMaxCardsCountActionType
+    | SetMinCardsCountActionType
+    | SetMyPacksActionType
 
 
 type PacksListStateType = typeof initialState;
@@ -93,6 +92,10 @@ type SetPageCountActionType = ReturnType<typeof setPageCount>
 type SetPageActionType = ReturnType<typeof setPage>
 type SetPreloaderActionType = ReturnType<typeof setPreloader>
 type SortByNameCardPackActionType = ReturnType<typeof sortByNameCardPack>
+type SetMaxCardsCountActionType = ReturnType<typeof setMaxCardsCount>
+type SetMinCardsCountActionType = ReturnType<typeof setMinCardsCount>
+type SetMyPacksActionType = ReturnType<typeof setMyPacks>
+
 
 //action
 const setPacks = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS', packs} as const);
@@ -103,12 +106,11 @@ const setError = (errorMessage: string) => ({type: "PACKS/SET_ERROR", errorMessa
 const setMinCardsCount = (min: number) => ({type: "PACKS/SET_MIN_CARDS_COUNT", min} as const);
 const setMaxCardsCount = (max: number) => ({type: "PACKS/SET_MAX_CARDS_COUNT", max} as const);
 const setMyPacks = (status: boolean) => ({type: "PACKS/SET_MY_PACKS", status} as const);
-
 //set query
 export const setPreloader = (isFetch: boolean) => ({type: 'PACKS/PRELOADER', isFetch} as const);
-
 //sortByNameCardPack
 export const sortByNameCardPack = () => ({type: 'PACKS/SORT_BY_NAME_PACK'} as const);
+
 
 //thunk
 export const getPacksCards = (packName?: string, sortPacks?: string) => async (dispatch: Dispatch<ActionTypes>, getState: () => AppStoreType) => {
@@ -137,7 +139,7 @@ export const getPacksCards = (packName?: string, sortPacks?: string) => async (d
 
 //Function CRUD
 //Create new pack card
-export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<any>, getState: () => AppStoreType) => {
+export const addNewPackCard = (payload: { name: string, user_name?: string }) => async (dispatch: Dispatch<ActionTypes | any>, getState: () => AppStoreType) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.addNewCardPack(payload);
@@ -153,7 +155,7 @@ export const addNewPackCard = (payload: { name: string, user_name?: string }) =>
 };
 
 //Delete  pack card by ID
-export const deletePackCardById = (id: string) => async (dispatch: Dispatch<any>) => {
+export const deletePackCardById = (id: string): ThunkType<any> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.deleteCardPack(id);
@@ -169,11 +171,10 @@ export const deletePackCardById = (id: string) => async (dispatch: Dispatch<any>
 };
 
 
-export const updatePackCard = (payload: { _id: string, name: string, private?: boolean }): ThunkTypes => async (dispatch) => {
+export const updatePackCard = (payload: { _id: string, name: string, private?: boolean }): ThunkType<any> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         await PacksListApi.updateCardPack(payload);
-        // @ts-ignore
         dispatch(getPacksCards());
         dispatch(setPage(1));
 
@@ -185,7 +186,7 @@ export const updatePackCard = (payload: { _id: string, name: string, private?: b
     }
 };
 
-export const getMinCountPackCard = (min: number): ThunkType<any> => async (dispatch) => {
+export const getMinCountPackCard = (min: number): ThunkType<SetPreloaderActionType | SetMinCardsCountActionType | SetPageActionType | any> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         dispatch(setMinCardsCount(min));
@@ -199,11 +200,10 @@ export const getMinCountPackCard = (min: number): ThunkType<any> => async (dispa
     }
 };
 
-export const getMaxCountPackCard = (max: number): ThunkTypes => (dispatch) => {
+export const getMaxCountPackCard = (max: number): ThunkType<SetPreloaderActionType | SetMaxCardsCountActionType | SetPageActionType | any> => async (dispatch) => {
     try {
         dispatch(setPreloader(true));
         dispatch(setMaxCardsCount(max));
-        // @ts-ignore
         dispatch(getPacksCards());
         dispatch(setPage(1));
 
@@ -216,15 +216,10 @@ export const getMaxCountPackCard = (max: number): ThunkTypes => (dispatch) => {
 };
 
 
-export const getMyPacksCards = (status: boolean) => async (dispatch: Dispatch<any>, getState: () => AppStoreType) => {
+export const getMyPacksCards = (status: boolean) => (dispatch: Dispatch<SetMyPacksActionType>) => {
     dispatch(setMyPacks(status));
 };
 
-
-export type ThunkTypes<ReturnType = void> = ThunkAction<ReturnType,
-    PacksListStateType,
-    unknown,
-    ActionTypes>
 
 export type ThunkType<TActions extends Action> = ThunkAction<Promise<void>,
     PacksListStateType,
