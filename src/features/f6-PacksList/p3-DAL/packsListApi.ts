@@ -52,7 +52,7 @@ export const PacksListApi = {
     },
 
     addNewCardPack(payload: { name: string, user_name?: string }) {
-        return instance.post<ResponseType>(`cards/pack/`, {cardsPack: payload});
+        return instance.post(`cards/pack/`, {cardsPack: payload});
     },
     deleteCardPack(id: string) {
         return instance.delete(`cards/pack/?id=${id}`);

@@ -7,6 +7,7 @@ import {
     addNewPackCard,
     getMaxCountPackCard,
     getMinCountPackCard,
+    getMyPacksCards,
     getPacksCards,
     setPage,
     setPageCount
@@ -24,33 +25,41 @@ import {Redirect} from "react-router-dom";
 import {Path} from "../../../main/m1-UI/Routes";
 import CustomRange from "./components/CustomRange/CustomRange";
 import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
+import useDebounce from "./hooks/Debounce";
 
 export const PacksList = () => {
-    const [packName, setPackName] = useState<string>('');
-    const [myPacks, setMyPacks] = useState<boolean>(false);
-    const [searchPackName, setSearchPackName] = useState<string>('');
 
-    const dispatch = useDispatch();
+    const [packName, setPackName] = useState<string>('');
+    const [searchPackName, setSearchPackName] = useState<string>('');
+    const [sortPack, setSortPack] = useState<string>("");
+
+    //for show my Packs
+    const myPacks = useSelector<AppStoreType, boolean>(state => state.packsList.myPacks);
+    //for Table Body
     const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
+    //for pagination
     const cardPacksTotalCount = useSelector<AppStoreType, number>(state => state.packsList.cardPacksTotalCount);
     const pageCount = useSelector<AppStoreType, number>(state => state.packsList.pageCount);
     const page = useSelector<AppStoreType, number>(state => state.packsList.page);
+    //for Preloader
     const isFetching = useSelector<AppStoreType, boolean>(state => state.packsList.isFetch);
+    //for Render
     const isInitialized = useSelector<AppStoreType, boolean>(state => state.app.initialized);
     const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
+
+    const dispatch = useDispatch();
 
     let myId = '';
     if (user) {
         myId = user._id;
     }
-    const [sortPack, setSortPack] = useState<string>("");
 
     const clickHandlerForSortUpdate = () => {
         sortPack === "update" ? setSortPack('') :
             setSortPack("update");
     };
 
-    // Data for table
+    // Data for Header Table
     const tableHeaders: Array<HeaderOptionType> = [
         {headerTitle: 'Name',},
         {headerTitle: "Cards"},
@@ -65,20 +74,31 @@ export const PacksList = () => {
     //Count cardsPacks into one page
     const optionsForSelector = [5, 10, 15];
 
-    useEffect(() => {
-        const myCardsPacks = myPacks ? myId : '';
-        dispatch(getPacksCards(searchPackName, myCardsPacks, sortPack));
-    }, [page, pageCount, searchPackName, dispatch, myPacks, sortPack, myId]);
 
+    // useDebounce hook for delay searchPackName
+    const debouncedSearchPackName = useDebounce(searchPackName, 1000);
+    useEffect(() => {
+        if (debouncedSearchPackName) {
+            setSearchPackName(debouncedSearchPackName);
+        }
+    }, [debouncedSearchPackName]);
+    // Example with Lodash // const searchPaymentByLastName = useCallback(debounce((value: string) => { dispatch(getInitialPayments({lastName: value})) }, 500),[])
+
+
+    useEffect(() => {
+        dispatch(getPacksCards(debouncedSearchPackName, sortPack));
+    }, [page, pageCount, debouncedSearchPackName, dispatch, myPacks, sortPack]);
+
+    //For  test field
     useEffect(() => {
         const test = setTestData();
         setPackName(test['name']);
     }, []);
 
 
-    // 0Added new pack and new query Cards Pack
+    //Added new pack and new query Cards Pack
     const clickHandlerAddNewPack = () => {
-        dispatch(addNewPackCard({name: packName}));
+        dispatch(addNewPackCard({name: packName, user_name: 'name'}));
         //Add Test data
         const test = setTestData();
         setPackName(test['name']);
@@ -95,12 +115,11 @@ export const PacksList = () => {
     };
 
 
-    const changeCheckedMyPacks = () => {
-        setMyPacks(!myPacks);
+    const changeCheckedMyPacks = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(getMyPacksCards(e.currentTarget.checked));
     };
 
     const getRangeMin = (min: number) => {
-        console.log(min);
         dispatch(getMinCountPackCard(min));
 
     };
@@ -123,7 +142,7 @@ export const PacksList = () => {
                 <div>
                     <div>
                         <span style={{marginRight: "5px"}}>My Packs</span>
-                        <ToggleCheckBox onChangeChecked={changeCheckedMyPacks} checked={myPacks}/>
+                        <ToggleCheckBox onChange={changeCheckedMyPacks} checked={myPacks}/>
                     </div>
                     <div style={{marginTop: "5px"}}>Number of cards <CustomRange getMin={getRangeMin}
                                                                                  getMax={getRangeMax}/></div>
