@@ -21,7 +21,7 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
                 cardPacks.map(table => {
 
                     const jsDate = new Date(Date.parse(table.updated));
-                    const lastUpdate = `${jsDate.getDate()}-${jsDate.getMonth() + 1}-${jsDate.getFullYear()}  ${jsDate.getHours()}:${jsDate.getMinutes()}`;
+                    const lastUpdate = `${jsDate.getDate()>9?jsDate.getDate():`0${jsDate.getDate()}`}-${jsDate.getMonth() + 1>9?jsDate.getMonth() + 1:`0${jsDate.getMonth() + 1}`}-${jsDate.getFullYear()}  ${jsDate.getHours()>9?jsDate.getHours():`0${jsDate.getHours()}`}:${jsDate.getMinutes() > 9 ? jsDate.getMinutes() : `0${jsDate.getMinutes()}`}`;
 
                     return (
                         <tr key={table._id}>

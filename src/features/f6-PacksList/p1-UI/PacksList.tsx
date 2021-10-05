@@ -129,7 +129,7 @@ export const PacksList = () => {
                 </div>
                 <div>
                     <InputText value={searchPackName} onChangeText={setSearchPackName}
-                               label={"Search by Pack Name  🔍"}/>
+                               label={"Search by Pack Name   🔍"}/>
                 </div>
                 <div><AddCardPackModalContainer/></div>
             </div>
