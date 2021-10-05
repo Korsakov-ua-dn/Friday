@@ -8,6 +8,7 @@ import {profileReducer} from '../../features/f5-Profile/p2-BLL/Profile-reducer';
 import {packsListReducer} from "../../features/f6-PacksList/p2-BLL/packsList-reducer";
 import {cardsReducer} from "../../features/f7-Cards/c2-BLL/cards-reducer";
 import {appReducer} from "../../features/f0-Initialized/app-reducer";
+import {learnReducer} from "../../features/f9-Learn/l2-BLL/learn-reducer";
 
 
 const reducers = combineReducers({
@@ -19,6 +20,7 @@ const reducers = combineReducers({
     packsList: packsListReducer,
     cards: cardsReducer,
     app: appReducer,
+    learn: learnReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));

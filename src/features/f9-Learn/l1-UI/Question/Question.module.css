@@ -1,0 +1,19 @@
+.questionWrapper h1 {
+    padding: 15px 0
+}
+
+.questionWrapper h2 {
+    padding: 35px 0
+}
+
+.buttonsWrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.answerTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 0;
+}

@@ -5,6 +5,7 @@
     border-radius: 20px;
     transition-duration: 0.4s;
     font-size: 16px;
+    cursor: pointer;
 }
 
 .default {

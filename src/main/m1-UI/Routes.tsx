@@ -8,6 +8,7 @@ import {ForgotContainer} from '../../features/f3-Forgot/f1-UI/ForgotContainer';
 import {AssistanceContainer} from '../../features/f4-Password-assistance/a1-UI/AssistanceContainer';
 import {PacksList} from "../../features/f6-PacksList/p1-UI/PacksList";
 import {CardsContainer} from "../../features/f7-Cards/c1-UI/CardsContainer";
+import {LearnContainer} from "../../features/f9-Learn/l1-UI/LearnContainer";
 
 
 // paths
@@ -19,6 +20,7 @@ export enum Path {
     PROFILE_PATH = '/profile',
     LERGNOM_PACKS_LIST_PATH = '/packs-list',
     CARDS_LIST_PATH = '/cards/:cardPackId',
+    LERGNOM_LEARN_PATH = '/learn/:cardPackId&:cardPackName',
 }
 
 const Routes: React.FC = () => {
@@ -33,6 +35,7 @@ const Routes: React.FC = () => {
             <Route path={Path.PROFILE_PATH} render={() => <Profile/>}/>
             <Route path={Path.LERGNOM_PACKS_LIST_PATH} render={() => <PacksList/>}/>
             <Route path={Path.CARDS_LIST_PATH} render={() => <CardsContainer/>}/>
+            <Route path={Path.LERGNOM_LEARN_PATH} render={() => <LearnContainer/>}/>
         </div>
     );
 };

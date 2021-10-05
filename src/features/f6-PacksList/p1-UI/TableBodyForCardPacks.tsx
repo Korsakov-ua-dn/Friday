@@ -6,6 +6,7 @@ import {CardPack} from "../p3-DAL/packsListApi";
 import {CustomNavlink} from "../../../common/c4-Navlink/CustomNavlink";
 import {DeleteCardPackModalContainer} from "./components/modalsContainers/DeleteCardPackModalContainer";
 import {EditCardPackModalContainer} from "./components/modalsContainers/EditCardPackModalContainer";
+import {Link, Redirect} from "react-router-dom";
 
 type TableBodyTypeProps = {
     cardPacks: Array<CardPack>
@@ -15,13 +16,18 @@ type TableBodyTypeProps = {
 export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => {
     const isFetching = useSelector<AppStoreType, boolean>(state => state.packsList.isFetch);
 
+    const onClickHandlerLearnTest = (id: string) => {
+        return <Redirect to={`/learn/${id}`}/>;
+    };
+
+
     return (
         <>
             {
                 cardPacks.map(table => {
 
                     const jsDate = new Date(Date.parse(table.updated));
-                    const lastUpdate = `${jsDate.getDate()>9?jsDate.getDate():`0${jsDate.getDate()}`}-${jsDate.getMonth() + 1>9?jsDate.getMonth() + 1:`0${jsDate.getMonth() + 1}`}-${jsDate.getFullYear()}  ${jsDate.getHours()>9?jsDate.getHours():`0${jsDate.getHours()}`}:${jsDate.getMinutes() > 9 ? jsDate.getMinutes() : `0${jsDate.getMinutes()}`}`;
+                    const lastUpdate = `${jsDate.getDate() > 9 ? jsDate.getDate() : `0${jsDate.getDate()}`}-${jsDate.getMonth() + 1 > 9 ? jsDate.getMonth() + 1 : `0${jsDate.getMonth() + 1}`}-${jsDate.getFullYear()}  ${jsDate.getHours() > 9 ? jsDate.getHours() : `0${jsDate.getHours()}`}:${jsDate.getMinutes() > 9 ? jsDate.getMinutes() : `0${jsDate.getMinutes()}`}`;
 
                     return (
                         <tr key={table._id}>
@@ -40,7 +46,10 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
                                 {myId === table.user_id &&
                                 <EditCardPackModalContainer oldName={table.name} packId={table._id}
                                                             isButtonDisabled={isFetching}/>}
-                                <Button disabled={isFetching} green >learn</Button>
+                                <Link to={`/learn/${table._id}&${table.name}`}> <Button green disabled={isFetching}
+                                                                                        onClick={() => {
+                                                                                            onClickHandlerLearnTest(table._id);
+                                                                                        }}>learn</Button> </Link>
                             </td>
                         </tr>
                     );
