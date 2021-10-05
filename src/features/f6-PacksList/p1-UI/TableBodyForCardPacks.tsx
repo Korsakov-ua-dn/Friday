@@ -3,13 +3,13 @@ import Button from "../../../common/c2-Button/Button";
 import {deletePackCardById, updatePackCard} from "../p2-BLL/packsList-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
-import {CardType} from "../p3-DAL/packsListApi";
+import {CardPack} from "../p3-DAL/packsListApi";
 import {CustomNavlink} from "../../../common/c4-Navlink/CustomNavlink";
 import {DeleteCardPackModalContainer} from "./components/modalsContainers/DeleteCardPackModalContainer";
 import {EditCardPackModalContainer} from "./components/modalsContainers/EditCardPackModalContainer";
 
 type TableBodyTypeProps = {
-    cardPacks: Array<CardType>
+    cardPacks: Array<CardPack>
     myId: string
 }
 

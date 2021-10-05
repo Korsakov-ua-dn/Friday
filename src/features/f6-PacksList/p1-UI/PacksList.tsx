@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {HeaderOptionType, Table} from "../../../common/c6-Table/Table";
-import {CardType} from "../p3-DAL/packsListApi";
+import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {
@@ -24,6 +23,7 @@ import CustomRange from "./components/CustomRange/CustomRange";
 import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 import useDebounce from "./hooks/Debounce";
 import {AddCardPackModalContainer} from "./components/modalsContainers/AddCardPackModalContainer";
+import {CardPack} from "../p3-DAL/packsListApi";
 
 export const PacksList = () => {
 

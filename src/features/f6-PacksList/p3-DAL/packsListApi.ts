@@ -17,10 +17,9 @@ export  type ResponseType<D = {}> = {
     tokenDeathTime: number,
 }
 
-export type CardType = {
+export type CardPack = {
     cardsCount: number,
     created: string,
-    deckCover?: any,
     grade: number,
     more_id: string,
     name: string,
@@ -33,12 +32,13 @@ export type CardType = {
     user_id: string,
     user_name: string,
     __v: number,
-    _id: string,
+    _id: string
 }
+
 
 export const PacksListApi = {
     getCardsPacks(page?: number, pageCount?: number, packName?: string, min?: number, max?: number, user_id?: string, sortPacks?: string) {
-        return instance.get<ResponseType<Array<CardType>>>('cards/pack/', {
+        return instance.get<ResponseType<Array<CardPack>>>('cards/pack/', {
             params: {
                 page,
                 pageCount,
