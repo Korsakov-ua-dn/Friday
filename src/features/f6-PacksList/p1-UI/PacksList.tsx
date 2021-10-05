@@ -26,8 +26,6 @@ import {AddCardPackModalContainer} from "./components/modalsContainers/AddCardPa
 import {CardPack} from "../p3-DAL/packsListApi";
 
 export const PacksList = () => {
-
-    const [packName, setPackName] = useState<string>('');
     const [searchPackName, setSearchPackName] = useState<string>('');
     const [sortPack, setSortPack] = useState<string>("");
 
@@ -87,22 +85,6 @@ export const PacksList = () => {
         dispatch(getPacksCards(debouncedSearchPackName, sortPack));
     }, [page, pageCount, debouncedSearchPackName, dispatch, myPacks, sortPack]);
 
-    // //For  test field
-    // useEffect(() => {
-    //     const test = setTestData();
-    //     setPackName(test['name']);
-    // }, []);
-
-
-    /* //Added new pack and new query Cards Pack
-     const clickHandlerAddNewPack = () => {
-         dispatch(addNewPackCard({name: packName, user_name: 'name'}));
-         //Add Test data
-         const test = setTestData();
-         setPackName(test['name']);
-         // setPackName('');
-     };*/
-
     //Change pageCount (selector options)
     const clickHandlerPageCount = (count: string) => {
         dispatch(setPageCount(+count));
@@ -148,9 +130,6 @@ export const PacksList = () => {
                 <div>
                     <InputText value={searchPackName} onChangeText={setSearchPackName}
                                label={"Search by Pack Name  🔍"}/>
-                    {/*<InputText value={packName} onChangeText={setPackName} label={"Add new Pack Name"}/>*/}
-                    {/*<Button disabled={isFetching} onClick={clickHandlerAddNewPack}> + New Pack</Button>*/}
-
                 </div>
                 <div><AddCardPackModalContainer/></div>
             </div>
