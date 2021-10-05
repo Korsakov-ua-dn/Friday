@@ -1,28 +1,10 @@
-import {CardType, PacksListApi} from "../p3-DAL/packsListApi";
+import {CardPack, PacksListApi} from "../p3-DAL/packsListApi";
 import {Action, Dispatch} from "redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {ThunkAction} from "redux-thunk";
 
 const initialState = {
-    cardPacks: [
-        {
-            cardsCount: 0,
-            created: "2021-09-24T17:26:08.281Z",
-            grade: 0,
-            more_id: "60b4ae9724476dsdsdsdf0b043efea812",
-            name: "яяя",
-            path: "/def",
-            private: false,
-            rating: 0,
-            shots: 0,
-            type: "pack",
-            updated: "2021-09-24T17:26:08.281Z",
-            user_id: "60b4ae9724476f0b043efea8",
-            user_name: "victor_bars_bars95@mail.ru",
-            __v: 0,
-            _id: "614e0a30128d3919c041bf0e"
-        }
-    ],
+    cardPacks: [] as Array<CardPack>,
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
     minCardsCount: 0,
@@ -103,7 +85,7 @@ type SetMyPacksActionType = ReturnType<typeof setMyPacks>
 
 
 //action
-const setPacks = (packs: Array<CardType>) => ({type: 'PACKS/SET_PACKS', packs} as const);
+const setPacks = (packs: Array<CardPack>) => ({type: 'PACKS/SET_PACKS', packs} as const);
 const setPacksTotalCount = (totalCount: number) => ({type: 'PACKS/SET_PACKS_TOTAL_COUNT', totalCount} as const);
 export const setPageCount = (count: number) => ({type: 'PACKS/SET_PAGE_COUNT', count} as const);
 export const setPage = (page: number) => ({type: 'PACKS/SET_PAGE', page} as const);
