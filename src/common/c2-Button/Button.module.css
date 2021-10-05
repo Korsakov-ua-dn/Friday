@@ -11,6 +11,7 @@
     background-color: #5264AE;
     color: white;
 }
+
 .default:disabled {
     opacity: 0.5;
 }
@@ -20,12 +21,43 @@
     color: white;
 }
 
+.red:disabled {
+    background: red;
+    color: white;
+    opacity: 0.5;
+}
+
+
+.green {
+    background: #1e4611;
+    color: white;
+}
+
+.green:disabled {
+    background: #1e4611;
+    color: white;
+    opacity: 0.5;
+
+}
+
 .button {
     transition-duration: 0.4s;
 }
-  
+
 .btn:hover {
-    border: 1px solid  #5264AE;
+    border: 1px solid #5264AE;
     background-color: white;
     color: #5264AE;
+}
+
+.red:hover {
+    border: 1px solid red;
+    background-color: white;
+    color: red;
+}
+
+.green:hover {
+    border: 1px solid #1e4611;
+    background-color: white;
+    color: #1e4611;
 }

@@ -40,7 +40,7 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
                                 {myId === table.user_id &&
                                 <EditCardPackModalContainer oldName={table.name} packId={table._id}
                                                             isButtonDisabled={isFetching}/>}
-                                <Button disabled={isFetching}>learn</Button>
+                                <Button disabled={isFetching} green >learn</Button>
                             </td>
                         </tr>
                     );
