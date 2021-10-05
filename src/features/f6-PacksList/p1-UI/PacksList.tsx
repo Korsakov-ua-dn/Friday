@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
+import {HeaderOptionType, Table} from "../../../common/c6-Table/Table";
 import {CardType} from "../p3-DAL/packsListApi";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";

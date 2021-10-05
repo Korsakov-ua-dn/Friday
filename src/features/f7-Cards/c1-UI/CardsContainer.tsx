@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addCardTC, getCardsTC, setCardPackId, setPage} from "../c2-BLL/cards-reducer";
 import {AppStoreType} from "../../../main/m2-BLL/store";
-import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
+import {HeaderOptionType, Table} from "../../../common/c6-Table/Table";
 import {Redirect, useHistory, useParams} from "react-router-dom";
 import {TableBody} from "./Component/CardsTableBody";
 import s from "./Cards.module.css";

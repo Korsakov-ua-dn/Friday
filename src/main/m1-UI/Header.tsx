@@ -15,7 +15,6 @@ const Header: React.FC = () => {
             <CustomNavlink to={Path.PROFILE_PATH} body={"profile"}/>
             <CustomNavlink to={Path.LERGNOM_PACKS_LIST_PATH} body={"packs-list"}/>
             <CustomNavlink to={Path.CARDS_LIST_PATH} body={"cards"}/>
-            <CustomNavlink to={Path.TEST_PATH} body={"test"}/>
         </div>
     );
 };

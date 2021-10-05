@@ -22,22 +22,11 @@ export const profileReducer = (state: ProfileState = initialState, action: Actio
 };
 
 // actions
-
-const setLoading = (loading: boolean) => {
-    return {type: 'PROFILE/LOADING', loading} as const;
-};
-
-const setError = (error: string | null) => {
-    return {type: 'PROFILE/ERROR', error} as const;
-};
-
-const setAuth = (auth: boolean) => {
-    return {type: 'PROFILE/AUTH', auth} as const;
-};
-
+const setLoading = (loading: boolean) => ({type: 'PROFILE/LOADING', loading} as const)
+const setError = (error: string | null) => ({type: 'PROFILE/ERROR', error} as const)
+const setAuth = (auth: boolean) => ({type: 'PROFILE/AUTH', auth} as const)
 
 // thunks
-
 export const logoutThunk = (dispatch: Dispatch) => {
     dispatch(setLoading(true));
     profileAPI.logout()
@@ -53,14 +42,8 @@ export const logoutThunk = (dispatch: Dispatch) => {
 };
 
 // types
+export type ProfileState = typeof initialState
 
-export type ProfileState = {
-    loading: boolean
-    error: null | string
-    auth: boolean
-}
-
-type SetLoading = ReturnType<typeof setLoading>
-type SetError = ReturnType<typeof setError>
-type SetAuth = ReturnType<typeof setAuth>
-type ActionType = SetError | SetLoading | SetAuth
+type ActionType = ReturnType<typeof setLoading>
+   | ReturnType<typeof setError>
+   | ReturnType<typeof setAuth>

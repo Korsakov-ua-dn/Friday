@@ -1,6 +1,5 @@
 import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
-import {Test} from '../../common/c9-Test/Test';
 import {SignInContainer} from '../../features/f1-Sign-in/s1-UI/SignInContainer';
 import {SignUpContainer} from '../../features/f2-Registration/r1-UI/SignUpContainer';
 import {Profile} from '../../features/f5-Profile/p1-UI/Profile';
@@ -18,7 +17,6 @@ export enum Path {
     FORGOT_PATH = '/forgot',
     PASSWORD_ASSISTANCE_PATH = '/assistance/:token',
     PROFILE_PATH = '/profile',
-    TEST_PATH = '/test',
     LERGNOM_PACKS_LIST_PATH = '/packs-list',
     CARDS_LIST_PATH = '/cards/:cardPackId',
 }
@@ -33,7 +31,6 @@ const Routes: React.FC = () => {
             <Route path={Path.FORGOT_PATH} render={() => <ForgotContainer/>}/>
             <Route path={Path.PASSWORD_ASSISTANCE_PATH} render={() => <AssistanceContainer/>}/>
             <Route path={Path.PROFILE_PATH} render={() => <Profile/>}/>
-            <Route path={Path.TEST_PATH} render={() => <Test/>}/>
             <Route path={Path.LERGNOM_PACKS_LIST_PATH} render={() => <PacksList/>}/>
             <Route path={Path.CARDS_LIST_PATH} render={() => <CardsContainer/>}/>
         </div>
