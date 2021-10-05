@@ -45,7 +45,7 @@ export const DeleteCardPackModalContainer = (
                 <div>
                     <Button disabled={isButtonDisabled} onClick={() => {
                         clickHandlerDeleteCardPackById(deleteId);
-                    }} red>yes</Button>
+                    }} red>Yes</Button>
                     <Button disabled={isButtonDisabled} onClick={clickHandlerHiddenModal}> No</Button>
                 </div>
             </Modal>

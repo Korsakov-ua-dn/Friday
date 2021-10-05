@@ -6,6 +6,7 @@ import {AppStoreType} from "../../../main/m2-BLL/store";
 import {CardType} from "../p3-DAL/packsListApi";
 import {CustomNavlink} from "../../../common/c4-Navlink/CustomNavlink";
 import {DeleteCardPackModalContainer} from "./components/modalsContainers/DeleteCardPackModalContainer";
+import {EditCardPackModalContainer} from "./components/modalsContainers/EditCardPackModalContainer";
 
 type TableBodyTypeProps = {
     cardPacks: Array<CardType>
@@ -63,12 +64,14 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
                                 {myId === table.user_id &&
                                 /*<Button disabled={isFetching} onClick={clickHandlerDeleteCardPackById}
                                         red>delete</Button>}*/
-                                <DeleteCardPackModalContainer deleteId={table._id} namePack={table.name}/>}
+                                <DeleteCardPackModalContainer deleteId={table._id} namePack={table.name}
+                                                              isButtonDisabled={isFetching}/>}
 
                                 {myId === table.user_id &&
-                                <Button disabled={isFetching}
-                                        onClick={clickHandlerEditPackById}>{editId === table._id && edit ? 'update' : 'edit'}</Button>}
-
+                                /*      <Button disabled={isFetching}
+                                              onClick={clickHandlerEditPackById}>{editId === table._id && edit ? 'update' : 'edit'}</Button>}*/
+                                <EditCardPackModalContainer oldName={table.name} packId={table._id}
+                                                            isButtonDisabled={isFetching}/>}
                                 <Button disabled={isFetching}>learn</Button>
                             </td>
                         </tr>
