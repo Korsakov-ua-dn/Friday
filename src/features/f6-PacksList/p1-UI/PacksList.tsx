@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {HeaderOptionType, Table} from "../../../common/c10-Table/Table";
+import {HeaderOptionType, Table} from "../../../common/c6-Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {
@@ -34,7 +34,7 @@ export const PacksList = () => {
     //for show my Packs
     const myPacks = useSelector<AppStoreType, boolean>(state => state.packsList.myPacks);
     //for Table Body
-    const cardPacks = useSelector<AppStoreType, Array<CardType>>(state => state.packsList.cardPacks);
+    const cardPacks = useSelector<AppStoreType, Array<CardPack>>(state => state.packsList.cardPacks);
     //for pagination
     const cardPacksTotalCount = useSelector<AppStoreType, number>(state => state.packsList.cardPacksTotalCount);
     const pageCount = useSelector<AppStoreType, number>(state => state.packsList.pageCount);
