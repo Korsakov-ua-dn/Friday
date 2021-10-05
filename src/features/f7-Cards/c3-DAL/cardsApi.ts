@@ -17,7 +17,7 @@ export const cardsApi = {
         })
     },
 
-    addNewCard(payload: {cardsPack_id: string, question?: string, answer?: string}) {
+    addNewCard(payload: { cardsPack_id: string, question?: string, answer?: string }) {
         return instance.post<ResponseType>(`/cards/card`, {card: payload});
     },
     deleteCard(id: string) {

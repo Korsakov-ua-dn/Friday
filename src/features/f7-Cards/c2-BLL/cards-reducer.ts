@@ -54,7 +54,7 @@ export const setSearchQuestion = (value: string) => ({type: "CARDS-LIST/SET_SEAR
 export const setSearchAnswer = (value: string) => ({type: "CARDS-LIST/SET_SEARCH_ANSWER", value} as const)
 
 // thunks
-export const    getCardsTC = () => (dispatch: Dispatch, getState: any) => {
+export const getCardsTC = () => (dispatch: Dispatch, getState: any) => {
     const {cardsPack_id, page, pageCount} = getState().cards
 
     dispatch(setLoading(true))

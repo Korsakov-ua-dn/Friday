@@ -59,7 +59,9 @@ export const CardsContainer = () => {
                     </svg>
                     <span>Back to Pack List</span>
                 </div>
-                <Button onClick={addCardHandler} className={s.addCard}>add new card</Button>
+                {user._id === cardsList[0]?.user_id
+                ? <Button onClick={addCardHandler} className={s.addCard}>add new card</Button>
+                : null}
             </div>
             <Search/>
             {loading && <Preloader/>}
