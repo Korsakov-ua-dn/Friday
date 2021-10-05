@@ -26,6 +26,7 @@ import {Path} from "../../../main/m1-UI/Routes";
 import CustomRange from "./components/CustomRange/CustomRange";
 import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 import useDebounce from "./hooks/Debounce";
+import {AddItemModalContainer} from "../../f8-modals/addItem/AddItemModalContainer";
 
 export const PacksList = () => {
 
@@ -152,6 +153,7 @@ export const PacksList = () => {
                                label={"Search by Pack Name  🔍"}/>
                     <InputText value={packName} onChangeText={setPackName} label={"Add new Pack Name"}/>
                     <Button disabled={isFetching} onClick={clickHandlerAddNewPack}> + New Pack</Button>
+                    <AddItemModalContainer/>
                 </div>
             </div>
             <div className={s.packListTableWrapper}>

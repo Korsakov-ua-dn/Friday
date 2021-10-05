@@ -1,0 +1,25 @@
+.modalBackground {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0.35;
+    zIndex: 20;
+}
+
+.modalWindow {
+    position: fixed;
+    /*flexFlow: column;*/
+    /*justifyContent: center;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 33px 0 33px;
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0 10px 62px 10px rgba(47, 128, 214, 0.71);
+    /*zIndex: 21;*/
+}
