@@ -4,7 +4,6 @@ import {CardType} from "../p3-DAL/packsListApi";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {
-    addNewPackCard,
     getMaxCountPackCard,
     getMinCountPackCard,
     getMyPacksCards,
@@ -16,9 +15,7 @@ import {Pagination} from "./components/Pagination/Pagination";
 import s from './PacksList.module.css';
 import {MySelect} from "./components/Select/MySelect";
 import {InputText} from "../../../common/c1-Input/InputText";
-import Button from "../../../common/c2-Button/Button";
 import {TableBodyForCardPacks} from "./TableBodyForCardPacks";
-import {setTestData} from "../p4-Test/test";
 import {Preloader} from "../../../common/c5-Loader/Preloader";
 import {ToggleCheckBox} from "./components/CheckBoxToggle/ToggleCheckBox";
 import {Redirect} from "react-router-dom";
@@ -26,7 +23,7 @@ import {Path} from "../../../main/m1-UI/Routes";
 import CustomRange from "./components/CustomRange/CustomRange";
 import {UserType} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 import useDebounce from "./hooks/Debounce";
-import {AddItemModalContainer} from "../../f8-modals/addItem/AddItemModalContainer";
+import {AddCardPackModalContainer} from "./components/modalsContainers/AddCardPackModalContainer";
 
 export const PacksList = () => {
 
@@ -90,21 +87,21 @@ export const PacksList = () => {
         dispatch(getPacksCards(debouncedSearchPackName, sortPack));
     }, [page, pageCount, debouncedSearchPackName, dispatch, myPacks, sortPack]);
 
-    //For  test field
-    useEffect(() => {
-        const test = setTestData();
-        setPackName(test['name']);
-    }, []);
+    // //For  test field
+    // useEffect(() => {
+    //     const test = setTestData();
+    //     setPackName(test['name']);
+    // }, []);
 
 
-    //Added new pack and new query Cards Pack
-    const clickHandlerAddNewPack = () => {
-        dispatch(addNewPackCard({name: packName, user_name: 'name'}));
-        //Add Test data
-        const test = setTestData();
-        setPackName(test['name']);
-        // setPackName('');
-    };
+    /* //Added new pack and new query Cards Pack
+     const clickHandlerAddNewPack = () => {
+         dispatch(addNewPackCard({name: packName, user_name: 'name'}));
+         //Add Test data
+         const test = setTestData();
+         setPackName(test['name']);
+         // setPackName('');
+     };*/
 
     //Change pageCount (selector options)
     const clickHandlerPageCount = (count: string) => {
@@ -151,10 +148,11 @@ export const PacksList = () => {
                 <div>
                     <InputText value={searchPackName} onChangeText={setSearchPackName}
                                label={"Search by Pack Name  🔍"}/>
-                    <InputText value={packName} onChangeText={setPackName} label={"Add new Pack Name"}/>
-                    <Button disabled={isFetching} onClick={clickHandlerAddNewPack}> + New Pack</Button>
-                    <AddItemModalContainer/>
+                    {/*<InputText value={packName} onChangeText={setPackName} label={"Add new Pack Name"}/>*/}
+                    {/*<Button disabled={isFetching} onClick={clickHandlerAddNewPack}> + New Pack</Button>*/}
+
                 </div>
+                <div><AddCardPackModalContainer/></div>
             </div>
             <div className={s.packListTableWrapper}>
                 <Table tableHeaders={tableHeaders}

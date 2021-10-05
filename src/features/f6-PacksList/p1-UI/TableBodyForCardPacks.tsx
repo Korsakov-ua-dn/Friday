@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../main/m2-BLL/store";
 import {CardType} from "../p3-DAL/packsListApi";
 import {CustomNavlink} from "../../../common/c4-Navlink/CustomNavlink";
+import {DeleteCardPackModalContainer} from "./components/modalsContainers/DeleteCardPackModalContainer";
 
 type TableBodyTypeProps = {
     cardPacks: Array<CardType>
@@ -60,8 +61,9 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
                             </td>
                             <td>
                                 {myId === table.user_id &&
-                                <Button disabled={isFetching} onClick={clickHandlerDeleteCardPackById}
-                                        red>delete</Button>}
+                                /*<Button disabled={isFetching} onClick={clickHandlerDeleteCardPackById}
+                                        red>delete</Button>}*/
+                                <DeleteCardPackModalContainer deleteId={table._id} namePack={table.name}/>}
 
                                 {myId === table.user_id &&
                                 <Button disabled={isFetching}
