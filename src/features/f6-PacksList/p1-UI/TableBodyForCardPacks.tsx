@@ -31,8 +31,9 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
 
                     return (
                         <tr key={table._id}>
-                            <th>
-                                <CustomNavlink to={`/cards/${table._id}`} body={table.name}/>
+                            <th style={{color: "gray", cursor: "default"}}>
+                                {(table.cardsCount > 0) || (myId === table.user_id) ?
+                                    <CustomNavlink to={`/cards/${table._id}`} body={table.name}/> : table.name}
                             </th>
                             <td>{table.cardsCount}</td>
                             <td>{lastUpdate}</td>
@@ -46,7 +47,8 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
                                 {myId === table.user_id &&
                                 <EditCardPackModalContainer oldName={table.name} packId={table._id}
                                                             isButtonDisabled={isFetching}/>}
-                                <Link to={`/learn/${table._id}&${table.name}`}> <Button green disabled={isFetching}
+                                <Link to={`/learn/${table._id}&${table.name}`}> <Button green
+                                                                                        disabled={table.cardsCount < 1 ? true : isFetching}
                                                                                         onClick={() => {
                                                                                             onClickHandlerLearnTest(table._id);
                                                                                         }}>learn</Button> </Link>

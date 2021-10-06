@@ -26,30 +26,29 @@ export const CardsContainer = () => {
     const isInitialized = useSelector<AppStoreType, boolean>(state => state.app.initialized);
     const user = useSelector<AppStoreType, UserType | null>(state => state.signIn.user);
 
-    const { cardPackId } = useParams<{ cardPackId: string }>()
+    const {cardPackId} = useParams<{ cardPackId: string }>();
 
     useEffect(() => {
-        dispatch(setCardPackId(cardPackId))
-    }, [cardPackId])
+        dispatch(setCardPackId(cardPackId));
+    }, [cardPackId]);
 
     useEffect(() => {
-        cardPackId && dispatch(getCardsTC())
-    }, [page, pageCount, cardPackId])
+        cardPackId && dispatch(getCardsTC());
+    }, [page, pageCount, cardPackId]);
 
-    const changePageHandler = (page: number) => dispatch(setPage(page))
-    const addCardHandler = () => dispatch(addCardTC())
+    const changePageHandler = (page: number) => dispatch(setPage(page));
+    const addCardHandler = () => dispatch(addCardTC());
     const historyBack = () => {
-        dispatch(setPage(1))
-        history.goBack()
-    }
+        dispatch(setPage(1));
+        history.goBack();
+    };
 
     const tableHeaders: Array<HeaderOptionType> = [{headerTitle: "Question"}, {headerTitle: "Answer"}, {headerTitle: "Update"}, {headerTitle: "Grade"}];
     const tableBody = <TableBody cardsList={cardsList}/>;
 
 
-    if (!isInitialized) return <Preloader/>
-    if (!user) return <Redirect to={Path.SIGN_IN_PATH}/>
-
+    if (!isInitialized) return <Preloader/>;
+    if (!user) return <Redirect to={Path.SIGN_IN_PATH}/>;
     return (
         <>
             <div className={s.backWrapper}>
@@ -59,9 +58,7 @@ export const CardsContainer = () => {
                     </svg>
                     <span>Back to Pack List</span>
                 </div>
-                {user._id === cardsList[0]?.user_id
-                ? <Button onClick={addCardHandler} className={s.addCard}>add new card</Button>
-                : null}
+                <Button onClick={addCardHandler} className={s.addCard}>add new card</Button>
             </div>
             <Search/>
             {loading && <Preloader/>}
