@@ -43,13 +43,13 @@ export const AddCardPackModalContainer = ({isButtonDisabled}: AddItemModalContai
     return (
         <>
             <div>
-                <Button disabled={isButtonDisabled} onClick={clickHandlerShowModal}> Add Pack</Button>
+                <Button title={"Open modal window for add new PackCard"} disabled={isButtonDisabled} onClick={clickHandlerShowModal}> Add Pack</Button>
             </div>
 
             <Modal show={show} backgroundOnClick={clickHandlerHiddenModal} width={413} height={240}>
                 <h1>Add new Pack</h1>
                 <InputText value={packName} onChangeText={setPackName} label={"Add new Pack Name"}/>
-                <Button disabled={isButtonDisabled} onClick={clickHandlerAddNewPack}> + New Pack</Button>
+                <Button title={"Add new CardPack"} disabled={isButtonDisabled} onClick={clickHandlerAddNewPack}> + New Pack</Button>
             </Modal>
         </>
     );

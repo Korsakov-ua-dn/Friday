@@ -38,15 +38,17 @@ export const DeleteCardPackModalContainer = (
     };
     return (
         <div className={s.wrapContainer}>
-            <Button disabled={isButtonDisabled} onClick={clickHandlerShowModal} red> delete</Button>
+            <Button disabled={isButtonDisabled} onClick={clickHandlerShowModal} red
+                    title={"Show modal for delete"}> delete</Button>
             <Modal show={show} backgroundOnClick={clickHandlerHiddenModal} width={413} height={240}>
                 <h1>Delete CardPack</h1>
                 Are you sure you want delete: <span>{namePack}</span>
                 <div>
-                    <Button disabled={isButtonDisabled} onClick={() => {
+                    <Button title={"After press i don't know :("} disabled={isButtonDisabled} onClick={() => {
                         clickHandlerDeleteCardPackById(deleteId);
                     }} red>Yes</Button>
-                    <Button disabled={isButtonDisabled} onClick={clickHandlerHiddenModal}> No</Button>
+                    <Button title={"Yes, yes, yes :)"} disabled={isButtonDisabled}
+                            onClick={clickHandlerHiddenModal}> No</Button>
                 </div>
             </Modal>
         </div>

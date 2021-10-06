@@ -36,7 +36,7 @@ export const ToggleCheckBox: React.FC<SuperCheckboxPropsType> = (
 
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (checked например там внутри)
             />
-            <span className={!checked ? s.checkboxSwitch : s.checkboxSwitchChecked}></span>
+            <span className={!checked ? s.checkboxSwitch : s.checkboxSwitchChecked} {...restProps}/>
             {children && <span className={s.spanClassName}>{children}</span>}
         </label> // благодаря label нажатие на спан передастся в инпут
     );

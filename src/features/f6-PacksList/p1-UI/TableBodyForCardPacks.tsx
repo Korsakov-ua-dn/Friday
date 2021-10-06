@@ -47,7 +47,8 @@ export const TableBodyForCardPacks = ({cardPacks, myId}: TableBodyTypeProps) => 
                                 {myId === table.user_id &&
                                 <EditCardPackModalContainer oldName={table.name} packId={table._id}
                                                             isButtonDisabled={isFetching}/>}
-                                <Link to={`/learn/${table._id}&${table.name}`}> <Button green
+                                <Link to={`/learn/${table._id}&${table.name}`}> <Button title={"Ready study? OK :)"}
+                                                                                        green
                                                                                         disabled={table.cardsCount < 1 ? true : isFetching}
                                                                                         onClick={() => {
                                                                                             onClickHandlerLearnTest(table._id);

@@ -122,7 +122,7 @@ export const PacksList = () => {
                 <div>
                     <div>
                         <span style={{marginRight: "5px"}}>My Packs</span>
-                        <ToggleCheckBox onChange={changeCheckedMyPacks} checked={myPacks}/>
+                        <ToggleCheckBox title={"Show me my packs... quickly :)"} onChange={changeCheckedMyPacks} checked={myPacks}/>
                     </div>
                     <div style={{marginTop: "5px"}}>Number of cards <CustomRange getMin={getRangeMin}
                                                                                  getMax={getRangeMax}/></div>

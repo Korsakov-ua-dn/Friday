@@ -5,7 +5,7 @@ import {authUserAC} from "../../f1-Sign-in/s2-BLL/Sign-in-reducer";
 const initialState = {
     loading: false,
     error: null,
-    auth: true
+    auth: true,
 };
 
 export const profileReducer = (state: ProfileState = initialState, action: ActionType) => {
@@ -22,9 +22,9 @@ export const profileReducer = (state: ProfileState = initialState, action: Actio
 };
 
 // actions
-const setLoading = (loading: boolean) => ({type: 'PROFILE/LOADING', loading} as const)
-const setError = (error: string | null) => ({type: 'PROFILE/ERROR', error} as const)
-const setAuth = (auth: boolean) => ({type: 'PROFILE/AUTH', auth} as const)
+const setLoading = (loading: boolean) => ({type: 'PROFILE/LOADING', loading} as const);
+const setError = (error: string | null) => ({type: 'PROFILE/ERROR', error} as const);
+const setAuth = (auth: boolean) => ({type: 'PROFILE/AUTH', auth} as const);
 
 // thunks
 export const logoutThunk = (dispatch: Dispatch) => {
@@ -41,9 +41,20 @@ export const logoutThunk = (dispatch: Dispatch) => {
         .finally(() => dispatch(setLoading(false)));
 };
 
+export const updateProfile = (name: string, avatar?: string) => async (dispatch: Dispatch<ActionType>) => {
+    try {
+        await profileAPI.changeProfile({
+            name,
+            avatar: 'https://www.meme-arsenal.com/memes/8ae510a2cd5493b409b45771b0fc6312.jpg'
+        });
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 // types
 export type ProfileState = typeof initialState
 
 type ActionType = ReturnType<typeof setLoading>
-   | ReturnType<typeof setError>
-   | ReturnType<typeof setAuth>
+    | ReturnType<typeof setError>
+    | ReturnType<typeof setAuth>

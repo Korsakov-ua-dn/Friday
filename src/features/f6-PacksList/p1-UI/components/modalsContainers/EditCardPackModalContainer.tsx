@@ -49,7 +49,8 @@ export const EditCardPackModalContainer = (
 
     return (
         <div className={s.wrapContainer}>
-            <Button disabled={isButtonDisabled} onClick={clickHandlerShowModal}> edit </Button>
+            <Button disabled={isButtonDisabled} onClick={clickHandlerShowModal}
+                    title={"Show modal for edit"}> edit </Button>
             <Modal show={show} backgroundOnClick={clickHandlerHiddenModal} width={413} height={240}>
                 <h1>Edit CardPack name</h1>
                 <InputText autoFocus onChange={onChangeHandlerChangeNameCardPack} value={changeNameCardPack}
@@ -57,8 +58,9 @@ export const EditCardPackModalContainer = (
                 <div>
                     <Button disabled={isButtonDisabled} onClick={() => {
                         clickHandlerEditPackById(packId);
-                    }}>Update</Button>
-                    <Button disabled={isButtonDisabled} onClick={clickHandlerHiddenModal}> No</Button>
+                    }} title={"Update or not update?..."}>Update</Button>
+                    <Button title={"Maybe, not update..."} disabled={isButtonDisabled}
+                            onClick={clickHandlerHiddenModal}> No</Button>
                 </div>
             </Modal>
         </div>
