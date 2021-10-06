@@ -8,14 +8,14 @@ const instance = axios.create({
 
 export const learnApi = {
     getCards(packListId: string, pageCount?: number) {
-        return instance.get<ResponseType<Array<CardType>>>(`/cards/card`, {
+        return instance.get<ResponseType>(`/cards/card`, {
             params: {
                 cardsPack_id: packListId, pageCount
             }
         });
     },
-    setGrade(payload: { grade: number, card_id: string }) {
-        return instance.put(`/cards/grade/`, {payload});
+    setGrade(payload: { card_id: string, grade: number, }) {
+        return instance.put(`/cards/grade`, {...payload});
     }
 };
 
@@ -41,7 +41,7 @@ export type CardType = {
     _id: string
 }
 
-type ResponseType<D = {}> = {
+type ResponseType = {
     cards: Array<CardType>
     cardsTotalCount: number
     maxGrade: number

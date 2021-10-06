@@ -22,7 +22,7 @@ const testData = [
 
 ];
 
-function getRandomTest(int: number) {
+export function getRandomTest(int: number) {
     return Math.floor(Math.random() * int);
 }
 
