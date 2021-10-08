@@ -131,7 +131,7 @@ export const PacksList = () => {
                     <InputText value={searchPackName} onChangeText={setSearchPackName}
                                label={"Search by Pack Name   🔍"}/>
                 </div>
-                <div><AddCardPackModalContainer/></div>
+                <div><AddCardPackModalContainer buttonTitle={"Add Pack"} title={"Open modal window for add new PackCard"}/></div>
             </div>
             <div className={s.packListTableWrapper}>
                 <Table tableHeaders={tableHeaders}

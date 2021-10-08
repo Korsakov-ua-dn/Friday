@@ -8,9 +8,14 @@ import {setTestData} from "../../../p4-Test/test";
 
 type AddItemModalContainerTypeProps = {
     isButtonDisabled?: boolean
+    buttonTitle?: string
+    title?:string
 }
 
-export const AddCardPackModalContainer = ({isButtonDisabled}: AddItemModalContainerTypeProps) => {
+export const AddCardPackModalContainer = ({
+                                              isButtonDisabled,
+                                              buttonTitle = 'button',title
+                                          }: AddItemModalContainerTypeProps) => {
     const [packName, setPackName] = useState<string>('');
     const [show, setShow] = useState(false);
 
@@ -43,13 +48,15 @@ export const AddCardPackModalContainer = ({isButtonDisabled}: AddItemModalContai
     return (
         <>
             <div>
-                <Button title={"Open modal window for add new PackCard"} disabled={isButtonDisabled} onClick={clickHandlerShowModal}> Add Pack</Button>
+                <Button title={title} disabled={isButtonDisabled}
+                        onClick={clickHandlerShowModal}> {buttonTitle}</Button>
             </div>
 
             <Modal show={show} backgroundOnClick={clickHandlerHiddenModal} width={413} height={240}>
                 <h1>Add new Pack</h1>
                 <InputText value={packName} onChangeText={setPackName} label={"Add new Pack Name"}/>
-                <Button title={"Add new CardPack"} disabled={isButtonDisabled} onClick={clickHandlerAddNewPack}> + New Pack</Button>
+                <Button title={"Add new CardPack"} disabled={isButtonDisabled} onClick={clickHandlerAddNewPack}> + New
+                    Pack</Button>
             </Modal>
         </>
     );
